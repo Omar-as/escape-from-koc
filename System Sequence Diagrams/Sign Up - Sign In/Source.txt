@@ -1,0 +1,21 @@
+title Sign Up / Sign In
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+note over player,game: While on "Sign Up / Sign In" Screen...
+
+alt signUpBtn clicked
+	loop NOT success?
+		player->game:signUp(username, password)
+		game-->player: success?
+	end
+else signInBtn clicked
+	loop NOT success?
+		player->game:signIn(username, password)
+		game-->player: success?
+	end
+end
+
+game-->player: goToMainMenu

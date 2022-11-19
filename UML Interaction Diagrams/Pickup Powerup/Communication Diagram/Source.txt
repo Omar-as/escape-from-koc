@@ -1,0 +1,25 @@
+title Pickup Powerup
+
+@startuml
+
+skinparam interface {
+	backgroundColor transparent
+	borderColor transparent
+}
+skinparam componentStyle rectangle
+
+[PowerupController] as controller
+[:Game] as game
+[:Player] as player
+
+" "-controller: rightClick(position)
+
+game--controller : " 1: getPowerup(position) ↑\n\
+ 1.1: powerup ↓                 "
+
+controller--player: "** 2a [powerup != NULL && storable(powerup)]** :\n\
+storeInBag(powerup) ↓"
+
+controller-- controller: "**2b [powerup != NULL && !storable(powerup)]** :\n\
+activate(powerup) ↓"
+@enduml

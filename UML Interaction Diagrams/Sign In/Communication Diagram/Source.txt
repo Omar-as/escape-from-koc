@@ -1,0 +1,25 @@
+title Sign In
+
+@startuml
+
+skinparam componentStyle rectangle
+skinparam interface {
+	backgroundColor transparent
+	borderColor transparent
+}
+
+[SignInController] as controller
+[Database] as database
+[User] as user
+
+" "-controller:"username, password ⟶"
+
+controller-database:"1: userExists?(username) ⟶                                               \n\
+⟵ 1.1: exists?                                                                                  \n\
+**2 [exists?]** : passwordCorrect?(username, password) ⟶\n\
+⟵ 2.1: correct?                                                                               "
+
+controller--user:"**3 [correct?]** :\n\
+ create(username, password) ↓"
+
+@enduml

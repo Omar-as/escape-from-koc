@@ -1,0 +1,24 @@
+title Pickup Key
+
+@startuml
+
+skinparam componentStyle rectangle
+skinparam interface {
+	backgroundColor transparent
+	borderColor transparent
+}
+
+[KeyController] as controller
+[Game] as game
+[Room] as room
+
+" "-controller:"pressKey(poisition) ⟶"
+
+controller--game: " 1: getRoom(position) ↓\n\
+ 1.1: room ↑                  "
+
+controller-room: "2: getKey() ⟶                                                                                       \n\
+⟵ 2.1: key                                                                                                        \n\
+**3 [key != NULL && key.position == position]** : setCleared() ⟶"
+
+@enduml

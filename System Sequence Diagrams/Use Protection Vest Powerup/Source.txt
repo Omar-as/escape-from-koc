@@ -1,0 +1,15 @@
+title Use Protection Vest Powerup
+
+actor ":Player" as player
+participant ":Game" as game
+
+note over player,game: While In Run Mode...
+note over player,game: Trigger action by pressing "P"
+
+player->game: useProtectionVestPowerup
+
+opt hasProtectionVestPowerup?
+	game-->player: activatePlayerProtection
+	game-->player: hasProtectionVestPowerup? = false
+	note over player,game: Protection lasts for 20 seconds
+end

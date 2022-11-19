@@ -1,0 +1,16 @@
+title Resume
+
+# Entities
+participant ":Controller" as controller
+participant ":Game" as game
+
+[->controller:keypress(Esc)
+activate controller
+controller->controller:hidePauseMenu()
+activate controller
+deactivateafter controller
+controller->game:setPaused(false)
+activate game
+deactivateafter game
+
+deactivateafter controller

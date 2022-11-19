@@ -1,0 +1,30 @@
+title Sign In
+
+# Entities
+participant ":SignInController" as controller
+participant ":Database" as db
+participant ":User" as user
+
+[->controller:username, password
+activate controller
+controller->db:userExists?(username)
+activate db
+db-->controller:exists?
+deactivateafter db
+
+alt exists?
+	controller->db:passwordCorrect?(username, password)
+	activate db
+	db-->controller:correct?
+	deactivateafter db
+	alt correct?
+    	controller->user:create(username, password)
+    	controller->[:Login Successful
+	else
+		controller->[:Incorrect password
+	end
+else
+	controller->[:User does not exist
+end
+
+deactivateafter controller

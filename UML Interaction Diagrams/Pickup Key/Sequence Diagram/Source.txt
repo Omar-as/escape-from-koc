@@ -1,0 +1,23 @@
+title Pickup Key
+
+# Entities
+participant ":KeyController" as controller
+participant ":Game" as game
+participant ":Room" as room
+
+[->controller:rightClick(position)
+activate controller
+controller->game:getRoom(position)
+activate game
+game-->controller:room
+deactivateafter game
+controller->room:getKey()
+activate room
+room-->controller:key
+deactivateafter room
+opt key != NULL && key.position == position
+	controller->room:setCleared()
+	activate room
+	deactivate room
+end
+deactivateafter controller

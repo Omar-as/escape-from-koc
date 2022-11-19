@@ -1,0 +1,15 @@
+title Use Hint Powerup
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+note over player,game: While In Run Mode...
+note over player,game: Trigger action by pressing "H"
+
+player->game: useHintPowerup
+
+opt hasHintPowerup?
+	game-->player: highlightKeyRegion
+	game-->player: hasHintPowerup? = false
+end

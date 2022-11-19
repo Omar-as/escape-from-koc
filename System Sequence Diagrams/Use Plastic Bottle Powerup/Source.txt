@@ -1,0 +1,15 @@
+title Use Plastic Bottle Powerup
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+note over player,game: While In Run Mode...
+note over player,game: Trigger action by pressing "B"\n and then pressing (A, W, D, X) for direction
+
+player->game: usePlasticBottlePowerup(direction)
+
+opt hasPlasticBottlePowerup?
+	game-->player: throwPlasticBottle(direction)
+	game-->player: hasPlasticBottlePowerup? = false
+end

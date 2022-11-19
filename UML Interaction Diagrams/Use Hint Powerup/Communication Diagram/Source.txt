@@ -1,0 +1,24 @@
+title Use Hint Powerup
+
+@startuml
+	skinparam interface {
+ 	backgroundColor transparent
+ 	borderColor transparent
+}
+skinparam componentStyle rectangle
+
+[:HintPowerupController] as controller
+[:Game] as game
+[:Player] as player
+[:Room] as room
+
+" "-controller: "keypress(H) →"
+game--controller : " 1: getHintPowerup(position) ↑\n\
+ 1.1: powerup ↓                        "
+controller --player: "**2 [powerup != NULL]** :\n getRoom(room) ↓"
+
+controller--room:"  3: getKey() ↓\n\
+3.1: key ↑   "
+
+controller--controller: "4: highlightKey(key) ↓"
+@enduml

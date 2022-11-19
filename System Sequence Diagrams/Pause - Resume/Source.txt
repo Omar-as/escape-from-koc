@@ -1,0 +1,17 @@
+title Pause / Resume
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+note over player,game: While in game...
+
+alt NOT isPaused?
+	note over player, game: Trigger action by pressing ESC
+	player->game: pauseGame
+	game-->player: showPauseMenu
+else isPaused?
+	note over player,game: Trigger action by pressing ESC\n or by clicking "Resume" button
+	player->game: resumeGame
+	game-->player: hidePauseMenu
+end

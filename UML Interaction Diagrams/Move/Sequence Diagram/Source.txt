@@ -1,0 +1,28 @@
+title Move
+
+participant ":PlayerController" as controller
+participant ":Player" as player
+participant ":Room" as room
+
+[->controller:keypress(k ∈ { up, down, left, right })
+
+activate controller
+
+controller->player:getPosition()
+activate player
+player -->controller:position
+deactivate player
+
+note over controller:newPosition = position + k
+
+controller->room:isValidPosition(newPosition)
+activate room
+room-->controller:valid?
+deactivateafter room
+
+opt valid?
+	controller->player:setPosition(newPosition)
+	activate player
+	deactivateafter player
+end
+deactivateafter controller

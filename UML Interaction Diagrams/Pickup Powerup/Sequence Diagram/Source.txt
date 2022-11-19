@@ -1,0 +1,30 @@
+title Pickup Powerup
+
+# Entities
+participant ":PowerupController" as controller
+participant ":Game" as game
+participant ":Player" as player
+
+[->controller:rightClick(position)
+
+activate controller
+
+controller->game:getPowerup(position)
+
+activate game
+
+game-->controller:powerup
+
+deactivateafter game
+
+alt powerup != NULL && isStorable(powerup)
+	controller->player:storeInBag(powerup)
+	activate player
+	deactivateafter player
+else powerup != NULL && !isStorable(powerup)
+	controller->controller:activate(powerup)
+	activate controller
+	deactivateafter controller
+end
+
+deactivateafter controller

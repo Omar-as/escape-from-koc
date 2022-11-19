@@ -1,0 +1,27 @@
+title Use Plastic Bottle Powerup
+
+@startuml
+
+skinparam componentStyle rectangle
+skinparam interface {
+	backgroundColor transparent
+	borderColor transparent
+}
+
+' Entities
+[:PlasticBottlePowerupController] as controller
+[:Player] as player
+[:Game] as game
+
+" "-controller: "keypress(B) ⟶                           \n\
+keyPress(k ∈ { A, D, W, X }) ⟶"
+
+controller--player:"1: getPlasticBottlePowerup() ↓\n\
+↑ 1.1: powerup                               "
+
+controller-game:"**2a [powerup != NULL && k == A]** : throwBottle(Directions.Left) ⟶  \n\
+**2b [powerup != NULL && k == D]** : throwBottle(Directions.Right) ⟶\n\
+**2c [powerup != NULL && k == W]** : throwBottle(Directions.Up) ⟶   \n\
+**2d [powerup != NULL && k == X]** : throwBottle(Directions.Down)⟶"
+
+@enduml

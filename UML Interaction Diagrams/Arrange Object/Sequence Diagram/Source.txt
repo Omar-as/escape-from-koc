@@ -1,0 +1,21 @@
+title Arrange Object
+
+participant ":ObjectController" as controller
+participant ":Room" as room
+
+[->controller:mouseDragEvent(object, position)
+activate controller
+
+controller->room:isPositionValid(position)
+room-->controller:valid?
+activate room
+deactivateafter room
+
+opt valid?
+	controller->room:setPosition(object, position)
+	activate room
+	deactivateafter room
+
+end
+
+deactivateafter controller

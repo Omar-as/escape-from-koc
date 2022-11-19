@@ -1,0 +1,28 @@
+title Move
+
+@startuml
+
+skinparam componentStyle rectangle
+skinparam interface {
+	backgroundColor transparent
+	borderColor transparent
+}
+
+[:PlayerController] as controller
+
+[:Room] as room
+
+[:Player] as player
+
+"."-controller: "keypress(k ∈ { up, down, left, right }) ⟶"
+
+controller - player: "1 getPosition() ⟶                                   \n\
+⟵  1.1 position                                                    \n\
+**3 [valid?]** : setPosition(newPosition) ⟶"
+
+note top of controller: newPosition = position + k
+
+controller -- room: "2: isValidPosition(newPosition) ↓\n\
+↑ 2.1: valid?                                        "
+
+@enduml

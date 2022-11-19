@@ -1,0 +1,26 @@
+title Use Protection Vest Powerup
+
+@startuml
+
+skinparam componentStyle rectangle
+skinparam interface {
+	backgroundColor transparent
+	borderColor transparent
+}
+
+' Entities
+[:ProtectionVestPowerupController] as controller
+[:Player] as player
+[:Timer] as timer
+
+" "-controller: "keypress(P) ⟶"
+
+controller-player:"1: getProtectionVestPowerup()  ⟶                     \n\
+⟵ 1.1: powerup                                                             \n\
+2 **[powerup != NULL]** : setProtected(true) ⟶\n\
+4: setProtected(false) ⟶                                   "
+
+controller--timer:"3: notifyAfter(20) ↓\n\
+↑ 3.1: notify                   "
+
+@enduml

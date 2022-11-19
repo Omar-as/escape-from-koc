@@ -1,0 +1,12 @@
+title Browse History
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+note over player,game: While in Main Menu...
+
+player->game: pressBtn(Game History)
+game-->player: goToHistoryScreen
+
+note over player,game: Player checks past games...

@@ -1,0 +1,36 @@
+title Use Protection Vest Powerup
+
+# Entities
+participant ":ProtectionVestPowerupController" as controller
+participant ":Player" as player
+participant ":Timer" as timer
+
+[->controller:keypress(P)
+
+activate controller
+
+controller->player:getProtectionVestPowerup()
+
+activate player
+
+player-->controller:powerup
+
+deactivateafter player
+
+opt powerup != NULL
+	controller->player:setProtected(true)
+	activate player
+	deactivateafter player
+	controller->timer:notifyAfter(20)
+	activate timer
+	note over timer: 20 seconds pass...
+	timer-->controller:notify
+	activate controller
+	deactivateafter timer
+	controller->player:setProtected(false)
+	activate player
+	deactivateafter player
+	deactivateafter controller
+end
+
+deactivateafter controller

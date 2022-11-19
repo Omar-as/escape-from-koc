@@ -1,0 +1,21 @@
+title Arrange Object
+@startuml
+
+skinparam componentStyle rectangle
+skinparam interface {
+	backgroundColor transparent
+	borderColor transparent
+}
+
+[:ObjectController] as controller
+
+[:Room] as room
+
+"."-controller: "mouseDragEvent(object, position) ⟶"
+
+controller - room: "1: isPostionValid(position) ⟶                       \n\
+⟵ 1.1: valid?                                                           \n\
+**2 [valid?]** : setPosition(object, position) ⟶"
+
+
+@enduml

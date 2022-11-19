@@ -1,0 +1,15 @@
+title Resume
+
+@startuml
+
+skinparam interface {
+	backgroundColor transparent
+	borderColor transparent
+}
+skinparam componentStyle rectangle
+
+" "-[controller]:"keypress(Esc) →"
+[controller]-[controller]: "1: hidePauseMenu() ↓"
+[controller]--[game]:"  2: setPaused(false) ↓"
+
+@enduml

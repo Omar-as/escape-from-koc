@@ -1,0 +1,13 @@
+title Get Help
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+opt isInGame?
+	player->game: pauseGame
+	game-->player: showPauseMenu
+end
+
+player->game:getHelp
+game-->player: goToHelpScreen

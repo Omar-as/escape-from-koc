@@ -1,0 +1,23 @@
+title Pickup Key / Powerup
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+note over player,game: While in Run Mode...
+
+alt leftClick?
+	player->game:checkUnderObject
+	game-->player:key
+	opt key
+		player->game:pickUpKey(key)
+	end
+else rightClick?
+	player->game:pickupPowerup
+	game-->player:powerup, isStorable?
+	alt powerup AND isStorable?
+		player->game: storeInPlayerBag(powerup)
+	else powerup AND NOT isStorable?
+		player->game: activate(powerup)
+	end
+end

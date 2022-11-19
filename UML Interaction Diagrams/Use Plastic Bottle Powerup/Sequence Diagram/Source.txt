@@ -1,0 +1,41 @@
+title Use Plastic Bottle Powerup
+
+# Entities
+participant ":PlasticBottlePowerupController" as controller
+participant ":Player" as player
+participant ":Game" as game
+
+[->controller:keypress(B)
+[->controller:keyPress(k ∈ { A, D, W, X })
+
+activate controller
+
+controller->player:getPlasticBottlePowerup()
+
+activate player
+
+player-->controller:powerup
+
+deactivateafter player
+
+opt powerup != NULL
+	alt k == A
+		controller->game:throwBottle(Directions.Left)
+		activate game
+		deactivateafter game
+	else k == D
+		controller->game:throwBottle(Directions.Right)
+		activate game
+		deactivateafter game
+	else k == W
+		controller->game:throwBottle(Directions.Up)
+		activate game
+		deactivateafter game
+	else k == X
+		controller->game:throwBottle(Directions.Down)
+		activate game
+		deactivateafter game
+	end
+end
+
+deactivateafter controller

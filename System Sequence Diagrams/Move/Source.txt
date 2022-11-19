@@ -1,0 +1,21 @@
+title Move
+
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+
+note over player,game: While in Run Mode...
+
+alt keyPress(up)
+	player->game: move(north)
+else keyPress(left)
+	player->game: move(west)
+else keyPress(right)
+	player->game: move(south)
+else keyPress(down)
+	player->game: move(east)
+end
+
+game-->player: isValid?, position

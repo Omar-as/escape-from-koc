@@ -1,0 +1,17 @@
+title Pause
+
+# Entities
+participant ":Controller" as controller
+participant ":Game" as game
+
+[->controller:keypress(Esc)
+activate controller
+controller->game:setPaused(true)
+activate game
+deactivateafter game
+
+controller->controller:showPauseMenu()
+activate controller
+deactivateafter controller
+
+deactivateafter controller

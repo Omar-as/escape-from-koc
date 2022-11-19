@@ -1,0 +1,17 @@
+title Arrange Objects
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+note over player,game: While in Build Mode...
+
+loop NOT isDone? OR NOT isValid?
+	player->game: moveObject(newPosition)
+	game-->player: isValid?
+	opt
+		player->game: isDone? = true
+	end
+end
+
+note over player,game: Build Mode completed

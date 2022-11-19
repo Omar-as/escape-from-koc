@@ -1,0 +1,34 @@
+title Use Hint Powerup
+
+# Entities
+participant ":HintPowerupController" as controller
+participant ":Player" as player
+participant ":Room" as room
+
+[->controller:keypress(H)
+
+activate controller
+
+controller->player:getHintPowerup()
+
+activate player
+
+player-->controller:powerup
+
+deactivateafter player
+
+opt powerup != NULL
+	controller->player:getRoom()
+	activate player
+	player-->controller:room
+	deactivateafter player
+	controller->room:getKey()
+	activate room
+	room-->controller:key
+	deactivateafter room
+	controller->controller:highlightKey(key)
+	activate controller
+	deactivateafter controller
+end
+
+deactivateafter controller
