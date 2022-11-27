@@ -5,8 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Demo extends JFrame {
@@ -128,6 +127,55 @@ public class Demo extends JFrame {
                     }
                     resultLabel.setText(check ? "Correct" : "Incorrect Username or Password");
                     resultLabel.setForeground(check ? Color.green : Color.red);
+                    myReader.close();
+                } catch (Exception e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        signUpButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent a)
+            {
+                try{
+                    File Dir = new File(String.format("%s/.config/escapefromkoc/", System.getProperty("user.home")));
+
+                    (new File(String.format("%s/", Dir))).mkdirs();
+                    (new File(String.format("%s/accounts.txt", Dir))).createNewFile();
+
+                    File accounts = new File(String.format("%s/accounts.txt", Dir));
+
+                    Scanner myReader = new Scanner(accounts);
+                    boolean check = false;
+                    String username = usernameField.getText();
+                    String password = passwordField.getText();
+                    while (myReader.hasNextLine()) {
+                        String data = myReader.nextLine().split(" ")[0];
+                        check = data.equals(username);
+                        if( check ){ break; }
+                    }
+
+                    if(check)
+                    {
+                        resultLabel.setText("User already has an account");
+                    }
+                    else
+                    {
+                        FileWriter f = new FileWriter(accounts, true);
+                        BufferedWriter b = new BufferedWriter(f);
+                        PrintWriter p = new PrintWriter(b);
+
+
+                        p.println(String.format("%s %s",username,password));
+                        p.close();
+                        b.close();
+                        f.close();
+                        resultLabel.setText("Account created successfully!!");
+                    }
+
+                    resultLabel.setForeground(!check ? Color.green : Color.red);
                     myReader.close();
                 } catch (Exception e) {
                     System.out.println("An error occurred.");
