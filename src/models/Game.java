@@ -2,7 +2,7 @@ package models;
 
 import models.alien.Alien;
 
-public class Game {
+public class Game extends State {
     private Alien[] aliens;
     private boolean isPaused;
     private GameData data;

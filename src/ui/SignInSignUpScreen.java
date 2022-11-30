@@ -1,3 +1,9 @@
+package ui;
+
+import control.DummyController;
+import models.DummyState;
+import models.Game;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -5,10 +11,7 @@ import java.awt.*;
 import java.io.*;
 import java.util.Scanner;
 
-public class Demo extends JFrame {
-
-    public static JFrame mainFrame;
-
+public class SignInSignUpScreen extends Screen {
     // Labels
     public static JLabel usernameLabel;
     public static JLabel passwordLabel;
@@ -22,8 +25,7 @@ public class Demo extends JFrame {
     // buttons
     public static JButton signUpButton;
     public static JButton signInButton;
-    Demo() {
-        mainFrame = new JFrame();
+    public SignInSignUpScreen() {
 
         usernameLabel = new JLabel("Username: ");
         usernameField = new JTextField(16);
@@ -37,7 +39,6 @@ public class Demo extends JFrame {
         signUpButton = new JButton("Sign Up");
 
         // panel
-        JPanel mainPanel = new JPanel();
         JPanel loginPanel = new JPanel();
 
         // field size
@@ -53,20 +54,11 @@ public class Demo extends JFrame {
         Box textBox = new Box(BoxLayout.X_AXIS);
         Box buttonBox = new Box(BoxLayout.X_AXIS);
 
-        // MainFrame
-        mainFrame.setSize(1024,768);
-        mainFrame.setTitle("Login");
-        mainFrame.setFocusable(false);
-        mainFrame.setResizable(false);
-        /*mainFrame.setVisible(true);*/
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.add(mainPanel);
-
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 //        mainPanel.setBackground(Color.GRAY);
         loginBox.setAlignmentY(Component.CENTER_ALIGNMENT);
         usernameBox.setAlignmentX(Component.CENTER_ALIGNMENT);
-        mainPanel.add(mainBox);
+        this.add(mainBox);
 
         // main panel
 
@@ -121,6 +113,9 @@ public class Demo extends JFrame {
                 resultLabel.setText(check ? "Correct" : "Incorrect Username or Password");
                 resultLabel.setForeground(check ? Color.green : Color.red);
                 myReader.close();
+                if (check) {
+                    ScreenManager.getInstance().setScreen(new RunModeScreen(new DummyState(0, 0), new DummyController()));
+                }
             } catch (Exception e) {
                 System.out.println("An error occurred.");
                 e.printStackTrace();
@@ -170,6 +165,5 @@ public class Demo extends JFrame {
                 e.printStackTrace();
             }
         });
-        mainFrame.setVisible(true);
     }
 }
