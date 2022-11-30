@@ -61,7 +61,7 @@ public class Demo extends JFrame {
         mainFrame.setTitle("Login");
         mainFrame.setFocusable(false);
         mainFrame.setResizable(false);
-        mainFrame.setVisible(true);
+        /*mainFrame.setVisible(true);*/
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.add(mainPanel);
 
@@ -151,16 +151,24 @@ public class Demo extends JFrame {
                     boolean check = false;
                     String username = usernameField.getText();
                     String password = passwordField.getText();
+
+
+
                     while (myReader.hasNextLine()) {
                         String data = myReader.nextLine().split(" ")[0];
                         check = data.equals(username);
                         if( check ){ break; }
+
                     }
 
                     if(check)
                     {
                         resultLabel.setText("User already has an account");
                     }
+                    else if (username.isEmpty() || password.isEmpty()) {
+                        resultLabel.setText("Please enter a username or password");
+                    }
+
                     else
                     {
                         FileWriter f = new FileWriter(accounts, true);
@@ -175,7 +183,7 @@ public class Demo extends JFrame {
                         resultLabel.setText("Account created successfully!!");
                     }
 
-                    resultLabel.setForeground(!check ? Color.green : Color.red);
+                    resultLabel.setForeground((check || username.isEmpty() || password.isEmpty()) ? Color.red : Color.green);
                     myReader.close();
                 } catch (Exception e) {
                     System.out.println("An error occurred.");
@@ -183,6 +191,7 @@ public class Demo extends JFrame {
                 }
             }
         });
+        mainFrame.setVisible(true);
 
     }
 }
