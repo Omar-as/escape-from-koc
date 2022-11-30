@@ -12,11 +12,11 @@ public class Alien {
     }
 
     public AlienType getType() {
-        return type;
+        return this.type;
     }
 
     public Position getPosition() {
-        return position;
+        return this.position;
     }
 
     public void setPosition(int xPosition, int yPosition) {
