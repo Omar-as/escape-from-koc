@@ -1,16 +1,18 @@
-import javax.swing.*;
+package models;
+
+import models.alien.Alien;
 
 public class Game {
     private Alien[] aliens;
-    private pauseMenu pausemenu;
-    private gameData data;
+    private boolean isPaused;
+    private GameData data;
     private Room rooms;
     private PowerUp[] powerUps;
     private Player player;
 
-    public Game(Alien[] aliens, pauseMenu pausemenu, gameData data, Room rooms, PowerUp[] powerUps, Player player) {
+    public Game(Alien[] aliens, boolean isPaused, GameData data, Room rooms, PowerUp[] powerUps, Player player) {
         this.aliens = aliens;
-        this.pausemenu = pausemenu;
+        this.isPaused = isPaused;
         this.data = data;
         this.rooms = rooms;
         this.powerUps = powerUps;
@@ -25,19 +27,19 @@ public class Game {
         this.aliens = aliens;
     }
 
-    public pauseMenu getPausemenu() {
-        return pausemenu;
+    public boolean isPaused() {
+        return isPaused;
     }
 
-    public void setPausemenu(pauseMenu pausemenu) {
-        this.pausemenu = pausemenu;
+    public void setPause(boolean isPaused) {
+        this.isPaused = isPaused;
     }
 
-    public gameData getData() {
+    public GameData getData() {
         return data;
     }
 
-    public void setData(gameData data) {
+    public void setData(GameData data) {
         this.data = data;
     }
 
