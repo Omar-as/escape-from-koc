@@ -11,14 +11,14 @@ public class Key {
     }
 
     public boolean isFound() {
-        return this.isFound;
+        return isFound;
     }
 
     public void setFound() {
-        this.isFound = true;
+        isFound = true;
     }
 
     public Position getPosition() {
-        return this.position;
+        return position;
     }
 }
