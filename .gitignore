@@ -3,3 +3,5 @@ out/
 # IntelliJ Config
 .idea/
 *.iml
+# Nix-Direnv Cache
+.direnv/
