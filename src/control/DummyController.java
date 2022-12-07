@@ -1,12 +1,11 @@
 package control;
 
 import models.DummyState;
+import models.Game;
 
-public class DummyController implements Controller<DummyState> {
+public class DummyController implements Controller<Game> {
     @Override
-    public void updateState(DummyState state) {
-        state.setXPosition(state.getPosition().getX() + 10);
-        state.setYPosition(state.getPosition().getY() + 10);
+    public void updateState(Game state) {
 
     }
 }

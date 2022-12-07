@@ -5,6 +5,8 @@ import control.GameController;
 import models.DummyState;
 import models.Game;
 import models.Player;
+import models.PowerUp;
+import models.alien.Alien;
 
 import javax.swing.*;
 

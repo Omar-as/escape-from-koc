@@ -1,22 +1,31 @@
 package ui;
 
 import control.Controller;
+import utils.Constants;
 import models.Game;
 import models.Player;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class RunModeScreen extends AnimatedScreen<Game>{
-    public RunModeScreen(Game state, Controller<Game> controller) {
+
+    BufferedImage DummyPlayer;
+
+    public RunModeScreen(Game state, Controller<Game> controller) throws IOException {
         super(state, controller);
+        DummyPlayer = ImageIO.read(new File("assets/player/player_art.png"));
     }
 
     @Override
     void drawState(Game state, Graphics canvas) {
-        Player player = state.getPlayer();
-        canvas.clearRect(0, 0, 1024, 800);
+        canvas.clearRect(0, 0, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
         canvas.setColor(Color.BLACK);
-        canvas.drawRect(0, 0, 100, 100);
-        canvas.fillRect(player.getPosition().getX(), player.getPosition().getY(), 10, 10);
+
+        Image DummyPlayer_resized = DummyPlayer.getScaledInstance(100,100,Image.SCALE_DEFAULT);
+        canvas.drawImage(DummyPlayer_resized,state.getPlayer().getPosition().getX(),state.getPlayer().getPosition().getY(),null);
     }
 }
