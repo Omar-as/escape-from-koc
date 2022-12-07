@@ -5,6 +5,7 @@ import utils.Position;
 public class Player {
     private int lives;
     private int score;
+    private Room currentRoom;
     private Position position;
 
     public Player(int lives, int score, int xPosition, int yPosition) {
@@ -27,6 +28,14 @@ public class Player {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public Room getCurrntRoom(){
+        return currentRoom;
+    }
+
+    public void setCurrntRoom(Room room){
+        currentRoom = room;
     }
 
     public Position getPosition() {
