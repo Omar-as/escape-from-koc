@@ -8,7 +8,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       devShells.default = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [ jdk ];
+        nativeBuildInputs = with pkgs; [ jdk19 ];
         buildInputs = [ ];
       };
     });
