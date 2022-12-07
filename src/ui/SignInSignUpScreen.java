@@ -1,8 +1,10 @@
 package ui;
 
 import control.DummyController;
+import control.GameController;
 import models.DummyState;
 import models.Game;
+import models.Player;
 
 import javax.swing.*;
 
@@ -109,7 +111,7 @@ public class SignInSignUpScreen extends Screen {
                 resultLabel.setForeground(check ? Color.green : Color.red);
                 myReader.close();
                 if (check) {
-                    ScreenManager.getInstance().setScreen(new RunModeScreen(new DummyState(0, 0), new DummyController()));
+                    ScreenManager.getInstance().setScreen(new RunModeScreen(new Game(false, new Player(5, 0, 0, 0)), new GameController()));
                 }
             } catch (Exception e) {
                 System.out.println("An error occurred.");

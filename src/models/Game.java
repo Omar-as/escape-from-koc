@@ -10,12 +10,12 @@ public class Game extends State {
     private PowerUp[] powerUps;
     private Player player;
 
-    public Game(Alien[] aliens, boolean isPaused, GameData data, Room[] rooms, PowerUp[] powerUps, Player player) {
-        this.aliens = aliens;
+//    public Game(Alien[] aliens, boolean isPaused, GameData data, Room[] rooms, PowerUp[] powerUps, Player player) {
+    public Game(boolean isPaused, Player player) {
         this.isPaused = isPaused;
-        this.data = data;
-        this.rooms = rooms;
-        this.powerUps = powerUps;
+//        this.data = data;
+//        this.rooms = rooms;
+//        this.powerUps = powerUps;
         this.player = player;
     }
 
