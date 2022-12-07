@@ -1,2 +1,4 @@
 # IntelliJ Build Results
 out/
+# IntelliJ Config
+.idea/
