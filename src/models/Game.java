@@ -6,11 +6,11 @@ public class Game extends State {
     private Alien[] aliens;
     private boolean isPaused;
     private GameData data;
-    private Room rooms;
+    private Room[] rooms;
     private PowerUp[] powerUps;
     private Player player;
 
-//    public Game(Alien[] aliens, boolean isPaused, GameData data, Room rooms, PowerUp[] powerUps, Player player) {
+//    public Game(Alien[] aliens, boolean isPaused, GameData data, Room[] rooms, PowerUp[] powerUps, Player player) {
     public Game(boolean isPaused, Player player) {
         this.isPaused = isPaused;
 //        this.data = data;
@@ -43,11 +43,11 @@ public class Game extends State {
         this.data = data;
     }
 
-    public Room getRooms() {
+    public Room[] getRooms() {
         return rooms;
     }
 
-    public void setRooms(Room rooms) {
+    public void setRooms(Room[] rooms) {
         this.rooms = rooms;
     }
 
