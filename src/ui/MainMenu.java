@@ -10,7 +10,6 @@ public class MainMenu extends Screen {
     // Labels
 
 
-    public static JLabel resultLabel;
 
     // fields
 
@@ -22,13 +21,20 @@ public class MainMenu extends Screen {
     public static JButton gameHistoryButton;
 
     public MainMenu() {
-        this.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel title = new JLabel("MAIN MENU");
+
+        title.setFont(new Font("Arial", Font.PLAIN, 40));
+        this.add(title);
+        title.setAlignmentX(CENTER_ALIGNMENT);
 
 
-        resultLabel = new JLabel("");
+
 
         playGameButton = new JButton("Play Game");
         creditsButton = new JButton("Credits");
+        optionsButton = new JButton("Options");
+        gameHistoryButton = new JButton("Game History");
+
 
         // panel
 
@@ -40,8 +46,9 @@ public class MainMenu extends Screen {
 
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        mainBox.setBorder(BorderFactory.createTitledBorder("EscapeFromKoc"));
         this.add(mainBox);
+        mainBox.setBorder(BorderFactory.createEmptyBorder());
+        mainBox.setAlignmentX(CENTER_ALIGNMENT);
 
 
 
@@ -51,7 +58,8 @@ public class MainMenu extends Screen {
 
         mainBox.add(playGameButton);
         mainBox.add(creditsButton);
-        mainBox.setAlignmentX(CENTER_ALIGNMENT);
+        mainBox.add(optionsButton);
+        mainBox.add(gameHistoryButton);
 
         // signin button
         playGameButton.setBackground(Color.BLUE);
@@ -59,12 +67,22 @@ public class MainMenu extends Screen {
         playGameButton.setFocusable(false);
         playGameButton.setVisible(true);
 
+        optionsButton.setBackground(Color.BLUE);
+        optionsButton.setForeground(Color.CYAN);
+        optionsButton.setFocusable(false);
+        optionsButton.setVisible(true);
+
         // signup button
 
         playGameButton.setBackground(Color.GRAY);
         playGameButton.setForeground(Color.BLACK);
         playGameButton.setFocusable(false);
         playGameButton.setVisible(true);
+
+        gameHistoryButton.setBackground(Color.GRAY);
+        gameHistoryButton.setForeground(Color.BLACK);
+        gameHistoryButton.setFocusable(false);
+        gameHistoryButton.setVisible(true);
 
 
 
