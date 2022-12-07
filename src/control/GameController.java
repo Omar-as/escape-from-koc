@@ -11,9 +11,22 @@ public class GameController implements Controller<Game> {
 
     @Override
     public void updateState(Game state) {
-        CheckKeys.isWPressed();
         Player player = state.getPlayer();
-        player.setXPosition(player.getPosition().getX() + 10);
-        player.setYPosition(player.getPosition().getY() + 10);
+        if (CheckKeys.isWPressed()) {
+            player.setXPosition(player.getPosition().getX());
+            player.setYPosition(player.getPosition().getY() - 10);
+        }
+        else if (CheckKeys.isAPressed()) {
+            player.setXPosition(player.getPosition().getX() - 10);
+            player.setYPosition(player.getPosition().getY());
+        }
+        else if (CheckKeys.isSPressed()){
+            player.setXPosition(player.getPosition().getX());
+            player.setYPosition(player.getPosition().getY() + 10);
+        }
+        else if (CheckKeys.isDPressed()){
+            player.setXPosition(player.getPosition().getX() + 10);
+            player.setYPosition(player.getPosition().getY());
+        }
     }
 }
