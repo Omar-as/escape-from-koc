@@ -54,13 +54,8 @@ public class SignInSignUpScreen extends Screen {
         Box textBox = new Box(BoxLayout.X_AXIS);
         Box buttonBox = new Box(BoxLayout.X_AXIS);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-//        mainPanel.setBackground(Color.GRAY);
-        loginBox.setAlignmentY(Component.CENTER_ALIGNMENT);
-        usernameBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.setLayout(new GridBagLayout());
         this.add(mainBox);
-
-        // main panel
 
         // login box
         mainBox.add(loginBox);
