@@ -5,15 +5,13 @@ import models.alien.Alien;
 public class Game extends State {
     private Alien[] aliens;
     private boolean isPaused;
-    private GameData data;
     private Room[] rooms;
     private PowerUp[] powerUps;
     private Player player;
 
-    public Game(Alien[] aliens, boolean isPaused, GameData data, Room[] rooms, PowerUp[] powerUps, Player player) {
+    public Game(Alien[] aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player) {
         this.aliens = aliens;
         this.isPaused = isPaused;
-        this.data = data;
         this.rooms = rooms;
         this.powerUps = powerUps;
         this.player = player;
@@ -34,15 +32,7 @@ public class Game extends State {
     public void setPause(boolean isPaused) {
         this.isPaused = isPaused;
     }
-
-    public GameData getData() {
-        return data;
-    }
-
-    public void setData(GameData data) {
-        this.data = data;
-    }
-
+    
     public Room[] getRooms() {
         return rooms;
     }
