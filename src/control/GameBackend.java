@@ -4,9 +4,7 @@ import models.Game;
 import models.Player;
 import utils.Constants;
 
-import java.awt.event.KeyAdapter;
-
-public class GameController implements Controller<Game> {
+public class GameBackend implements Backend<Game> {
 
     IsKeyPressed CheckKeys = new IsKeyPressed();
 
