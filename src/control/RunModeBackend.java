@@ -31,7 +31,7 @@ public class RunModeBackend implements Backend<Game> {
         // Move player
         if (isWPressed) player.setYPosition(Math.max(player.getPosition().getY() - moveBy, 0));
         if (isAPressed) player.setXPosition(Math.max(player.getPosition().getX() - moveBy, 0));
-        if (isSPressed) player.setYPosition(Math.min(player.getPosition().getY() + moveBy, height));
-        if (isDPressed) player.setXPosition(Math.min(player.getPosition().getX() + moveBy, width));
+        if (isSPressed) player.setYPosition(Math.min(player.getPosition().getY() + moveBy, height - player.getHeight()));
+        if (isDPressed) player.setXPosition(Math.min(player.getPosition().getX() + moveBy, width  - player.getWidth()));
     }
 }
