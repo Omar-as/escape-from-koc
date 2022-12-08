@@ -1,18 +1,18 @@
 package ui;
 
+import control.Backend;
 import models.State;
-import control.Controller;
 import utils.Constants;
 
 import java.awt.*;
 
 public abstract class AnimatedScreen<T extends State> extends Screen implements Runnable {
-    private T state;
-    private Controller<T> controller;
+    private final T state;
+    private final Backend<T> backend;
 
-    public AnimatedScreen(T state, Controller<T> controller) {
+    public AnimatedScreen(T state, Backend<T> backend) {
         this.state = state;
-        this.controller = controller;
+        this.backend = backend;
     }
 
     abstract void drawState(T state, Graphics canvas);
@@ -30,7 +30,7 @@ public abstract class AnimatedScreen<T extends State> extends Screen implements 
         while (true) {
             long startTime = System.currentTimeMillis();
 
-            controller.updateState(state);
+            backend.updateState(state, getWidth(), getHeight());
             repaint();
 
             long endTime = System.currentTimeMillis();
