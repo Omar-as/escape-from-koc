@@ -15,88 +15,72 @@ import java.util.Scanner;
 
 public class HelpMenu extends Screen {
     // Labels
-    public static JLabel usernameLabel;
-    public static JLabel passwordLabel;
+    public static JLabel titleLabel;
 
-    public static JLabel resultLabel;
+    // TextArea
+    public static JTextArea textArea;
 
-    /*public static JLabel titleLabel;*/
+    // Button
 
-    // fields
-    public static JTextField usernameField;
-    public static JPasswordField passwordField;
-
-    // buttons
-    public static JButton signUpButton;
-    public static JButton signInButton;
     public HelpMenu() {
-        String title = "Help Menu";
-        TitledBorder border = BorderFactory.createTitledBorder(title);
-
-        border.setTitleJustification(TitledBorder.CENTER);
-        border.setTitlePosition(TitledBorder.TOP);
-        border.setTitleFont(new Font("Arial", Font.BOLD, 40));
-        this.setBorder(border);
+        titleLabel = new JLabel("Help Screen");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
 
 
-        usernameLabel = new JLabel("Username: ");
-        usernameField = new JTextField(16);
+        // Dummy Help Screen Text
+        String helpText = "Game Navigation\n" +
+                "\n" +
+                "• On many in-game screens, tapping the date in the top right corner will return you to the top of the " +
+                "current stack of screens.\n" +
+                "\n" +
+                "• Many instances of bold text can be tapped to take you to a corresponding detail screen. " +
+                "For instance tapping on the Fight Record on a boxer’s profile will display that boxer’s bout history.\n" +
+                "\n" +
+                "• You can mute any sound effects from within the OPTIONS screen, located from the main menu.\n" +
+                "\n" +
+                "• When viewing the profile of a boxer tapping on their name will allow you to edit their name, " +
+                "nickname and nationality (they cannot belong to another player’s gym).\n" +
+                "\n" +
+                "• When editing a boxer’s name and nationality, if you’d prefer them not to have a " +
+                "nickname fill the textbox with a single space.\n" +
+                "\n" +
+                "• To give yourself more/less of a challenge you can adjust many settings " +
+                "governing game difficulty from within the OPTIONS screen, located from the main menu.\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "Ringcraft Attributes\n" +
+                "\n" +
+                "• The ringcraft attribute “Stamina” governs a boxer’s capacity to muster " +
+                "energy. Boxers with superior Stamina expend less energy when punching, and " +
+                "recover energy faster when resting during and between rounds.\n" +
+                "\n" +
+                "• The ringcraft attribute “Dexterity” governs a boxer’s hand/eye coordination. " +
+                "Boxers with superior Dexterity can utilise their full strength with their " +
+                "non-dominant arm, and are better at coupling together punches with an economy of effort. They can coordinate swifter counterpunches, and are adept at initiating clinches.\n" +
+                "\n" +
+                "• The ringcraft attribute “Agility” governs a boxer’s upper-body movement and " +
+                "suppleness. Boxers with superior Agility are confident with a proactive defence " +
+                "when boxing off the front foot: bobbing, weaving, slipping and rolling incoming shots " +
+                "at all ranges. They are defensively slippery, making them difficult to grasp onto in clinches.";
 
-        passwordLabel = new JLabel("Password:  ");
-        passwordField = new JPasswordField(16);
 
-        resultLabel = new JLabel("");
+        textArea = new JTextArea(helpText);
+        textArea.append(helpText);
+        textArea.setFont(new Font("Arial", Font.PLAIN, 10));
 
-        signInButton = new JButton("Sign out");
-        signUpButton = new JButton("Sign Up");
+
 
         // field size
-        usernameField.setMaximumSize(new Dimension(500, 50));
-        passwordField.setMaximumSize(new Dimension(500, 50));
+/*        usernameField.setMaximumSize(new Dimension(500, 50));
+        passwordField.setMaximumSize(new Dimension(500, 50));*/
 
-        // boxes
-        Box mainBox = new Box(BoxLayout.Y_AXIS);
-        Box loginBox = new Box(BoxLayout.Y_AXIS);
-        Box usernameBox = new Box(BoxLayout.X_AXIS);
-        Box passwordBox = new Box(BoxLayout.X_AXIS);
 
-        Box textBox = new Box(BoxLayout.X_AXIS);
-        Box buttonBox = new Box(BoxLayout.X_AXIS);
-
-        this.setLayout(new GridBagLayout());
-        this.add(mainBox);
-
-        // login box
-        mainBox.add(loginBox);
-        mainBox.add(textBox);
-        mainBox.add(buttonBox);
-        loginBox.add(usernameBox);
-        loginBox.add(passwordBox);
-        usernameBox.add(usernameLabel);
-        usernameBox.add(usernameField);
-        passwordBox.add(passwordLabel);
-        passwordBox.add(passwordField);
-
-        // Text box
-        textBox.add(resultLabel);
-
-        // button box
-        buttonBox.add(signInButton);
-        buttonBox.add(signUpButton);
-
-        // signin button
-        signInButton.setBackground(Color.GRAY);
-        signInButton.setForeground(Color.BLACK);
-        signInButton.setFocusable(false);
-        signInButton.setVisible(true);
-
-        // signup button
-
-        signInButton.setBackground(Color.GRAY);
-        signInButton.setForeground(Color.BLACK);
-        signInButton.setFocusable(false);
-        signInButton.setVisible(true);
-
+        this.setLayout(new BorderLayout());
+   /*     titlePanel.add(titleBox);*/
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(titleLabel, BorderLayout.NORTH);
+        this.add(textArea, BorderLayout.CENTER);
 
     }
 
