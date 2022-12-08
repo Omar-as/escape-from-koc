@@ -8,6 +8,9 @@ public final class Constants {
     public static final int FRAME_HEIGHT = 768;
     public static final String FRAME_TITLE = "Escape From Koç";
 
-    // Frame Rate: 30 FPS
-    public static final long REPAINT_DELAY_MILLS = 33;
+    // Frame Rate: 67 FPS
+    public static final long REPAINT_DELAY_MILLS = 15;
+
+    // Run Mode
+    public static final int PLAYER_SPEED = 10;
 }

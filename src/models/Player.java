@@ -7,11 +7,15 @@ public class Player {
     private int score;
     private Room currentRoom;
     private Position position;
+    private final int width;
+    private final int height;
 
-    public Player(int lives, int score, int xPosition, int yPosition) {
+    public Player(int lives, int score, int xPosition, int yPosition, int width, int height) {
         this.lives = lives;
         this.score = score;
         this.position = new Position(xPosition, yPosition);
+        this.width = width;
+        this.height = height;
     }
 
     public int getLives() {
@@ -30,11 +34,11 @@ public class Player {
         this.score = score;
     }
 
-    public Room getCurrntRoom(){
+    public Room getCurrentRoom(){
         return currentRoom;
     }
 
-    public void setCurrntRoom(Room room){
+    public void setCurrentRoom(Room room){
         currentRoom = room;
     }
 
@@ -52,5 +56,13 @@ public class Player {
 
     public void setYPosition(int yPosition) {
         position = new Position(position.getX(), yPosition);
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }
