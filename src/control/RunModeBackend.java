@@ -4,22 +4,19 @@ import models.Game;
 import models.Player;
 import utils.Constants;
 
-public class GameBackend implements Backend<Game> {
-
-    IsKeyPressed CheckKeys = new IsKeyPressed();
-
+public class RunModeBackend implements Backend<Game> {
     @Override
-    public void updateState(Game state) {
+    public void updateState(Game state, int width, int height) {
         Player player = state.getPlayer();
 
-        if (CheckKeys.isWPressed()) {
+        if (KeyManager.getInstance().isKeyPressed('w')) {
             if(player.getPosition().getY() - 10 > 0) {
                 player.setYPosition(player.getPosition().getY() - 10);
             } else {
                 player.setYPosition(0);
             }
         }
-        else if (CheckKeys.isAPressed()) {
+        if (KeyManager.getInstance().isKeyPressed('a')) {
 
             if(player.getPosition().getX() - 10 > 0) {
                 player.setXPosition(player.getPosition().getX() - 10);
@@ -27,14 +24,14 @@ public class GameBackend implements Backend<Game> {
                 player.setXPosition(0);
             }
         }
-        else if (CheckKeys.isSPressed()) {
+        if (KeyManager.getInstance().isKeyPressed('s')) {
             if (player.getPosition().getY() + 10 < Constants.FRAME_HEIGHT){
                 player.setYPosition(player.getPosition().getY() + 10);
             } else {
                 player.setYPosition(Constants.FRAME_HEIGHT - 10);
             }
         }
-        else if (CheckKeys.isDPressed()){
+        if (KeyManager.getInstance().isKeyPressed('d')){
             if(player.getPosition().getX() + 10 < Constants.FRAME_WIDTH) {
                 player.setXPosition(player.getPosition().getX() + 10);
             } else {
