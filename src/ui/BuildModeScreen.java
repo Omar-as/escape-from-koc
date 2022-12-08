@@ -1,14 +1,13 @@
 package ui;
 
-import control.Controller;
+import control.Backend;
 import models.Game;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class BuildModeScreen extends AnimatedScreen<Game> {
-    public BuildModeScreen(Game state, Controller<Game> controller) {
-        super(state, controller);
+    public BuildModeScreen(Game state, Backend<Game> backend) {
+        super(state, backend);
     }
 
     @Override
