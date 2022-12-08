@@ -17,9 +17,12 @@ public class GraphicsManager {
         return instance;
     }
 
-    public static Image buffImages(String name, int width, int height) throws IOException {
+    private GraphicsManager() {
+
+    }
+
+    public Image buffImages(String name, int width, int height) throws IOException {
         BufferedImage image_imp = ImageIO.read(new File("assets/" + name + ".png"));
-        Image image = image_imp.getScaledInstance(width, height, Image.SCALE_FAST);
-        return image;
+        return image_imp.getScaledInstance(width, height, Image.SCALE_FAST);
     }
 }
