@@ -24,11 +24,6 @@ public class HelpMenu extends Screen {
     public static JButton backButton;
 
     public HelpMenu() {
-        titleLabel = new JLabel("Help Screen");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
-        titleLabel.setForeground(Color.RED);
-
-
         // Dummy Help Screen Text
         String helpText = "Game Navigation\n" +
                 "\n" +
@@ -67,30 +62,39 @@ public class HelpMenu extends Screen {
                 "at all ranges. They are defensively slippery, making them difficult to grasp onto in clinches.";
 
 
+        // Initialize components
+        titleLabel = new JLabel("Help Screen");
         textArea = new JTextArea(helpText);
+        backButton = new JButton("Back");
+
+        // Set textArea not editable
+        textArea.setEditable(false);
+
+
+        // Set Titles Allignment
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Customize components
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
+        titleLabel.setForeground(Color.RED);
+
         textArea.append(helpText);
         textArea.setFont(new Font("Arial", Font.PLAIN, 10));
 
-        backButton = new JButton("Back");
         backButton.setPreferredSize(new Dimension(20,60));
         backButton.setForeground(Color.BLUE);
 
 
-
-        // field size
-/*        usernameField.setMaximumSize(new Dimension(500, 50));
-        passwordField.setMaximumSize(new Dimension(500, 50));*/
-
-
+        // Add components to the Panel
         this.setLayout(new BorderLayout());
-   /*     titlePanel.add(titleBox);*/
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(titleLabel, BorderLayout.NORTH);
         this.add(textArea, BorderLayout.CENTER);
         this.add(backButton,BorderLayout.SOUTH);
 
     }
 
+
+    // Local main method for testing
     public static void main(String[] args) {
         ScreenManager.getInstance().launch(
                 Constants.FRAME_WIDTH,
