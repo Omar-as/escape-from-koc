@@ -14,7 +14,7 @@ public class GraphicsManager {
         return instance;
     }
 
-    HashMap<String, Image> imageCache;
+    private HashMap<String, Image> imageCache;
 
     private GraphicsManager() {
 
