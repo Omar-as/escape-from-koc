@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class GraphicsManager {
 
@@ -17,12 +18,19 @@ public class GraphicsManager {
         return instance;
     }
 
+    HashMap<String, Image> imageCache;
+
     private GraphicsManager() {
 
     }
 
     public Image buffImages(String name, int width, int height) throws IOException {
+        if(imageCache.containsKey(name)){
+            return imageCache.get(name);
+        }
         BufferedImage image_imp = ImageIO.read(new File("assets/" + name + ".png"));
-        return image_imp.getScaledInstance(width, height, Image.SCALE_FAST);
+        Image image = image_imp.getScaledInstance(width, height, Image.SCALE_FAST);
+        imageCache.put(name, image);
+        return image;
     }
 }
