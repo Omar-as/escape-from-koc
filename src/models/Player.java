@@ -30,11 +30,11 @@ public class Player {
         this.score = score;
     }
 
-    public Room getCurrntRoom(){
+    public Room getCurrentRoom(){
         return currentRoom;
     }
 
-    public void setCurrntRoom(Room room){
+    public void setCurrentRoom(Room room){
         currentRoom = room;
     }
 

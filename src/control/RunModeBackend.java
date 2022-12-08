@@ -25,8 +25,8 @@ public class RunModeBackend implements Backend<Game> {
         // If we are moving diagonally, keep speed consistent:
         // moveByDiagonal = sqrt(2   * (moveByXY       ^ 2))
         // moveByXY       = sqrt(1/2 * (moveByDiagonal ^ 2))
-        if ((isWPressed && isAPressed) || (isWPressed && isDPressed) || (isSPressed && isAPressed) || (isSPressed && isDPressed))
-            moveBy = (int) Math.sqrt(Math.pow(moveBy, 2) / 2);
+        var movingDiagonally = (isWPressed || isSPressed) && (isAPressed || isDPressed);
+        if (movingDiagonally) moveBy = (int) Math.sqrt(Math.pow(moveBy, 2) / 2);
 
         // Move player
         if (isWPressed) player.setYPosition(Math.max(player.getPosition().getY() - moveBy, 0));
