@@ -10,4 +10,7 @@ public final class Constants {
 
     // Frame Rate: 67 FPS
     public static final long REPAINT_DELAY_MILLS = 15;
+
+    // Run Mode
+    public static final int PLAYER_SPEED = 10;
 }
