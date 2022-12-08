@@ -1,10 +1,10 @@
 package control;
 
-import models.Game;
+import models.BuildModeState;
 
-public class BuildModeBackend implements Backend<Game> {
+public class BuildModeBackend implements Backend<BuildModeState> {
     @Override
-    public void updateState(Game state, int width, int height) {
+    public void updateState(BuildModeState state) {
 
     }
 }
