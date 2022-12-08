@@ -1,12 +1,8 @@
 package ui;
 
-import control.KeyManager;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
 public class GraphicsManager {
@@ -24,13 +20,16 @@ public class GraphicsManager {
 
     }
 
-    public Image buffImages(String name, int width, int height) throws IOException {
-        if(imageCache.containsKey(name)){
-            return imageCache.get(name);
+    public Image buffImages(String name, int width, int height) {
+        try {
+            if (imageCache.containsKey(name)) return imageCache.get(name);
+            var buffImage = ImageIO.read(new File("assets/" + name + ".png"));
+            var image = buffImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+            imageCache.put(name, image);
+            return image;
+        } catch(Exception e) {
+            System.exit(-1);
+            return null;
         }
-        BufferedImage image_imp = ImageIO.read(new File("assets/" + name + ".png"));
-        Image image = image_imp.getScaledInstance(width, height, Image.SCALE_FAST);
-        imageCache.put(name, image);
-        return image;
     }
 }
