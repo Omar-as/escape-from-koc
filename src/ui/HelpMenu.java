@@ -21,10 +21,12 @@ public class HelpMenu extends Screen {
     public static JTextArea textArea;
 
     // Button
+    public static JButton backButton;
 
     public HelpMenu() {
         titleLabel = new JLabel("Help Screen");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
+        titleLabel.setForeground(Color.RED);
 
 
         // Dummy Help Screen Text
@@ -69,6 +71,10 @@ public class HelpMenu extends Screen {
         textArea.append(helpText);
         textArea.setFont(new Font("Arial", Font.PLAIN, 10));
 
+        backButton = new JButton("Back");
+        backButton.setPreferredSize(new Dimension(20,60));
+        backButton.setForeground(Color.BLUE);
+
 
 
         // field size
@@ -81,6 +87,7 @@ public class HelpMenu extends Screen {
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(titleLabel, BorderLayout.NORTH);
         this.add(textArea, BorderLayout.CENTER);
+        this.add(backButton,BorderLayout.SOUTH);
 
     }
 
