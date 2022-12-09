@@ -1,9 +1,7 @@
 package models;
 
-import models.Key;
-import models.Obj;
+import models.objects.Obj;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Room {

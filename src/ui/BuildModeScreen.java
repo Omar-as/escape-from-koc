@@ -3,12 +3,15 @@ package ui;
 import control.Backend;
 import control.BuildModeBackend;
 import models.BuildModeState;
+import models.objects.Obj;
+import models.objects.TrashBin;
 import utils.Constants;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
     private BuildModeFrontend frontend;
@@ -35,14 +38,13 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
 
         JPopupMenu popupMenu = new JPopupMenu("XX");
 
-        JMenuItem menuItemCreateSpringProject = new JMenuItem("Spring Project");
+        JMenuItem menuItemCreateSpringProject = new JMenuItem("Trash Bin");
         popupMenu.add(menuItemCreateSpringProject);
 
-        JMenuItem menuItemCreateHibernateProject = new JMenuItem("Hibernate Project");
-        popupMenu.add(menuItemCreateHibernateProject);
+        menuItemCreateSpringProject.addActionListener(e -> {
+            positionRandomly(state, new TrashBin(0, 0));
+        });
 
-        JMenuItem menuItemCreateStrutsProject = new JMenuItem("Struts Project");
-        popupMenu.add(menuItemCreateStrutsProject);
 
         JButton btn = new JButton("Insert");
 
@@ -84,11 +86,85 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         bar.add(Box.createGlue());
 
         bar.setMaximumSize(new Dimension(Constants.FRAME_WIDTH, 10));
+
+        var listener = new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                for (var obj : state.getRooms()[state.getCurrentRoom()].getObjects()) {
+                    int pressX = e.getX();
+                    int pressY = e.getY();
+                    int objX   = obj.getPosition().getX();
+                    int objY   = obj.getPosition().getY();
+                    if (pressX >= objX && pressX <= objX + obj.getWidth() && pressY >= objY && pressY <= objY + obj.getHeight()) {
+                        state.setSelectedObject(obj);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                var selected = state.getSelectedObject();
+                if (selected == null) return;
+                var x = selected.getPosition().getX();
+                var y = selected.getPosition().getY();
+                var w = selected.getWidth();
+                var h = selected.getHeight();
+                if (x < 0 || x + w >= state.getWidth() || y < 0 || y + h >= state.getHeight()) {
+                    var objects = state.getRooms()[state.getCurrentRoom()].getObjects();
+                    objects.remove(selected);
+                }
+                state.setSelectedObject(null);
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                var selected = state.getSelectedObject();
+                if (selected == null) return;
+                var objects = state.getRooms()[state.getCurrentRoom()].getObjects();
+                var backupPosition = selected.getPosition();
+                selected.setPosition(e.getX(), e.getY());
+                for (var obj : objects) if (obj != selected && selected.intersects(obj)) {
+                    selected.setPosition(backupPosition.getX(), backupPosition.getY());
+                    break;
+                }
+            }
+        };
+        canvas.addMouseListener(listener);
+        canvas.addMouseMotionListener(listener);
+
     }
 
     @Override
     void drawFrame(BuildModeState state, Backend<BuildModeState> backend) {
+        state.setWidth(canvas.getWidth());
+        state.setHeight(canvas.getHeight());
         backend.updateState(state);
         canvas.repaint();
+    }
+
+    private void positionRandomly(BuildModeState state, Obj newObj) {
+        var objects  = state.getRooms()[state.getCurrentRoom()].getObjects();
+        var random   = new Random();
+        var done     = false;
+
+        while (!done) {
+            int x = random.nextInt(state.getWidth()  - newObj.getWidth());
+            int y = random.nextInt(state.getHeight() - newObj.getHeight());
+
+            newObj.setPosition(x, y);
+
+            int collisions = objects.stream()
+                    .map(newObj::intersects)
+                    .mapToInt(b -> b ? 1 : 0)
+                    .sum();
+
+            done = collisions == 0;
+        }
+
+        objects.add(newObj);
     }
 }
