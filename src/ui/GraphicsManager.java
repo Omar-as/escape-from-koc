@@ -1,6 +1,6 @@
 package ui;
 
-import utils.Constants;
+import utils.Asset;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,13 +18,14 @@ public class GraphicsManager {
     private final Image[] cache;
 
     private GraphicsManager() {
-        cache = new Image[Constants.ASSET_NAMES.length];
+        cache = new Image[Asset.values().length];
     }
 
-    public Image getImage(int idx, int width, int height) {
+    public Image getImage(Asset asset, int width, int height) {
         try {
+            int idx = asset.ordinal();
             if (cache[idx] == null) {
-                var bufferedImage = ImageIO.read(new File("assets/%s.png".formatted(Constants.ASSET_NAMES[idx])));
+                var bufferedImage = ImageIO.read(new File("assets/%s.png".formatted(asset.name)));
                 var image  = bufferedImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
                 cache[idx] = image;
             }

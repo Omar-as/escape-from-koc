@@ -1,17 +1,18 @@
 package models.objects;
 
 import models.Rectangle;
+import utils.Asset;
 import utils.Position;
 
 public abstract class Obj extends Rectangle {
-    private final int imageIdx;
+    private final Asset asset;
 
-    public Obj(int xPosition, int yPosition, int width, int height, int imageIdx) {
+    public Obj(int xPosition, int yPosition, int width, int height, Asset asset) {
         super(new Position(xPosition, yPosition), width, height);
-        this.imageIdx = imageIdx;
+        this.asset = asset;
     }
 
-    public int getImageIdx() {
-        return imageIdx;
+    public Asset getAsset() {
+        return asset;
     }
 }

@@ -21,4 +21,12 @@ public class Room {
     public ArrayList<Obj> getObjects() {
         return objects;
     }
+
+    public Key getKey() {
+        return key;
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
+    }
 }
