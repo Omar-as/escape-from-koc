@@ -9,13 +9,15 @@ public class Player {
     private Position position;
     private final int width;
     private final int height;
+    private final String imageName;
 
-    public Player(int lives, int score, int xPosition, int yPosition, int width, int height) {
+    public Player(int lives, int score, int xPosition, int yPosition, int width, int height, String imageName) {
         this.lives = lives;
         this.score = score;
         this.position = new Position(xPosition, yPosition);
         this.width = width;
         this.height = height;
+        this.imageName = imageName;
     }
 
     public int getLives() {
@@ -65,4 +67,6 @@ public class Player {
     public int getHeight() {
         return height;
     }
+
+    public String getImageName() { return imageName; }
 }

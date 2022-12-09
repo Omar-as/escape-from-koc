@@ -25,9 +25,9 @@ public class Main {
                         false,null,
                         new Room[]{new Room(new Key(100,100,false),
                                 null,
-                                new Door(100, 100, 300, 300))},
+                                new Door("closedDoor","openedDoor",100, 100, 300, 300))},
                         null,
-                        new Player(5, 0, 0, 0,100,100)),
+                        new Player(5, 0, 0, 0,100,100,"player")),
                         new RunModeBackend())
         );
     }
