@@ -1,7 +1,12 @@
 package models.alien;
 
 public enum AlienType {
-    SHOOTER,
-    BLIND,
-    TIME_WASTING
+    SHOOTER("shooterA"),
+    BLIND("blindA"),
+    TIME_WASTING("timeA");
+
+    public final String name;
+    private AlienType(String name) {
+        this.name = name;
+    }
 }
