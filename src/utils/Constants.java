@@ -13,7 +13,4 @@ public final class Constants {
 
     // Run Mode
     public static final int PLAYER_SPEED = 10;
-
-    public static final String[] ASSET_NAMES = { "trash_bin" };
-    public static final int ASSET_TRASH_CAN = 0;
 }
