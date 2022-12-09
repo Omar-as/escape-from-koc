@@ -18,8 +18,8 @@ public class Main {
                 Constants.FRAME_TITLE,
                 new RunModeScreen(new Game(
                         new Alien[]{new Alien(AlienType.BLIND, 100, 100,50,50),
-                                new Alien(AlienType.SHOOTER, 100, 100,50,50),
-                                new Alien(AlienType.TIME_WASTING, 100, 100,50,50)},
+                                new Alien(AlienType.SHOOTER, 200, 200,50,50),
+                                new Alien(AlienType.TIME_WASTING, 300, 300,50,50)},
                         false,null,
                         new Room[]{new Room(new Key(100,100,false),
                                 null,

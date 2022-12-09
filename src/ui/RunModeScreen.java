@@ -12,9 +12,6 @@ public class RunModeScreen extends AnimatedScreen<Game> {
     Image playerImage = null;
     Image closedDoorImage = null;
     Image openedDoorImage = null;
-    Image blindAlienImage = null;
-    Image shooterAlienImage = null;
-    Image timeAlienImage = null;
 
 
     public RunModeScreen(Game state, Backend<Game> backend) throws IOException {
@@ -32,12 +29,13 @@ public class RunModeScreen extends AnimatedScreen<Game> {
         canvas.setColor(Color.BLACK);
 
 
-//        for (int i = 0; i < state.getAliens().length; i++)
-//        {
-//            if(state.getAliens()[i].getType() == AlienType.BLIND){
-//
-//            }
-//        }
+        for (int i = 0; i < state.getAliens().length; i++)
+        {
+            Image alienImage = GraphicsManager.buffImages(state.getAliens()[i].getType().name,
+                    state.getAliens()[i].getWidth(),state.getAliens()[i].getHeight());
+            canvas.drawImage(alienImage,state.getAliens()[i].getPosition().getX(),
+                    state.getAliens()[i].getPosition().getY(),null);
+        }
 
         if(state.getRooms()[0].getKey().isFound())
         {
