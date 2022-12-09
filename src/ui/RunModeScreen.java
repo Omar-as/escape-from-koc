@@ -2,33 +2,18 @@ package ui;
 
 import control.Backend;
 import models.Game;
-import models.alien.Alien;
-import models.alien.AlienType;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class RunModeScreen extends AnimatedScreen<Game> {
 
-//    BufferedImage playerBufferedImage;
     Image playerImage = null;
-
-    BufferedImage closedDoorBufferedImage;
     Image closedDoorImage = null;
-
-    BufferedImage openedDoorBufferedImage;
     Image openedDoorImage = null;
-
-    BufferedImage blindAlienBufferedImage;
     Image blindAlienImage = null;
-
-    BufferedImage shooterAlienBufferedImage;
     Image shooterAlienImage = null;
-
-    BufferedImage timeAlienBufferedImage;
     Image timeAlienImage = null;
 
 
@@ -46,40 +31,27 @@ public class RunModeScreen extends AnimatedScreen<Game> {
 
         canvas.setColor(Color.BLACK);
 
-        // Scale images
-//        playerImage = playerBufferedImage.getScaledInstance(player.getWidth(), player.getHeight(), Image.SCALE_FAST);
-//        closedDoorImage = closedDoorBufferedImage.getScaledInstance(
-//                state.getRooms()[0].getDoor().getWidth(),
-//                state.getRooms()[0].getDoor().getHeight(),Image.SCALE_DEFAULT);
-//        openedDoorImage = openedDoorBufferedImage.getScaledInstance(
-//                state.getRooms()[0].getDoor().getWidth(),
-//                state.getRooms()[0].getDoor().getHeight(),Image.SCALE_DEFAULT);
 
-//        for (int i = 0; i < state.getAliens().length; i++){
+//        for (int i = 0; i < state.getAliens().length; i++)
+//        {
 //            if(state.getAliens()[i].getType() == AlienType.BLIND){
 //
 //            }
 //        }
 
-//        if(state.getRooms()[0].getKey().isFound())
-//        {
-//            openedDoorImage = openedDoorBufferedImage.getScaledInstance(
-//                    state.getRooms()[0].getDoor().getWidth(),
-//                    state.getRooms()[0].getDoor().getHeight(),Image.SCALE_DEFAULT);
-//            canvas.drawImage(openedDoorImage,
-//                    width - state.getRooms()[0].getDoor().getWidth(),
-//                    height - state.getRooms()[0].getDoor().getHeight(),
-//                    null);
-//        }else
-//        {
-//            closedDoorImage = closedDoorBufferedImage.getScaledInstance(
-//                    state.getRooms()[0].getDoor().getWidth(),
-//                    state.getRooms()[0].getDoor().getHeight(),Image.SCALE_DEFAULT);
-//            canvas.drawImage(closedDoorImage,
-//                    width - state.getRooms()[0].getDoor().getWidth(),
-//                    height - state.getRooms()[0].getDoor().getHeight(),
-//                    null);
-//        }
+        if(state.getRooms()[0].getKey().isFound())
+        {
+            openedDoorImage = GraphicsManager.buffImages(state.getRooms()[0].getDoor().getOpenedDoorName(),
+                    state.getRooms()[0].getDoor().getWidth(), state.getRooms()[0].getDoor().getHeight());
+            canvas.drawImage(openedDoorImage,width - state.getRooms()[0].getDoor().getWidth(),
+                    height - state.getRooms()[0].getDoor().getHeight(),null);
+        } else
+        {
+            closedDoorImage = GraphicsManager.buffImages(state.getRooms()[0].getDoor().getClosedDoorName(),
+                    state.getRooms()[0].getDoor().getWidth(), state.getRooms()[0].getDoor().getHeight());
+            canvas.drawImage(closedDoorImage,width - state.getRooms()[0].getDoor().getWidth(),
+                    height - state.getRooms()[0].getDoor().getHeight(),null);
+        }
 
         playerImage = GraphicsManager.buffImages(player.getImageName(), player.getWidth(), player.getHeight());
         canvas.drawImage(playerImage, player.getPosition().getX(), player.getPosition().getY(), null);

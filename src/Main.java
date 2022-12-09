@@ -4,9 +4,7 @@ import models.alien.Alien;
 import models.alien.AlienType;
 import ui.RunModeScreen;
 import ui.ScreenManager;
-import ui.SignInSignUpScreen;
 import utils.Constants;
-import control.Backend;
 import models.Game;
 
 import java.io.IOException;
