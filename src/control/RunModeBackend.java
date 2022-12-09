@@ -5,12 +5,16 @@ import utils.Constants;
 
 public class RunModeBackend implements Backend<Game> {
     @Override
-    public void updateState(Game state, int width, int height) {
-        movePlayer(state, width, height);
+    public void updateState(Game state) {
+        movePlayer(state);
     }
 
-    void movePlayer(Game state, int width, int height) {
+    void movePlayer(Game state) {
         var player = state.getPlayer();
+
+        // TODO: Remove
+        int width  = 0;
+        int height = 0;
 
         // Check whether keys are pressed or not
         var isWPressed = KeyManager.getInstance().isKeyPressed('w');
