@@ -12,7 +12,7 @@ public class KeyManager {
         return instance;
     }
 
-    HashMap<Integer, Boolean> keyStates;
+    private HashMap<Integer, Boolean> keyStates;
 
     private KeyManager() {
         keyStates = new HashMap<>();
