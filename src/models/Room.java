@@ -1,24 +1,26 @@
 package models;
 
-import models.Key;
-import models.Obj;
+import models.objects.Obj;
+
+import java.util.ArrayList;
 
 public class Room {
     private Key key;
-    private Obj[] objects;
     private Door door;
+    private final String name;
+    private final ArrayList<Obj> objects;
 
-    public Room(Key key, Obj[] objects,Door door) {
-        this.key = key;
-        this.objects = objects;
+    public Room(String name, Door door) {
+        this.name = name;
+        this.objects = new ArrayList<>();
         this.door = door;
     }
 
-    public Key getKey() {
-        return key;
+    public String getName() {
+        return name;
     }
 
-    public Obj[] getObjects() {
+    public ArrayList<Obj> getObjects() {
         return objects;
     }
 

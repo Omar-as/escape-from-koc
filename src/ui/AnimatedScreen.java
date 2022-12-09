@@ -4,18 +4,14 @@ import control.Backend;
 import models.State;
 import utils.Constants;
 
-import java.awt.*;
-
 public abstract class AnimatedScreen<T extends State> extends Screen implements Runnable {
     private final T state;
     private final Backend<T> backend;
 
     public AnimatedScreen(T state, Backend<T> backend) {
-        this.state = state;
+        this.state   = state;
         this.backend = backend;
     }
-
-    abstract void drawState(T state, Graphics canvas);
 
     @Override
     public void addNotify() { // Called when this screen is added to the frame
@@ -25,13 +21,14 @@ public abstract class AnimatedScreen<T extends State> extends Screen implements 
         animator.start();
     }
 
+    abstract void drawFrame(T state, Backend<T> backend);
+
     @Override
     public void run() {
         while (true) {
             long startTime = System.currentTimeMillis();
 
-            backend.updateState(state, getWidth(), getHeight());
-            repaint();
+            drawFrame(state, backend);
 
             long endTime = System.currentTimeMillis();
             long timeTaken = endTime - startTime;
@@ -47,11 +44,5 @@ public abstract class AnimatedScreen<T extends State> extends Screen implements 
                 Thread.sleep(Constants.REPAINT_DELAY_MILLS - timeTaken);
             } catch (InterruptedException ignored) { }
         }
-    }
-
-    @Override
-    public void paintComponent(Graphics canvas) {
-        super.paintComponent(canvas);
-        drawState(state, canvas);
     }
 }

@@ -19,6 +19,10 @@ public class RunModeScreen extends AnimatedScreen<Game> {
     }
 
     @Override
+    void drawFrame(Game state, Backend<Game> backend) {
+
+    }
+
     void drawState(Game state, Graphics canvas) {
         int width  = getWidth();
         int height = getHeight();
