@@ -25,6 +25,7 @@ public class GraphicsManager {
         try {
             int idx = asset.ordinal();
             if (cache[idx] == null) {
+                // TODO: Remove magic path
                 var bufferedImage = ImageIO.read(new File("assets/%s.png".formatted(asset.name)));
                 var image  = bufferedImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
                 cache[idx] = image;
