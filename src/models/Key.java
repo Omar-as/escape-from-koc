@@ -6,9 +6,9 @@ public class Key {
     private final Position position;
     private boolean isFound;
 
-    public Key(int xPosition, int yPosition, boolean isFound){
+    public Key(int xPosition, int yPosition){
         this.position = new Position(xPosition, yPosition);
-        this.isFound = isFound;
+        this.isFound = false;
     }
 
     public boolean isFound() {

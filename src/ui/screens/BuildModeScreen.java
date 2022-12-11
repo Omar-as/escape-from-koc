@@ -8,7 +8,7 @@ import models.alien.Alien;
 import models.alien.AlienType;
 import models.objects.ObjectType;
 import ui.AnimatedScreen;
-import ui.BuildModeFrontend;
+import ui.frontends.BuildModeFrontend;
 import ui.Canvas;
 import ui.ScreenManager;
 import utils.Constants;
@@ -19,7 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
-    private final JPanel canvas;
+    private final Canvas<BuildModeState> canvas;
 
     public BuildModeScreen(BuildModeState state, BuildModeBackend backend) {
         super(state, backend);

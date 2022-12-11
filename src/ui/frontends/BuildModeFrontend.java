@@ -1,6 +1,8 @@
-package ui;
+package ui.frontends;
 
 import models.BuildModeState;
+import ui.Frontend;
+import ui.GraphicsManager;
 import utils.Asset;
 
 import java.awt.*;

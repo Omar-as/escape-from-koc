@@ -44,7 +44,7 @@ public class BuildModeBackend implements Backend<BuildModeState> {
         var backupPosition = selected.getPosition();
         selected.setPosition(newX, newY);
         for (var obj : objects) if (obj != selected && selected.intersects(obj)) {
-            selected.setPosition(backupPosition.getX(), backupPosition.getY());
+            selected.setPosition(backupPosition);
             break;
         }
         if (selected.intersects(state.getDoor())) selected.setPosition(backupPosition.getX(), backupPosition.getY());
