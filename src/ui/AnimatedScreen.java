@@ -21,7 +21,7 @@ public abstract class AnimatedScreen<T extends State> extends Screen implements 
         animator.start();
     }
 
-    abstract void drawFrame(T state, Backend<T> backend);
+    protected abstract void drawFrame(T state, Backend<T> backend);
 
     @Override
     public void run() {

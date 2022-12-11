@@ -3,7 +3,7 @@ package models;
 import utils.Position;
 
 public class Door extends Rectangle {
-    public Door(Position position, int width, int height) {
-        super(position, width, height);
+    public Door(int positionX, int positionY, int width, int height) {
+        super(new Position(positionX, positionY), width, height);
     }
 }

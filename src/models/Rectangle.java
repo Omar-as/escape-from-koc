@@ -17,6 +17,10 @@ public class Rectangle {
         return position;
     }
 
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     public void setPosition(int xPosition, int yPosition) {
         position = new Position(xPosition, yPosition);
     }

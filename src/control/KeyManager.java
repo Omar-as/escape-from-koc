@@ -30,4 +30,10 @@ public class KeyManager {
             return keyStates.getOrDefault(KeyEvent.getExtendedKeyCodeForChar(key), false);
         }
     }
+
+    public boolean isKeyPressed(int keyCode) {
+        synchronized (KeyManager.class) {
+            return keyStates.getOrDefault(keyCode, false);
+        }
+    }
 }
