@@ -2,10 +2,7 @@ package ui.screens;
 
 import control.Backend;
 import control.BuildModeBackend;
-import control.RunModeBackend;
 import models.*;
-import models.alien.Alien;
-import models.alien.AlienType;
 import models.objects.ObjectType;
 import ui.*;
 import ui.Canvas;
@@ -72,6 +69,12 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         finishBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                for (var room : state.getRooms()) {
+                    if (room.getObjects().size() < room.getMinObjects()) {
+                        ScreenManager.getInstance().showDialog("%s should have at least %d objects.".formatted(room.getName(), room.getMinObjects()));
+                        return;
+                    }
+                }
                 ScreenManager.getInstance().setScreen(ScreenFactory.getRunModeScreen(state));
             }
         });

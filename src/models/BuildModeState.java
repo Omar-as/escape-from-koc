@@ -12,10 +12,10 @@ public class BuildModeState extends State {
     private Obj selectedObject;
     private final Door door;
 
-    public BuildModeState(Stream<String> roomNames) {
+    public BuildModeState(Room[] rooms) {
         this.width  = 0;
         this.height = 0;
-        this.rooms  = roomNames.map(Room::new).toArray(Room[]::new);
+        this.rooms  = rooms;
         this.currentRoom = 0;
         this.selectedObject = null;
         // TODO: Remove magic numbers

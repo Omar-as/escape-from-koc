@@ -4,6 +4,7 @@ import control.BuildModeBackend;
 import control.RunModeBackend;
 import models.BuildModeState;
 import models.Player;
+import models.Room;
 import models.RunModeState;
 import models.alien.Alien;
 import ui.screens.*;
@@ -36,14 +37,14 @@ public class ScreenFactory {
     private static BuildModeScreen getBuildModeScreen() {
         var backend = new BuildModeBackend();
         // TODO: Make array constant
-        return new BuildModeScreen(new BuildModeState(Stream.of(
-                "Student Center",
-                "CASE Building",
-                "SOS Building",
-                "SCI Building",
-                "ENG Building",
-                "SNA Building"
-        )), backend);
+        return new BuildModeScreen(new BuildModeState(new Room[]{
+                new Room("Student Center", 5),
+                new Room("CASE Building", 7),
+                new Room("SOS Building", 10),
+                new Room("SCI Building", 14),
+                new Room("ENG Building", 19),
+                new Room("SNA Building", 25)
+        }), backend);
     }
 
     public static RunModeScreen getRunModeScreen(BuildModeState buildModeState) {

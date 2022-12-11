@@ -28,4 +28,8 @@ public class ScreenManager {
         frame.setContentPane(screen);
         frame.revalidate();
     }
+
+    public void showDialog(String msg) {
+        JOptionPane.showMessageDialog(frame, msg);
+    }
 }
