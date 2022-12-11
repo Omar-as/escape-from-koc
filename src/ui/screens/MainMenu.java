@@ -17,7 +17,7 @@ public class MainMenu extends Screen {
         var mainColumn = Box.createVerticalBox();
         this.add(mainColumn);
 
-        var title = new JLabel("Main Screen");
+        var title = new JLabel("Main Menu");
         // TODO: Remove magic numbers
         title.setFont(new Font("Arial", Font.PLAIN, 40));
         title.setAlignmentX(CENTER_ALIGNMENT);

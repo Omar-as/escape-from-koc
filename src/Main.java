@@ -1,5 +1,5 @@
 import ui.ScreenManager;
-import ui.SignInSignUpScreen;
+import ui.screens.SignInSignUpScreen;
 import utils.Constants;
 
 public class Main {
