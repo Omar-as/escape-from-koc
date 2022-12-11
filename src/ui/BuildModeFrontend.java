@@ -1,20 +1,23 @@
 package ui;
 
 import models.BuildModeState;
+import utils.Asset;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 public class BuildModeFrontend implements Frontend<BuildModeState> {
     @Override
     public void drawState(BuildModeState state, Graphics canvas) {
-
-        canvas.setColor(Color.BLACK);
-        // canvas.fillRect(0, 0, 2000, 2000);
-        // canvas.drawString(String.valueOf(state.getCurrentRoom()), 0, 0);
-
-        for (var obj : state.getRooms()[state.getCurrentRoom()].getObjects()) {
-            canvas.drawImage(GraphicsManager.getInstance().getImage(obj.getAsset(), obj.getWidth(), obj.getHeight()), obj.getPosition().getX(), obj.getPosition().getY(), null);
+        // Draw all objects
+        var objects = state.getRooms()[state.getCurrentRoom()].getObjects();
+        for (var obj : objects) {
+            var objectImage = GraphicsManager.getInstance().getImage(obj.getType().asset, obj.getWidth(), obj.getHeight());
+            canvas.drawImage(objectImage, obj.getPosition().getX(), obj.getPosition().getY(), null);
         }
+
+        // Draw door
+        var door = state.getDoor();
+        var doorImage = GraphicsManager.getInstance().getImage(Asset.DOOR_CLOSED, door.getWidth(), door.getHeight());
+        canvas.drawImage(doorImage, door.getPosition().getX(), door.getPosition().getY(), null);
     }
 }

@@ -10,6 +10,7 @@ public class BuildModeState extends State {
     private final Room[] rooms;
     private int currentRoom;
     private Obj selectedObject;
+    private final Door door;
 
     public BuildModeState(Stream<String> roomNames) {
         this.width  = 0;
@@ -17,6 +18,8 @@ public class BuildModeState extends State {
         this.rooms  = roomNames.map(Room::new).toArray(Room[]::new);
         this.currentRoom = 0;
         this.selectedObject = null;
+        // TODO: Remove magic numbers
+        this.door = new Door(width - 50, height - 50, 50, 50);
     }
 
     public int getWidth() {
@@ -25,6 +28,8 @@ public class BuildModeState extends State {
 
     public void setWidth(int width) {
         this.width = width;
+        // TODO: Remove magic number
+        this.door.setXPosition(width - 50);
     }
 
     public int getHeight() {
@@ -33,6 +38,8 @@ public class BuildModeState extends State {
 
     public void setHeight(int height) {
         this.height = height;
+        // TODO: Remove magic number
+        this.door.setYPosition(height - 50);
     }
 
     public Room[] getRooms() {
@@ -53,5 +60,9 @@ public class BuildModeState extends State {
 
     public void setSelectedObject(Obj selectedObject) {
         this.selectedObject = selectedObject;
+    }
+
+    public Door getDoor() {
+        return door;
     }
 }
