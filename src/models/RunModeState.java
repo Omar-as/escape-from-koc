@@ -1,6 +1,9 @@
 package models;
 
 import models.alien.Alien;
+import utils.Constants;
+
+import java.util.Random;
 
 public class RunModeState extends State {
     private int width;
@@ -12,6 +15,10 @@ public class RunModeState extends State {
     private PowerUp[] powerUps;
     private Player player;
     private Door door;
+    private Key key;
+    private int showKeyFor;
+    private int timeoutAfter;
+    private boolean completed;
 
     public RunModeState(Alien[] aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door) {
         this.width  = 0;
@@ -23,6 +30,10 @@ public class RunModeState extends State {
         this.powerUps = powerUps;
         this.player = player;
         this.door = door;
+        setKey();
+        this.showKeyFor = 0;
+        resetTimeoutAfter();
+        this.completed = false;
     }
 
     public int getWidth() {
@@ -69,8 +80,8 @@ public class RunModeState extends State {
         return currentRoom;
     }
 
-    public void setCurrentRoom(int currentRoom) {
-        this.currentRoom = currentRoom;
+    public void incCurrentRoom() {
+        currentRoom++;
     }
 
     public void setRooms(Room[] rooms) {
@@ -99,5 +110,50 @@ public class RunModeState extends State {
 
     public void setDoor(Door door) {
         this.door = door;
+    }
+
+    public Key getKey() {
+        return key;
+    }
+
+    public void setKey() {
+        var random  = new Random();
+        var room    = getRooms()[getCurrentRoom()];
+        var objects = room.getObjects();
+        var randObj = objects.get(random.nextInt(objects.size()));
+        this.key = new Key(randObj);
+    }
+
+    public int getShowKeyFor() {
+        return showKeyFor;
+    }
+
+    public void setShowKeyFor(int showKeyFor) {
+        this.showKeyFor = showKeyFor;
+    }
+
+    public void decShowKeyFor() {
+        showKeyFor = Math.max(showKeyFor - 1, 0);
+    }
+
+    public long getTimeoutAfter() {
+        return timeoutAfter;
+    }
+
+    public void resetTimeoutAfter() {
+        // TODO: Remove magic numbers
+        timeoutAfter = (int) ((getRooms()[getCurrentRoom()].getObjects().size() * 5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+
+    public void decTimeoutAfter() {
+        timeoutAfter = Math.max(timeoutAfter - 1, 0);
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted() {
+        completed = true;
     }
 }

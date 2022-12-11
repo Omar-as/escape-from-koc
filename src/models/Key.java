@@ -1,13 +1,14 @@
 package models;
 
+import models.objects.Obj;
 import utils.Position;
 
 public class Key {
-    private final Position position;
     private boolean isFound;
+    private final Obj under;
 
-    public Key(int xPosition, int yPosition){
-        this.position = new Position(xPosition, yPosition);
+    public Key(Obj under){
+        this.under = under;
         this.isFound = false;
     }
 
@@ -19,7 +20,7 @@ public class Key {
         isFound = true;
     }
 
-    public Position getPosition() {
-        return position;
+    public Obj getUnder() {
+        return under;
     }
 }

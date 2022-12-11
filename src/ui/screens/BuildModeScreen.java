@@ -113,19 +113,16 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         var dragListener = new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
                 backend.liftObject(state, e.getX(), e.getY());
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
                 backend.dropObject(state);
             }
 
             @Override
             public void mouseDragged(MouseEvent e) {
-                super.mouseDragged(e);
                 backend.moveObject(state, e.getX(), e.getY());
             }
         };
