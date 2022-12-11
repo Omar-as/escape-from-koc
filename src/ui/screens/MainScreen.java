@@ -39,7 +39,9 @@ public class MainScreen extends Screen {
             ScreenManager.getInstance().setScreen(screen);
         });
         addMainMenuButton(mainMenu, "Credits", e -> {});
-        addMainMenuButton(mainMenu, "Options", e -> {});
+        addMainMenuButton(mainMenu, "Help", e -> {
+            ScreenManager.getInstance().setScreen(new HelpScreen());
+        });
         addMainMenuButton(mainMenu, "Game History", e -> {});
         mainColumn.add(mainMenu);
     }

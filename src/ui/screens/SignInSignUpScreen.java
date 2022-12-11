@@ -57,7 +57,7 @@ public class SignInSignUpScreen extends Screen {
             }
             accountScanner.close();
             if (check) {
-                ScreenManager.getInstance().setScreen(new MainMenu());
+                ScreenManager.getInstance().setScreen(new MainScreen());
             } else {
                 feedbackLabel.setText("Incorrect username or password.");
                 feedbackLabel.setForeground(Color.RED);
