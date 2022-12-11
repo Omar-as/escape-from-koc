@@ -1,0 +1,94 @@
+@startuml
+
+title Class Diagram
+
+hide circle
+skinparam classAttributeIconSize 0
+skinparam linetype polyline
+
+class SignInSignUpScreen { }
+
+class MainScreen {
+- addMainMenuButton(mainMenu : JComponent, text : String, listener : ActionListener)
+}
+
+class HelpScreen { }
+
+class BuildModeScreen { 
+# drawFrame(state : BuildModeState, backend : Backend<BuildModeState>)
+}
+
+class BuildModeFrontEnd {
++ drawState(state : BuildModeState, canvas :  Graphics)
+}
+
+class BuildModeBackEnd {
++ liftObject(state : BuildModeState, pressX : int, pressY : int)
++ dropObject(state : BuildModeState)
++ moveObject(state : BuildModeState, newX : int, newY : int)
++ insertRandomObject(state : BuildModeState, type : ObjectType)
+}
+
+class BuildModeState { 
+rooms : Room[]
+currentRoom : Int
+door : Door
++ getRooms() : Room[]
++ getCurrentRoom() : int
++ getDoor() : Door
+}
+
+class RunModeScreen { 
+# drawFrame(state : RunModeState, backend : Backend<RunModeState>)
+}
+
+class RunModeFrontEnd {
++ drawState(state : RunModeState, canvas :  Graphics)
+}
+
+class RunModeBackEnd {
++ updateState(state : RunModeState)
++ movePlayer(state : RunModeState)
++ pickupKey(state : RunModeState, clickX : int, clickY : int)
+}
+
+class RunModeState {
+timeoutAfter : Int
+completed : Boolean
++ getTimeoutAfter() : long
++ resetTimeoutAfter()
++ decTimeoutAfter()
++ isCompleted() : boolean
+}
+
+class GameEndScreen { }
+
+interface FrontEnd <<interface>> {
+drawState(T state, Graphics canvas)
+}
+
+interface BackEnd <<interface>> {
+updateState(T state)
+}
+
+SignInSignUpScreen "  1  " ..> "  1  " MainScreen : "  Transitions to  "
+MainScreen "  1  " ..> "  1  " HelpScreen : "  Transitions to  "
+
+MainScreen "  1  " ..> "  1  " BuildModeScreen : "  Transitions to  "
+BuildModeFrontEnd "  1  " <.. "  1  " BuildModeScreen : "  Has  "
+BuildModeBackEnd "  1  " <.. "  1  " BuildModeScreen : "  Has  "
+BuildModeState "  1  " <.. "  1  " BuildModeScreen : "  Has  "
+
+BuildModeScreen "  1  " ..> "  1  " RunModeScreen : "  Transitions to  "
+RunModeScreen "  1  " ..> "  1  " RunModeFrontEnd : "  Has  "
+RunModeScreen "  1  " ..> "  1  " RunModeBackEnd : "  Has  "
+RunModeScreen "  1  " ..> "  1  " RunModeState : "  Has  "
+
+RunModeScreen "  1  " ..> "  1  " GameEndScreen : "  Transitions to  "
+
+RunModeFrontEnd --|> FrontEnd
+BuildModeFrontEnd --|> FrontEnd
+
+RunModeBackEnd --|> BackEnd
+BuildModeBackEnd --|> BackEnd
+@enduml
