@@ -1,12 +1,15 @@
 package models.alien;
 
-public enum AlienType {
-    SHOOTER("shooterA"),
-    BLIND("blindA"),
-    TIME_WASTING("timeA");
+import utils.Asset;
 
-    public final String name;
-    private AlienType(String name) {
-        this.name = name;
+public enum AlienType {
+    BLIND(Asset.ALIEN_BLIND),
+    SHOOTER(Asset.ALIEN_SHOOTER),
+    TIME_WASTING(Asset.ALIEN_TIME_WASTING);
+
+    public final Asset asset;
+
+    AlienType(Asset asset) {
+        this.asset = asset;
     }
 }
