@@ -3,9 +3,8 @@ package ui.screens;
 import control.Backend;
 import control.RunModeBackend;
 import models.RunModeState;
-import ui.AnimatedScreen;
+import ui.*;
 import ui.Canvas;
-import ui.ScreenManager;
 import ui.frontends.RunModeFrontend;
 import utils.Constants;
 
@@ -49,7 +48,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
         exitBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ScreenManager.getInstance().setScreen(new MainScreen());
+                ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
             }
         });
 

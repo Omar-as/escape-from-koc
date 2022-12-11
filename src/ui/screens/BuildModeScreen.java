@@ -7,10 +7,9 @@ import models.*;
 import models.alien.Alien;
 import models.alien.AlienType;
 import models.objects.ObjectType;
-import ui.AnimatedScreen;
-import ui.frontends.BuildModeFrontend;
+import ui.*;
 import ui.Canvas;
-import ui.ScreenManager;
+import ui.frontends.BuildModeFrontend;
 import utils.Constants;
 
 import javax.swing.*;
@@ -53,7 +52,6 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         nextBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
                 int currentRoom = state.getCurrentRoom();
                 state.setCurrentRoom(currentRoom != state.getRooms().length - 1 ? currentRoom + 1 : 0);
                 roomLabel.setText(state.getRooms()[state.getCurrentRoom()].getName());
@@ -64,7 +62,6 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         prevBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
                 int currentRoom = state.getCurrentRoom();
                 state.setCurrentRoom(currentRoom != 0 ? currentRoom - 1 : state.getRooms().length - 1);
                 roomLabel.setText(state.getRooms()[state.getCurrentRoom()].getName());
@@ -75,17 +72,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         finishBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                var aliens = new Alien[] {
-                        new Alien(AlienType.BLIND, 100, 100,50,50),
-                        new Alien(AlienType.SHOOTER, 200, 200,50,50),
-                        new Alien(AlienType.TIME_WASTING, 300, 300,50,50)
-                };
-                var player = new Player(5, 0, 0, 0,100,100);
-                var runModeState = new RunModeState(aliens, false, state.getRooms(), null, player, state.getDoor());
-                var backend = new RunModeBackend();
-                var screen = new RunModeScreen(runModeState, backend);
-                ScreenManager.getInstance().setScreen(screen);
+                ScreenManager.getInstance().setScreen(ScreenFactory.getRunModeScreen(state));
             }
         });
 
@@ -93,8 +80,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         exitBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                ScreenManager.getInstance().setScreen(new MainScreen());
+                ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
             }
         });
 

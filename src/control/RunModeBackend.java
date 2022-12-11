@@ -1,6 +1,7 @@
 package control;
 
 import models.RunModeState;
+import ui.ScreenFactory;
 import ui.ScreenManager;
 import ui.screens.GameEndScreen;
 import utils.Constants;
@@ -14,7 +15,7 @@ public class RunModeBackend implements Backend<RunModeState> {
         movePlayer(state);
         if (state.getTimeoutAfter() <= 0 && !state.isCompleted()) {
             state.setCompleted();
-            ScreenManager.getInstance().setScreen(new GameEndScreen(false));
+            ScreenManager.getInstance().setScreen(ScreenFactory.getGameEndScreen(false));
         }
         state.decTimeoutAfter();
     }
@@ -56,7 +57,7 @@ public class RunModeBackend implements Backend<RunModeState> {
                 state.incCurrentRoom();
                 if (state.getCurrentRoom() == state.getRooms().length) {
                     state.setCompleted();
-                    ScreenManager.getInstance().setScreen(new GameEndScreen(true));
+                    ScreenManager.getInstance().setScreen(ScreenFactory.getGameEndScreen(true));
                 }
                 else {
                     state.setKey();

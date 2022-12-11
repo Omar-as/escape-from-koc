@@ -3,7 +3,9 @@ package ui.screens;
 import control.BuildModeBackend;
 import models.BuildModeState;
 import ui.Screen;
+import ui.ScreenFactory;
 import ui.ScreenManager;
+import ui.ScreenType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,23 +27,9 @@ public class MainScreen extends Screen {
 
         var mainMenu = new JPanel();
         mainMenu.setLayout(new GridLayout(0, 1));
-        addMainMenuButton(mainMenu, "Play Game", e -> {
-            // Launch Build Mode
-            var backend = new BuildModeBackend();
-            var screen  = new BuildModeScreen(new BuildModeState(Stream.of(
-                    "Student Center",
-                    "CASE Building",
-                    "SOS Building",
-                    "SCI Building",
-                    "ENG Building",
-                    "SNA Building"
-            )), backend);
-            ScreenManager.getInstance().setScreen(screen);
-        });
+        addMainMenuButton(mainMenu, "Play Game", e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.BUILD_MODE)));
         addMainMenuButton(mainMenu, "Credits", e -> {});
-        addMainMenuButton(mainMenu, "Help", e -> {
-            ScreenManager.getInstance().setScreen(new HelpScreen());
-        });
+        addMainMenuButton(mainMenu, "Help", e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.HELP)));
         addMainMenuButton(mainMenu, "Game History", e -> {});
         mainColumn.add(mainMenu);
     }

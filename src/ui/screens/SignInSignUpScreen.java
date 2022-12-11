@@ -1,7 +1,9 @@
 package ui.screens;
 
 import ui.Screen;
+import ui.ScreenFactory;
 import ui.ScreenManager;
+import ui.ScreenType;
 
 import javax.swing.*;
 
@@ -57,7 +59,7 @@ public class SignInSignUpScreen extends Screen {
             }
             accountScanner.close();
             if (check) {
-                ScreenManager.getInstance().setScreen(new MainScreen());
+                ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
             } else {
                 feedbackLabel.setText("Incorrect username or password.");
                 feedbackLabel.setForeground(Color.RED);
