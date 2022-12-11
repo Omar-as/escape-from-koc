@@ -10,8 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.stream.Stream;
 
-public class MainMenu extends Screen {
-    public MainMenu() {
+public class MainScreen extends Screen {
+    public MainScreen() {
         this.setLayout(new GridBagLayout());
 
         var mainColumn = Box.createVerticalBox();
