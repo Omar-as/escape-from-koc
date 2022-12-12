@@ -32,6 +32,14 @@ public class ScreenManager {
         frame.revalidate();
     }
 
+    public void showErrorDialog(String msg) {
+        JOptionPane.showMessageDialog(frame, msg, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void showInformationDialog(String msg) {
+        JOptionPane.showMessageDialog(frame, msg, "INFO", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public void showDialog(String msg) {
         JOptionPane.showMessageDialog(frame, msg);
     }
