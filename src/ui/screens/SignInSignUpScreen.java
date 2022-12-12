@@ -27,11 +27,10 @@ public class SignInSignUpScreen extends Screen {
         form.setLayout(new GridLayout(0, 1));
         mainColumn.add(form);
 
-        // TODO: Remove magic numbers
         var usernameLabel = new JLabel("Username");
-        var usernameField = new JTextField(16);
+        var usernameField = new JTextField();
         var passwordLabel = new JLabel("Password");
-        var passwordField = new JPasswordField(16);
+        var passwordField = new JPasswordField();
 
         var signInButton = new JButton("Sign In");
         var signUpButton = new JButton("Sign Up");
