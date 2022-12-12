@@ -1,9 +1,6 @@
 package utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -30,8 +27,10 @@ public final class ConfigManager {
     public static void writeLineToConfigFile(String fileName, String line) {
         var configFile = getConfigFile(fileName);
         try {
-            var printWriter = new PrintWriter(configFile);
+            var fileWriter  = new FileWriter(configFile, true);
+            var printWriter = new PrintWriter(fileWriter);
             printWriter.println(line);
+            fileWriter.close();
             printWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
