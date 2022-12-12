@@ -2,10 +2,10 @@ package ui.screens;
 
 import control.Backend;
 import control.BuildModeBackend;
-import models.*;
+import models.BuildModeState;
 import models.objects.ObjectType;
-import ui.*;
 import ui.Canvas;
+import ui.*;
 import ui.frontends.BuildModeFrontend;
 import utils.Constants;
 
@@ -41,7 +41,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         var insertBtn = new JButton("Insert");
         insertBtn.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                insertMenu.show(insertBtn , insertBtn.getX(), insertBtn.getY() + insertBtn.getHeight());
+                insertMenu.show(insertBtn, insertBtn.getX(), insertBtn.getY() + insertBtn.getHeight());
             }
         });
 
@@ -96,7 +96,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         bar.add(finishBtn);
         bar.add(exitBtn);
 
-        canvas  = new Canvas<>(state, frontend);
+        canvas = new Canvas<>(state, frontend);
         mainColumn.add(canvas);
 
         var dragListener = new MouseAdapter() {

@@ -21,7 +21,7 @@ public class RunModeState extends State {
     private boolean completed;
 
     public RunModeState(Alien[] aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door) {
-        this.width  = 0;
+        this.width = 0;
         this.height = 0;
         this.aliens = aliens;
         this.isPaused = isPaused;
@@ -71,9 +71,13 @@ public class RunModeState extends State {
     public void setPause(boolean isPaused) {
         this.isPaused = isPaused;
     }
-    
+
     public Room[] getRooms() {
         return rooms;
+    }
+
+    public void setRooms(Room[] rooms) {
+        this.rooms = rooms;
     }
 
     public int getCurrentRoom() {
@@ -82,10 +86,6 @@ public class RunModeState extends State {
 
     public void incCurrentRoom() {
         currentRoom++;
-    }
-
-    public void setRooms(Room[] rooms) {
-        this.rooms = rooms;
     }
 
     public PowerUp[] getPowerUps() {
@@ -117,8 +117,8 @@ public class RunModeState extends State {
     }
 
     public void setKey() {
-        var random  = new Random();
-        var room    = getRooms()[getCurrentRoom()];
+        var random = new Random();
+        var room = getRooms()[getCurrentRoom()];
         var objects = room.getObjects();
         var randObj = objects.get(random.nextInt(objects.size()));
         this.key = new Key(randObj);

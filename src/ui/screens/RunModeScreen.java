@@ -3,8 +3,8 @@ package ui.screens;
 import control.Backend;
 import control.RunModeBackend;
 import models.RunModeState;
-import ui.*;
 import ui.Canvas;
+import ui.*;
 import ui.frontends.RunModeFrontend;
 import utils.Constants;
 
@@ -34,7 +34,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
         mainColumn.add(bar);
 
         roomNameLabel = new JLabel(state.getRooms()[state.getCurrentRoom()].getName());
-        timeLabel     = new JLabel();
+        timeLabel = new JLabel();
 
         var pauseResumeButton = new JButton("Pause");
         pauseResumeButton.addMouseListener(new MouseAdapter() {
@@ -59,7 +59,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
         bar.add(pauseResumeButton);
         bar.add(exitBtn);
 
-        canvas  = new Canvas<>(state, frontend);
+        canvas = new Canvas<>(state, frontend);
         canvas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
