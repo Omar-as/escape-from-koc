@@ -4,13 +4,10 @@ import ui.Screen;
 import ui.ScreenFactory;
 import ui.ScreenManager;
 import ui.ScreenType;
+import utils.AccountManager;
 
 import javax.swing.*;
-
 import java.awt.*;
-
-import java.io.*;
-import java.util.Scanner;
 
 public class SignInSignUpScreen extends Screen {
 
@@ -49,95 +46,38 @@ public class SignInSignUpScreen extends Screen {
         // signInButton.setBackground(Color.GRAY);
         // signInButton.setForeground(Color.BLACK);
         signInButton.addActionListener(event -> {
-            var check = false;
-            var match = "%s %s".formatted(usernameField.getText(), passwordField.getText());
-            var accountScanner = getAccountsFile();
-            while (accountScanner.hasNextLine()) {
-                var data = accountScanner.nextLine();
-                check = data.equals(match);
-                if (check) break;
-            }
-            accountScanner.close();
-            if (check) {
+            var username = usernameField.getText();
+            var password = passwordField.getPassword();
+            if (AccountManager.isValidAuthInput(username, password)) {
                 ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
             } else {
                 feedbackLabel.setText("Incorrect username or password.");
                 feedbackLabel.setForeground(Color.RED);
             }
         });
-        signUpButton.addActionListener(a -> {
-                var check = false;
-                var username = usernameField.getText();
-                var password = passwordField.getText();
-                var accountScanner = getAccountsFile();
-                while (accountScanner.hasNextLine()) {
-                    var data = accountScanner.nextLine().split(" ")[0];
-                    check = data.equals(username);
-                    if(check) break;
-                }
-                accountScanner.close();
 
-                if(check) {
-                    feedbackLabel.setText("User already has an account.");
-                    feedbackLabel.setForeground(Color.RED);
-                } else if (username.isEmpty() || password.isEmpty()) {
-                    feedbackLabel.setText("Missing username or password.");
-                    feedbackLabel.setForeground(Color.RED);
-                } else {
-                    addNewAccount(username, password);
-                    feedbackLabel.setText("Account created successfully!");
-                    feedbackLabel.setForeground(Color.GREEN);
-                }
+        signUpButton.addActionListener(a -> {
+            var username = usernameField.getText();
+            var password = passwordField.getPassword();
+
+            if (username.isEmpty() || password.length == 0) {
+                feedbackLabel.setText("Missing username or password.");
+                feedbackLabel.setForeground(Color.RED);
+            } else if (AccountManager.doesAccountExist(username)) {
+                feedbackLabel.setText("User already has an account.");
+                feedbackLabel.setForeground(Color.RED);
+            } else {
+                AccountManager.createNewAccount(username, password);
+                feedbackLabel.setText("Account created successfully!");
+                feedbackLabel.setForeground(Color.GREEN);
+            }
         });
+
         form.add(signInButton);
         form.add(signUpButton);
-
         form.add(feedbackLabel);
 
         mainColumn.add(form);
     }
 
-    private void createAccountsFileIfNotFound() {
-        // TODO: Remove magic paths
-        var configDir = new File("%s/.config/escapefromkoc/".formatted(System.getProperty("user.home")));
-        configDir.mkdir();
-        var accountsFile = new File("%s/accounts.txt".formatted(configDir));
-        try {
-            accountsFile.createNewFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private Scanner getAccountsFile() {
-        createAccountsFileIfNotFound();
-        // TODO: Remove magic paths
-        var configDir = new File("%s/.config/escapefromkoc/".formatted(System.getProperty("user.home")));
-        var accountsFile = new File("%s/accounts.txt".formatted(configDir));
-
-        try {
-            return new Scanner(accountsFile);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void addNewAccount(String username, String password) {
-        // TODO: Remove magic paths
-        var configDir = new File("%s/.config/escapefromkoc/".formatted(System.getProperty("user.home")));
-        var accountsFile = new File("%s/accounts.txt".formatted(configDir));
-        try {
-            var f = new FileWriter(accountsFile, true);
-            var b = new BufferedWriter(f);
-            var p = new PrintWriter(b);
-
-            p.println("%s %s".formatted(username, password));
-
-            p.close();
-            b.close();
-            f.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
