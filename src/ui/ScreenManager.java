@@ -20,6 +20,8 @@ public class ScreenManager {
         frame.setFocusable(false);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Launch JFrame in the center of the screen
+        frame.setLocationRelativeTo(null);
         setScreen(initialScreen);
         frame.setVisible(true);
     }
