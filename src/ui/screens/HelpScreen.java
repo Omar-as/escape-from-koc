@@ -1,6 +1,7 @@
 package ui.screens;
 
 import ui.Screen;
+import utils.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,9 +32,7 @@ public class HelpScreen extends Screen {
                 """;
 
         // Initialize components
-        var titleLabel = new JLabel("Help");
-        // TODO: Remove magic numbers
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
+        var titleLabel = new JLabel(ThemeManager.getTitle("Help"));
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
         mainColumn.add(titleLabel);
 

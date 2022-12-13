@@ -5,6 +5,7 @@ import ui.ScreenFactory;
 import ui.ScreenManager;
 import ui.ScreenType;
 import utils.AccountManager;
+import utils.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,9 +18,7 @@ public class SignInSignUpScreen extends Screen {
         var mainColumn = Box.createVerticalBox();
         this.add(mainColumn);
 
-        var title = new JLabel("Sign In / Sign Up");
-        // TODO: Remove magic numbers
-        title.setFont(new Font("Arial", Font.PLAIN, 40));
+        var title = new JLabel(ThemeManager.getTitle("Sign In / Sign Up"));
         title.setAlignmentX(CENTER_ALIGNMENT);
         mainColumn.add(title);
 
@@ -37,11 +36,7 @@ public class SignInSignUpScreen extends Screen {
 
         var signInButton = new JButton("Sign In");
         var signUpButton = new JButton("Sign Up");
-        // TODO: Set uniform style
-        // signInButton.setBackground(Color.GRAY);
-        // signInButton.setForeground(Color.BLACK);
-        // signInButton.setBackground(Color.GRAY);
-        // signInButton.setForeground(Color.BLACK);
+
         signInButton.addActionListener(event -> {
             var username = usernameField.getText();
             var password = passwordField.getPassword();

@@ -4,6 +4,7 @@ import ui.Screen;
 import ui.ScreenFactory;
 import ui.ScreenManager;
 import ui.ScreenType;
+import utils.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,9 +17,7 @@ public class MainScreen extends Screen {
         var mainColumn = Box.createVerticalBox();
         this.add(mainColumn);
 
-        var title = new JLabel("Main Menu");
-        // TODO: Remove magic numbers
-        title.setFont(new Font("Arial", Font.PLAIN, 40));
+        var title = new JLabel(ThemeManager.getTitle("Main Menu"));
         title.setAlignmentX(CENTER_ALIGNMENT);
         mainColumn.add(title);
 
