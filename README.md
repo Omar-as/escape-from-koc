@@ -25,3 +25,14 @@ Example entries in the account database:
 | xyz      | 5_362eOJ0oy93mcw1o1E01bzv6K9JYV7uD9vLwYcLgE  | SHrmP_3BYqL0njmhyEkEo3v9O7G3m03g7niki3WvMpM  |
 | abc      | 9XkrtLHEhvCSAteyyc4gQ9zrS7XWpbpzARWckbKXjoU  | mT3Gvj6PYxhyNBnbQnXvhPgBw_oaN_rHF4IACslVxBk  |
 | admin    | Ty9XVhQrxVP6XJsfRZzGDH0TGebaf8AWK2-6nY2LsZs  | qOe_yN8RGfTPuPA588JIz2wKL3Qu62ToJdyugBN3PP0  |
+
+## License
+
+After we finish COMP302, we want to open this project by making this repository
+public. For that, we chose to license our project under the **GNU General Public
+License v3.0**, or **GPL-3.0** for short.
+
+We chose GPL-3.0 because it's very permissive. It allows people to distribute
+and modify the code, even for commercial or private use. However, it does not
+allow people to distribute the project in a closed-source manner, or under a
+different license. It also does not provide a warranty of any sort.
