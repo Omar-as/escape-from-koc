@@ -1,18 +1,12 @@
 package control;
 
-import java.awt.KeyboardFocusManager;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 public class KeyManager {
     private static KeyManager instance = null;
-
-    public static KeyManager getInstance() {
-        if (instance == null) instance = new KeyManager();
-        return instance;
-    }
-
-    private HashMap<Integer, Boolean> keyStates;
+    private final HashMap<Integer, Boolean> keyStates;
 
     private KeyManager() {
         keyStates = new HashMap<>();
@@ -23,6 +17,11 @@ public class KeyManager {
                 return false;
             }
         });
+    }
+
+    public static KeyManager getInstance() {
+        if (instance == null) instance = new KeyManager();
+        return instance;
     }
 
     public boolean isKeyPressed(char key) {

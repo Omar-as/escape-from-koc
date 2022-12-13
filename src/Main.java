@@ -1,7 +1,6 @@
 import ui.ScreenFactory;
 import ui.ScreenManager;
 import ui.ScreenType;
-import ui.screens.SignInSignUpScreen;
 import utils.Constants;
 
 public class Main {

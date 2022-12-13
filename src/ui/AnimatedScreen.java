@@ -9,7 +9,7 @@ public abstract class AnimatedScreen<T extends State> extends Screen implements 
     private final Backend<T> backend;
 
     public AnimatedScreen(T state, Backend<T> backend) {
-        this.state   = state;
+        this.state = state;
         this.backend = backend;
     }
 
@@ -42,7 +42,8 @@ public abstract class AnimatedScreen<T extends State> extends Screen implements 
             // So we sleep until the time for the next frame comes, to keep the frame rate consistent
             try {
                 Thread.sleep(Constants.REPAINT_DELAY_MILLS - timeTaken);
-            } catch (InterruptedException ignored) { }
+            } catch (InterruptedException ignored) {
+            }
         }
     }
 }

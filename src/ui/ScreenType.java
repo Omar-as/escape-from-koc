@@ -6,5 +6,5 @@ public enum ScreenType {
     HELP,
     BUILD_MODE,
     RUN_MODE,
-    GAME_END;
+    GAME_END
 }

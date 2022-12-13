@@ -29,11 +29,11 @@ public class Player extends Rectangle {
         this.score = score;
     }
 
-    public Room getCurrentRoom(){
+    public Room getCurrentRoom() {
         return currentRoom;
     }
 
-    public void setCurrentRoom(Room room){
+    public void setCurrentRoom(Room room) {
         currentRoom = room;
     }
 }

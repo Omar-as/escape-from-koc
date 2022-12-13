@@ -9,8 +9,8 @@ public class Rectangle {
 
     public Rectangle(Position position, int width, int height) {
         this.position = position;
-        this.width    = width;
-        this.height   = height;
+        this.width = width;
+        this.height = height;
     }
 
     public Position getPosition() {
@@ -50,10 +50,10 @@ public class Rectangle {
     }
 
     public boolean intersects(Rectangle other) {
-        int selfX1  = this.position.getX();
-        int selfY1  = this.position.getY();
-        int selfX2  = this.position.getX() + this.width;
-        int selfY2  = this.position.getY() + this.height;
+        int selfX1 = this.position.getX();
+        int selfY1 = this.position.getY();
+        int selfX2 = this.position.getX() + this.width;
+        int selfY2 = this.position.getY() + this.height;
         int otherX1 = other.position.getX();
         int otherY1 = other.position.getY();
         int otherX2 = other.position.getX() + other.width;

@@ -2,20 +2,18 @@ package models;
 
 import models.objects.Obj;
 
-import java.util.stream.Stream;
-
 public class BuildModeState extends State {
+    private final Room[] rooms;
+    private final Door door;
     private int width;
     private int height;
-    private final Room[] rooms;
     private int currentRoom;
     private Obj selectedObject;
-    private final Door door;
 
     public BuildModeState(Room[] rooms) {
-        this.width  = 0;
+        this.width = 0;
         this.height = 0;
-        this.rooms  = rooms;
+        this.rooms = rooms;
         this.currentRoom = 0;
         this.selectedObject = null;
         // TODO: Remove magic numbers
