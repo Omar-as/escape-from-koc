@@ -7,6 +7,12 @@ public class ScreenManager {
     private JFrame frame;
 
     private ScreenManager() {
+        try {
+            // Make program look like a native application
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static ScreenManager getInstance() {
