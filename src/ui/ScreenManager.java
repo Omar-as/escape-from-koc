@@ -24,7 +24,6 @@ public class ScreenManager {
         frame = new JFrame();
         frame.setSize(width, height);
         frame.setTitle(title);
-        frame.setFocusable(false);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Launch JFrame in the center of the screen

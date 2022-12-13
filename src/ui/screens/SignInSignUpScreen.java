@@ -32,6 +32,9 @@ public class SignInSignUpScreen extends Screen {
         var passwordLabel = new JLabel("Password");
         var passwordField = new JPasswordField();
 
+        usernameLabel.setLabelFor(usernameField);
+        passwordLabel.setLabelFor(passwordField);
+
         var signInButton = new JButton("Sign In");
         var signUpButton = new JButton("Sign Up");
         // TODO: Set uniform style
