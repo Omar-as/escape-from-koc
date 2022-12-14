@@ -1,6 +1,7 @@
 package control;
 
 import models.BuildModeState;
+import models.Room;
 import models.objects.Obj;
 import models.objects.ObjectType;
 
@@ -73,5 +74,11 @@ public class BuildModeBackend implements Backend<BuildModeState> {
         }
 
         objects.add(newObj);
+    }
+    public void randomizeObjectPlacement(BuildModeState state){
+        Room currentRoom = state.getRooms()[state.getCurrentRoom()];
+        int minNumOfObjs = currentRoom.getMinObjects();
+        var random = new Random();
+        for(int i = 0; i < minNumOfObjs ;i++) insertRandomObject(state, ObjectType.values()[random.nextInt(ObjectType.values().length)]);
     }
 }

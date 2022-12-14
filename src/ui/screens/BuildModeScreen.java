@@ -54,7 +54,21 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
                 roomLabel.setText(state.getRooms()[state.getCurrentRoom()].getName());
             }
         });
+        var randomizeRoomBtn = new JButton("Randomize Room");
+        randomizeRoomBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backend.randomizeObjectPlacement(state);
 
+            }
+        });
+        var randomizeAllBtn = new JButton("Randomize Room");
+        randomizeAllBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backend.randomizeObjectPlacement(state);
+            }
+        });
         var prevBtn = new JButton("Prev Room");
         prevBtn.addMouseListener(new MouseAdapter() {
             @Override
@@ -90,6 +104,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         bar.add(insertBtn);
         bar.add(prevBtn);
         bar.add(nextBtn);
+        bar.add(randomizeRoomBtn);
         bar.add(Box.createGlue());
         bar.add(roomLabel);
         bar.add(Box.createGlue());
