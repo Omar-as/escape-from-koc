@@ -62,11 +62,11 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
 
             }
         });
-        var randomizeAllBtn = new JButton("Randomize Room");
+        var randomizeAllBtn = new JButton("Randomize All");
         randomizeAllBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                backend.randomizeObjectPlacement(state);
+                backend.randomizeObjectPlacementForAllRooms(state);
             }
         });
         var prevBtn = new JButton("Prev Room");
@@ -105,6 +105,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         bar.add(prevBtn);
         bar.add(nextBtn);
         bar.add(randomizeRoomBtn);
+        bar.add(randomizeAllBtn);
         bar.add(Box.createGlue());
         bar.add(roomLabel);
         bar.add(Box.createGlue());
