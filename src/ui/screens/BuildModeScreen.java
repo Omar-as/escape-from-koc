@@ -58,7 +58,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         randomizeRoomBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                backend.randomizeObjectPlacement(state);
+                backend.randomizeObjectPlacementInARoom(state,state.getRooms()[state.getCurrentRoom()]);
 
             }
         });

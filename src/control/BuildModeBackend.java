@@ -4,7 +4,6 @@ import models.BuildModeState;
 import models.Room;
 import models.objects.Obj;
 import models.objects.ObjectType;
-import ui.screens.BuildModeScreen;
 
 import java.util.Random;
 
@@ -55,8 +54,24 @@ public class BuildModeBackend implements Backend<BuildModeState> {
 
     public void insertRandomObject(BuildModeState state, ObjectType type) {
         // TODO: Remove magic numbers
+        objectPlacementRandomize(state, state.getRooms()[state.getCurrentRoom()], type);
+    }
+    public void randomizeObjectPlacementInARoom(BuildModeState state, Room room){
+        int NumOfObjs = room.getMinObjects() - room.getObjects().size();
+        var random = new Random();
+        for(int i = 0; i < NumOfObjs ;i++)
+            objectPlacementRandomize(state, room,ObjectType.values()[random.nextInt(ObjectType.values().length)]);
+    }
+    public void randomizeObjectPlacementForAllRooms(BuildModeState state){
+        Room[] rooms = state.getRooms();
+        int numOfRooms = state.getRooms().length;
+        for(int i = 0; i < numOfRooms; i ++) {
+            randomizeObjectPlacementInARoom(state, rooms[i]);
+        }
+    }
+    private void objectPlacementRandomize(BuildModeState state, Room room, ObjectType type){
         var newObj = new Obj(0, 0, 50, 50, type);
-        var objects = state.getRooms()[state.getCurrentRoom()].getObjects();
+        var objects = room.getObjects();
         var random = new Random();
         var done = false;
 
@@ -76,18 +91,5 @@ public class BuildModeBackend implements Backend<BuildModeState> {
 
         objects.add(newObj);
     }
-    public void randomizeObjectPlacement(BuildModeState state){
-        Room currentRoom = state.getRooms()[state.getCurrentRoom()];
-        int minNumOfObjs = currentRoom.getMinObjects();
-        var random = new Random();
-        for(int i = 0; i < minNumOfObjs ;i++) insertRandomObject(state, ObjectType.values()[random.nextInt(ObjectType.values().length)]);
-    }
-    public void randomizeObjectPlacementForAllRooms(BuildModeState state){
-        int currentRoom = state.getCurrentRoom();
-        int numOfRooms = state.getRooms().length;
-        for(int i = currentRoom; i < numOfRooms; i ++) {
-            state.setCurrentRoom(i != state.getRooms().length - 1 ? i + 1 : 0);
-            randomizeObjectPlacement(state);
-        }
-    }
+
 }
