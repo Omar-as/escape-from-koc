@@ -26,6 +26,15 @@ Example entries in the account database:
 | abc      | 9XkrtLHEhvCSAteyyc4gQ9zrS7XWpbpzARWckbKXjoU  | mT3Gvj6PYxhyNBnbQnXvhPgBw_oaN_rHF4IACslVxBk  |
 | admin    | Ty9XVhQrxVP6XJsfRZzGDH0TGebaf8AWK2-6nY2LsZs  | qOe_yN8RGfTPuPA588JIz2wKL3Qu62ToJdyugBN3PP0  |
 
+### Config Directory
+
+For this feature we created the `ConfigManager` class; which is 
+used to handle writing to and reading data from the config file.
+
+the date is stored in a file placed in the `.config` file that is stored
+in the home directory; and that is because we are following the XDG
+convention to store configuration files.
+
 ## License
 
 After we finish COMP302, we want to open this project by making this repository
@@ -36,3 +45,4 @@ We chose GPL-3.0 because it's very permissive. It allows people to distribute
 and modify the code, even for commercial or private use. However, it does not
 allow people to distribute the project in a closed-source manner, or under a
 different license. It also does not provide a warranty of any sort.
+
