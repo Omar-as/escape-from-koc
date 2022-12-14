@@ -25,3 +25,12 @@ Example entries in the account database:
 | xyz      | 5_362eOJ0oy93mcw1o1E01bzv6K9JYV7uD9vLwYcLgE  | SHrmP_3BYqL0njmhyEkEo3v9O7G3m03g7niki3WvMpM  |
 | abc      | 9XkrtLHEhvCSAteyyc4gQ9zrS7XWpbpzARWckbKXjoU  | mT3Gvj6PYxhyNBnbQnXvhPgBw_oaN_rHF4IACslVxBk  |
 | admin    | Ty9XVhQrxVP6XJsfRZzGDH0TGebaf8AWK2-6nY2LsZs  | qOe_yN8RGfTPuPA588JIz2wKL3Qu62ToJdyugBN3PP0  |
+
+### Config Directory
+
+For this feature we created the `ConfigManager` class; which is 
+used to handle writing to and reading data from the config file.
+
+the date is stored in a file placed in the `.config` file that is stored
+in the home directory; and that is because we are following the XDG
+convention to store configuration files.
