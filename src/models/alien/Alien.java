@@ -4,11 +4,11 @@ import utils.Position;
 
 public class Alien {
     private final AlienType type;
-    private Position position;
     private final int width;
     private final int height;
+    private Position position;
 
-    public Alien(AlienType type, int xPosition, int yPosition,int width, int height) {
+    public Alien(AlienType type, int xPosition, int yPosition, int width, int height) {
         this.type = type;
         this.position = new Position(xPosition, yPosition);
         this.width = width;

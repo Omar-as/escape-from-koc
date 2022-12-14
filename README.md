@@ -34,3 +34,15 @@ used to handle writing to and reading data from the config file.
 the date is stored in a file placed in the `.config` file that is stored
 in the home directory; and that is because we are following the XDG
 convention to store configuration files.
+
+## License
+
+After we finish COMP302, we want to open this project by making this repository
+public. For that, we chose to license our project under the **GNU General Public
+License v3.0**, or **GPL-3.0** for short.
+
+We chose GPL-3.0 because it's very permissive. It allows people to distribute
+and modify the code, even for commercial or private use. However, it does not
+allow people to distribute the project in a closed-source manner, or under a
+different license. It also does not provide a warranty of any sort.
+

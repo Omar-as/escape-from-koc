@@ -1,13 +1,12 @@
 package models;
 
 import models.objects.Obj;
-import utils.Position;
 
 public class Key {
-    private boolean isFound;
     private final Obj under;
+    private boolean isFound;
 
-    public Key(Obj under){
+    public Key(Obj under) {
         this.under = under;
         this.isFound = false;
     }

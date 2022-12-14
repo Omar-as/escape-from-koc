@@ -14,8 +14,8 @@ public class BuildModeBackend implements Backend<BuildModeState> {
 
     public void liftObject(BuildModeState state, int pressX, int pressY) {
         for (var obj : state.getRooms()[state.getCurrentRoom()].getObjects()) {
-            int objX   = obj.getPosition().getX();
-            int objY   = obj.getPosition().getY();
+            int objX = obj.getPosition().getX();
+            int objY = obj.getPosition().getY();
             if (pressX >= objX && pressX <= objX + obj.getWidth() && pressY >= objY && pressY <= objY + obj.getHeight()) {
                 state.setSelectedObject(obj);
                 break;
@@ -43,22 +43,23 @@ public class BuildModeBackend implements Backend<BuildModeState> {
         var objects = state.getRooms()[state.getCurrentRoom()].getObjects();
         var backupPosition = selected.getPosition();
         selected.setPosition(newX, newY);
-        for (var obj : objects) if (obj != selected && selected.intersects(obj)) {
-            selected.setPosition(backupPosition);
-            break;
-        }
+        for (var obj : objects)
+            if (obj != selected && selected.intersects(obj)) {
+                selected.setPosition(backupPosition);
+                break;
+            }
         if (selected.intersects(state.getDoor())) selected.setPosition(backupPosition.getX(), backupPosition.getY());
     }
 
     public void insertRandomObject(BuildModeState state, ObjectType type) {
         // TODO: Remove magic numbers
-        var newObj   = new Obj(0, 0, 50, 50, type);
-        var objects  = state.getRooms()[state.getCurrentRoom()].getObjects();
-        var random   = new Random();
-        var done     = false;
+        var newObj = new Obj(0, 0, 50, 50, type);
+        var objects = state.getRooms()[state.getCurrentRoom()].getObjects();
+        var random = new Random();
+        var done = false;
 
         while (!done) {
-            int x = random.nextInt(state.getWidth()  - newObj.getWidth());
+            int x = random.nextInt(state.getWidth() - newObj.getWidth());
             int y = random.nextInt(state.getHeight() - newObj.getHeight());
 
             newObj.setPosition(x, y);

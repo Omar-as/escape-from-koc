@@ -10,7 +10,7 @@ import java.awt.*;
 public class RunModeFrontend implements Frontend<RunModeState> {
     @Override
     public void drawState(RunModeState state, Graphics canvas) {
-        int width  = state.getWidth();
+        int width = state.getWidth();
         int height = state.getHeight();
 
         canvas.clearRect(0, 0, width, height); // Clear entire canvas
@@ -18,20 +18,20 @@ public class RunModeFrontend implements Frontend<RunModeState> {
         canvas.setColor(Color.BLACK);
 
         // Draw aliens
-        for (var alien : state.getAliens()) {
-            var alienImage = GraphicsManager.getInstance().getImage(alien.getType().asset, alien.getWidth(), alien.getHeight());
-            canvas.drawImage(alienImage, alien.getPosition().getX(), alien.getPosition().getY(), null);
-        }
+        // for (var alien : state.getAliens()) {
+        //     var alienImage = GraphicsManager.getInstance().getImage(alien.getType().asset, alien.getWidth(), alien.getHeight());
+        //     canvas.drawImage(alienImage, alien.getPosition().getX(), alien.getPosition().getY(), null);
+        // }
 
         // Draw door
         var isDoorOpen = state.getKey().isFound() && state.getShowKeyFor() == 0;
         var door = state.getDoor();
         var doorImage = GraphicsManager.getInstance().getImage(isDoorOpen ? Asset.DOOR_OPEN : Asset.DOOR_CLOSED, door.getWidth(), door.getHeight());
-        canvas.drawImage(doorImage,door.getPosition().getX(), door.getPosition().getY(), null);
+        canvas.drawImage(doorImage, door.getPosition().getX(), door.getPosition().getY(), null);
 
         // Draw all objects
         var objects = state.getRooms()[state.getCurrentRoom()].getObjects();
-        var under   = state.getKey().getUnder();
+        var under = state.getKey().getUnder();
         for (var obj : objects) {
             if (obj == under && state.getKey().isFound() && state.getShowKeyFor() > 0) {
                 // Remove magic numbers
