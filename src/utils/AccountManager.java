@@ -81,16 +81,16 @@ public final class AccountManager {
         }
     }
     public static boolean checkArrays(byte[] arr1, byte[] arr2) {
-        boolean differenceFound = false;
+        boolean flag = false;
 
         for (int i = 0; i < arr1.length; i++) {
             if (i >= arr2.length) {
-                differenceFound = true;
+                flag = true;
                 break;
             }
             if (arr1[i] != arr2[i]) {
-                if (!differenceFound) {
-                    differenceFound = true;
+                if (!flag) {
+                    flag = true;
                 }
                 continue;
             }
@@ -98,7 +98,7 @@ public final class AccountManager {
         if (arr2.length > arr1.length) {
             return false;
         }
-        return !differenceFound;
+        return !flag;
     }
 
 
