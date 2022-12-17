@@ -81,11 +81,11 @@ public final class AccountManager {
     }
 
     // Assuming that both arrays are equal lengths
-    public static boolean secureEquals(byte[] original, byte[] entered) {
+    public static boolean secureEquals(byte[] arr1, byte[] arr2) {
         var isEqual = true;
 
-        for (int i = 0; i < original.length; i++) {
-            if (original[i] != entered[i]) {
+        for (int i = 0; i < arr1.length; i++) {
+            if (arr1[i] != arr2[i]) {
                 if (isEqual) {
                     isEqual = false;
                 }
