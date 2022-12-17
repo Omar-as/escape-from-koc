@@ -80,25 +80,26 @@ public final class AccountManager {
             throw new RuntimeException(e);
         }
     }
-    public static boolean checkArrays(byte[] arr1, byte[] arr2) {
-        boolean flag = false;
+    public static boolean checkArrays(byte[] original, byte[] entered) {
+        boolean flag = true;
 
-        for (int i = 0; i < arr1.length; i++) {
-            if (i >= arr2.length) {
-                flag = true;
-                break;
+        for (int i = 0; i < original.length; i++) {
+            if (i >= entered.length) {
+                flag = false;
             }
-            if (arr1[i] != arr2[i]) {
-                if (!flag) {
-                    flag = true;
+            else if (original[i] != entered[i]) {
+                if (flag) {
+                    flag = false;
                 }
+                continue;
+            }else{
                 continue;
             }
         }
-        if (arr2.length > arr1.length) {
+        if (entered.length > original.length) {
             return false;
         }
-        return !flag;
+        return flag;
     }
 
 
