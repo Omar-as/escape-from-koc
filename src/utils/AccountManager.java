@@ -43,7 +43,8 @@ public final class AccountManager {
             var recordHash = decoder.decode(recordFields[2]);
 
             var inputHash = generateHash(recordSalt, password);
-            return Arrays.equals(inputHash, recordHash);
+//            return Arrays.equals(inputHash, recordHash);
+            return checkArrays(inputHash, recordHash);
         }
 
         return false;
@@ -79,4 +80,26 @@ public final class AccountManager {
             throw new RuntimeException(e);
         }
     }
+    public static boolean checkArrays(byte[] arr1, byte[] arr2) {
+        boolean differenceFound = false;
+
+        for (int i = 0; i < arr1.length; i++) {
+            if (i >= arr2.length) {
+                differenceFound = true;
+                break;
+            }
+            if (arr1[i] != arr2[i]) {
+                if (!differenceFound) {
+                    differenceFound = true;
+                }
+                continue;
+            }
+        }
+        if (arr2.length > arr1.length) {
+            return false;
+        }
+        return !differenceFound;
+    }
+
+
 }
