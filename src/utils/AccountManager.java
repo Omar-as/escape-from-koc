@@ -43,7 +43,7 @@ public final class AccountManager {
             var recordHash = decoder.decode(recordFields[2]);
 
             var inputHash = generateHash(recordSalt, password);
-            return checkArrays(inputHash, recordHash);
+            return secureEquals(inputHash, recordHash);
         }
 
         return false;
@@ -80,17 +80,17 @@ public final class AccountManager {
         }
     }
 
-    public static boolean checkArrays(byte[] original, byte[] entered) {
-        boolean flag = true;
+    // Assuming that both arrays are equal lengths
+    public static boolean secureEquals(byte[] original, byte[] entered) {
+        var isEqual = true;
 
         for (int i = 0; i < original.length; i++) {
             if (original[i] != entered[i]) {
-                if (flag) {
-                    flag = false;
+                if (isEqual) {
+                    isEqual = false;
                 }
-                continue;
             }
         }
-        return flag;
+        return isEqual;
     }
 }
