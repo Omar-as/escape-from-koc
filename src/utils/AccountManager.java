@@ -86,9 +86,7 @@ public final class AccountManager {
 
         for (int i = 0; i < arr1.length; i++) {
             if (arr1[i] != arr2[i]) {
-                if (isEqual) {
-                    isEqual = false;
-                }
+                isEqual = false;
             }
         }
         return isEqual;
