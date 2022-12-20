@@ -76,11 +76,7 @@ public class RunModeBackend implements Backend<RunModeState> {
         var underX = under.getPosition().getX();
         var underY = under.getPosition().getY();
         var player = state.getPlayer();
-        var playerCenterX = player.getPosition().getX() + player.getWidth() / 2;
-        var playerCenterY = player.getPosition().getY() + player.getHeight() / 2;
-        var underCenterX = under.getPosition().getX() + under.getWidth() / 2;
-        var underCenterY = under.getPosition().getY() + under.getHeight() / 2;
-        var distance = Math.sqrt(Math.pow(playerCenterX - underCenterX, 2) + Math.pow(playerCenterY - underCenterY, 2));
+        var distance = player.distanceBetweenObjects(under);
         // TODO: Remove magic numbers
         if (clickX >= underX && clickX <= underX + under.getWidth() && clickY >= underY && clickY <= underY + under.getHeight() && distance <= 100) {
             state.getKey().setFound();

@@ -82,16 +82,12 @@ public class BuildModeBackend implements Backend<BuildModeState> {
 
             newObj.setPosition(x, y);
 
-            int collisions = objects.stream()
-                    .map(newObj::intersects)
-                    .mapToInt(b -> b ? 1 : 0)
-                    .sum();
             int tooClose = objects.stream()
                     .map(newObj::distanceBetweenObjects)
                     .mapToInt(b -> (b < minDistance) ? 1 : 0)
                     .sum();
 
-            done = collisions == 0 && tooClose == 0;
+            done = tooClose == 0;
         }
 
         objects.add(newObj);
