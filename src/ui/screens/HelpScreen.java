@@ -1,6 +1,10 @@
 package ui.screens;
 
 import ui.Screen;
+import ui.ScreenFactory;
+import ui.ScreenManager;
+import ui.ScreenType;
+import utils.Constants;
 import utils.ThemeManager;
 
 import javax.swing.*;
@@ -17,12 +21,11 @@ public class HelpScreen extends Screen {
         var helpText = """
                 Game Navigation
                                 
-                • On many in-game screens, tapping the date in the top right corner will return you to the top of the current stack of screens.
-                • Many instances of bold text can be tapped to take you to a corresponding detail screen. For instance tapping on the Fight Record on a boxer’s profile will display that boxer’s bout history.
-                • You can mute any sound effects from within the OPTIONS screen, located from the main menu.
-                • When viewing the profile of a boxer tapping on their name will allow you to edit their name, nickname and nationality (they cannot belong to another player’s gym).
-                • When editing a boxer’s name and nationality, if you’d prefer them not to have a nickname fill the textbox with a single space.
-                • To give yourself more/less of a challenge you can adjust many settings governing game difficulty from within the OPTIONS screen, located from the main menu.
+                • You can use the arrow keys to move. You can go east, west, north and south. You can not go through walls. You can open the exit door of a building if you find the keys
+                • Your aim is to travel the building in the given order: CASE building, SOS building, SCI building, ENG building and SNA building finding keys one by one
+                • To find the keys, you use a left click on the object on the building. If a key is present it appears for a second and the door is unlocked.
+                • You need to be next to objects to check if key exists
+                
                                 
                 Ringcraft Attributes
                                 
@@ -48,5 +51,15 @@ public class HelpScreen extends Screen {
         backButton.setPreferredSize(new Dimension(20, 60));
         backButton.setForeground(Color.BLUE);
         mainColumn.add(backButton);
+    }
+
+
+    public static void main(String[] args) {
+        ScreenManager.getInstance().launch(
+                Constants.FRAME_WIDTH,
+                Constants.FRAME_HEIGHT,
+                Constants.FRAME_TITLE,
+                ScreenFactory.getScreen(ScreenType.HELP)
+        );
     }
 }
