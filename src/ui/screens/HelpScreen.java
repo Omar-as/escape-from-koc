@@ -18,7 +18,7 @@ public class HelpScreen extends Screen {
         this.add(mainColumn);
 
         // TODO: Fix help text
-        var helpText = """                           
+        var helpText = """
                 AIM
                                 
                 • You are in KOC University Campus.
@@ -49,9 +49,8 @@ public class HelpScreen extends Screen {
                 • Extra time power-up adds extra time to your timer.
                                 
                 EXTRA TIME POWER-UP
-                
-                • Extra Life power-up adds one extra life to your life. Like extra time power-up the addition of extra life is automatic.                              
-                                
+                    
+                • Extra Life power-up adds one extra life to your life. Like extra time power-up the addition of extra life is automatic.\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040
                 HINT
                                 
                 • Hint power-up gives information about the location of the key to you. Once you collect it is held in your bag.
@@ -83,6 +82,14 @@ public class HelpScreen extends Screen {
                 • Shooter alien appears in a random location in the building.\s
                 • If you are closer than 4 squares to the shooter alien 1 of your lives. At the beginning of the game you have 3 lives and you can collect extra lives during the game.
                 • If you wear a protection vest you can get close to shooter alien without losing your lives.
+                                
+                                
+                BLIND ALIEN
+                 
+                • Blind alien tries to kill you. In order to kill you it should be right next to you.
+                • It is sensitive to voices and you can fool the blind alien by throwing plastic bottles to the opposite direction where you want to go.
+                • Protection vest does not protect you from the blind alien.
+                                
                      
                                 
                 BUILDING MODE
