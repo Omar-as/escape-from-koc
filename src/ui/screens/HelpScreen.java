@@ -91,6 +91,11 @@ public class HelpScreen extends Screen {
                 • The items you have on your bag are visible on the screen as well.\s
                                 
                                 
+                PAUSE/RESUME
+                                
+                • At any point in the game you can pause and resume the game by pressing ESC on your keyboard.
+                                
+                                
 
                 """;
 
