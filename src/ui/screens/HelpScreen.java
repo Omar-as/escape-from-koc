@@ -66,6 +66,12 @@ public class HelpScreen extends Screen {
                 • To use Protection Vest power-up you can use P on your keyboard.\s
                 • You can use it as soon as you get it or you can save it for next levels. When you activate it its protection last 20 seconds
                                 
+                PLASTIC BOTTLE
+                                
+                • Plastic Bottle power-up is used to fool blind alien.\s
+                • To use the power-up click B button and then press one of the buttons A, D, W, or X\s
+                • A: West, D: East, W: north, X: South.
+                                
 
                 """;
 
