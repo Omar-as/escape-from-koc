@@ -71,6 +71,17 @@ public class HelpScreen extends Screen {
                 • Plastic Bottle power-up is used to fool blind alien.\s
                 • To use the power-up click B button and then press one of the buttons A, D, W, or X\s
                 • A: West, D: East, W: north, X: South.
+                     
+                
+                BUILDING MODE
+                                
+                Game starts with the building mode. In building mode you design the inside of the buildings by placing objects with minimum criteria for each building.
+                There must be at least 5 objects in the Student Center.
+                There must be at least 7 objects in the CASE building.
+                There must be at least 10 objects in the SOS building.
+                There must be at least 14 objects in the SCI building.
+                There must be at least 19 objects in the ENG building.
+                There must be at least 25 objects in the SNA building.
                                 
 
                 """;
