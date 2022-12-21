@@ -1,6 +1,6 @@
 @startuml
 
-title Phase 2 Domain Model
+title Domain Model
 hide circle
 hide methods
 
