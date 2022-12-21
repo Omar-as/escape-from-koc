@@ -47,11 +47,11 @@ public class HelpScreen extends Screen {
                 • You are not required to be next to power-ups to collect them.
                 • Other than extra time and extra life power-ups, power-ups can be stored in your bag for later use.
                 • Extra time power-up adds extra time to your timer.
-                                
+                    
+                              
                 EXTRA TIME POWER-UP
                     
-                • Extra Life power-up adds one extra life to your life. Like extra time power-up the addition of extra life is automatic.\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040
-                HINT
+                • Extra Life power-up adds one extra life to your life. Like extra time power-up the addition of extra life is automatic.
                                 
                 • Hint power-up gives information about the location of the key to you. Once you collect it is held in your bag.
                 • You can use it as soon as you get it or you can save it for next levels.
@@ -94,13 +94,20 @@ public class HelpScreen extends Screen {
                                 
                 BUILDING MODE
                                 
-                Game starts with the building mode. In building mode you design the inside of the buildings by placing objects with minimum criteria for each building.
+                • Game starts with the building mode. In building mode you design the inside of the buildings by placing objects with minimum criteria for each building.
                 • There must be at least 5 objects in the Student Center.
                 • There must be at least 7 objects in the CASE building.
                 • There must be at least 10 objects in the SOS building.
                 • There must be at least 14 objects in the SCI building.
                 • There must be at least 19 objects in the ENG building.
                 • There must be at least 25 objects in the SNA building.
+                
+                
+                TIME-WASTING ALIEN
+                
+                 • Time-wasting alien does not kill you
+                 • It changes the location of the key randomly every 5 seconds.
+                 • It does not walk around but just resides wherever it appears and you cannot see how it changes the location of the key
                                 
                                 
                 RUNNING MODE
