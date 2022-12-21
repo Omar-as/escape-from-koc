@@ -18,8 +18,7 @@ public class HelpScreen extends Screen {
         this.add(mainColumn);
 
         // TODO: Fix help text
-        var helpText = """
-                                
+        var helpText = """                           
                 AIM
                                 
                 • You are in KOC University Campus.
@@ -51,8 +50,7 @@ public class HelpScreen extends Screen {
                                 
                 EXTRA TIME POWER-UP
                                 
-                • The time limit for each object is 5 seconds. If there are 5 objects there is a 25 second time limit for that building. When you collect a Extra Time Power-up you gain 5 extra seconds\s
-                                
+                • The time limit for each object is 5 seconds. If there are 5 objects there is a 25 second time limit for that building. When you collect a Extra Time Power-up you gain 5 extra seconds                              
                                 
                 HINT
                                 
@@ -62,15 +60,22 @@ public class HelpScreen extends Screen {
                                 
                 PROTECTION VEST
                                 
-                • Protection Vest power-up protects you from being shot by the shooter alien.\s
-                • To use Protection Vest power-up you can use P on your keyboard.\s
+                • Protection Vest power-up protects you from being shot by the shooter alien.
+                • To use Protection Vest power-up you can use P on your keyboard.
                 • You can use it as soon as you get it or you can save it for next levels. When you activate it its protection last 20 seconds
                                 
                 PLASTIC BOTTLE
                                 
-                • Plastic Bottle power-up is used to fool blind alien.\s
-                • To use the power-up click B button and then press one of the buttons A, D, W, or X\s
+                • Plastic Bottle power-up is used to fool blind alien.
+                • To use the power-up click B button and then press one of the buttons A, D, W, or X
                 • A: West, D: East, W: north, X: South.
+                                
+                                
+                ALIENS
+                                
+                • While walking around you encounter some aliens who try to kill you or prevent you from finding the keys
+                • All aliens appear randomly in the buildings every 10 seconds and the type of the alien appearing is selected randomly.
+                • Alien stays in the current building even if you find the key and exit.
                      
                                 
                 BUILDING MODE
@@ -84,11 +89,11 @@ public class HelpScreen extends Screen {
                 • There must be at least 25 objects in the SNA building.
                                 
                                 
-                RUNNING MODE\s
+                RUNNING MODE
                                 
                 • When you finish building mode, the game starts running. Your initial location will be random
-                • Number of lives you currently have and your remaining time is displayed on the screen.\s
-                • The items you have on your bag are visible on the screen as well.\s
+                • Number of lives you currently have and your remaining time is displayed on the screen.
+                • The items you have on your bag are visible on the screen as well.
                                 
                                 
                 PAUSE/RESUME
@@ -104,7 +109,7 @@ public class HelpScreen extends Screen {
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
         mainColumn.add(titleLabel);
 
-        var helpTextArea = new JTextArea(helpText);
+        var helpTextArea = new JTextArea();
         helpTextArea.setEditable(false);
         // TODO: Remove magic numbers
         helpTextArea.append(helpText);
