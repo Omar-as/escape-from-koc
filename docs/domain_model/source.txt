@@ -1,0 +1,75 @@
+
+hide circle
+hide methods
+
+class BuildModeState {
+	width
+	height
+	currentRoomIndex
+}
+
+class RunModeState {
+	isPaused
+	currentRoomIndex
+	timeoutAfter
+	completed
+}
+
+class Door {
+	position
+	width
+	height
+}
+
+class Player {
+	lives
+	score
+	position
+}
+
+class PowerUp {
+	timer
+	position
+	type
+}
+
+class Room {
+	name
+	minObjects
+}
+
+class Object {
+	position
+	type
+}
+
+class Key {
+	position
+	isFound?
+}
+
+class Alien {
+	position
+	type
+}
+
+class GameData {
+	score
+	powerUps
+}
+
+BuildModeState "1" -up-    "1" Door     : Contains
+BuildModeState "1" -right- "*" Room     : Contains
+BuildModeState "1" -down-  "1" Object   : Tracks
+
+RunModeState   "1" -down-  "*" Alien    : Contains
+RunModeState   "1" -left-  "*" Room     : Contains
+RunModeState   "1" -right- "1" PowerUp  : Shows
+RunModeState   "1" -up-    "1" Player   : Is Played By
+RunModeState   "1" -up-    "1" Door     : Contains
+RunModeState   "1" -down-  "1" Key      : Contains
+RunModeState   "1" -up-    "1" GameData : Produces
+
+Room           "1" -down-  "*" Object   : Contains
+
+@enduml
