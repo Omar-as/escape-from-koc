@@ -38,6 +38,8 @@ Orhan:
 
 Arda:
 
+- Converting `.docx` documents to `.md` documents.
+- Help screen instructions.
 - Contributed to creating two new use-cases and use-case narratives.
 - Contributed to updating the Domain Model for phase 2.
 - Contributed to creating two new system sequence diagrams.
