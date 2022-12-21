@@ -1,0 +1,13 @@
+title Check Scoreboard
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+note over player,game: Player is on the main screen
+
+player->game: openScoreboardScreen()
+
+game-->player: showScoresTable()
+
+note over player,game: Player is on the scoreboard screen
