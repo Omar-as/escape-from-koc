@@ -19,13 +19,26 @@ public class HelpScreen extends Screen {
 
         // TODO: Fix help text
         var helpText = """
+                
+                AIM
+                
+                • You are in KOC University Campus.
+                • You need to find a sequence of keys in the campus buildings.
+                • The game starts when you enter one of the buildings.
+                • You need to be next to objects to check if key exists
+                • There is a timeout until you can find the keys
+                • You can find hints around the campus map
+                • When you find the key the building will be marked as completed
+                • You fail if you can not find the key in the given time limit
+                • If you manage to find all the keys you win the game !!!!!
+                
+                
                 Game Navigation
                                 
                 • You can use the arrow keys to move. You can go east, west, north and south. You can not go through walls. You can open the exit door of a building if you find the keys
                 • Your aim is to travel the building in the given order: CASE building, SOS building, SCI building, ENG building and SNA building finding keys one by one
                 • To find the keys, you use a left click on the object on the building. If a key is present it appears for a second and the door is unlocked.
                 • You need to be next to objects to check if key exists
-                
                                 
                 Ringcraft Attributes
                                 
