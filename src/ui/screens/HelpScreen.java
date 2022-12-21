@@ -19,9 +19,9 @@ public class HelpScreen extends Screen {
 
         // TODO: Fix help text
         var helpText = """
-                
+                                
                 AIM
-                
+                                
                 • You are in KOC University Campus.
                 • You need to find a sequence of keys in the campus buildings.
                 • The game starts when you enter one of the buildings.
@@ -31,20 +31,25 @@ public class HelpScreen extends Screen {
                 • When you find the key the building will be marked as completed
                 • You fail if you can not find the key in the given time limit
                 • If you manage to find all the keys you win the game !!!!!
-                
-                
-                Game Navigation
+                                
+                GAME NAVIGATION
                                 
                 • You can use the arrow keys to move. You can go east, west, north and south. You can not go through walls. You can open the exit door of a building if you find the keys
                 • Your aim is to travel the building in the given order: CASE building, SOS building, SCI building, ENG building and SNA building finding keys one by one
                 • To find the keys, you use a left click on the object on the building. If a key is present it appears for a second and the door is unlocked.
                 • You need to be next to objects to check if key exists
                                 
-                Ringcraft Attributes
                                 
-                • The ringcraft attribute “Stamina” governs a boxer’s capacity to muster energy. Boxers with superior Stamina expend less energy when punching, and recover energy faster when resting during and between rounds.
-                • The ringcraft attribute “Dexterity” governs a boxer’s hand/eye coordination. Boxers with superior Dexterity can utilise their full strength with their non-dominant arm, and are better at coupling together punches with an economy of effort. They can coordinate swifter counterpunches, and are adept at initiating clinches.
-                • The ringcraft attribute “Agility” governs a boxer’s upper-body movement and suppleness. Boxers with superior Agility are confident with a proactive defence when boxing off the front foot: bobbing, weaving, slipping and rolling incoming shots at all ranges. They are defensively slippery, making them difficult to grasp onto in clinches.
+                POWER-UPS
+                                
+                • You can use power-ups to escape aliens and find keys easily.
+                • The power ups appear randomly in every 12 seconds in a random location.
+                • Power-up disappear if you not collect them in 6 seconds. To collect power-ups you can right click with mouse on them.
+                • You are not required to be next to power-ups to collect them.
+                • Other than extra time and extra life power-ups, power-ups can be stored in your bag for later use.
+                • Extra time power-up adds extra time to your timer.
+                                
+
                 """;
 
         // Initialize components
