@@ -48,7 +48,7 @@ public class HelpScreen extends Screen {
                 • You are not required to be next to power-ups to collect them.
                 • Other than extra time and extra life power-ups, power-ups can be stored in your bag for later use.
                 • Extra time power-up adds extra time to your timer.
-                
+                                
                 EXTRA TIME POWER-UP
                                 
                 • The time limit for each object is 5 seconds. If there are 5 objects there is a 25 second time limit for that building. When you collect a Extra Time Power-up you gain 5 extra seconds\s
@@ -60,6 +60,11 @@ public class HelpScreen extends Screen {
                 • You can use it as soon as you get it or you can save it for next levels.
                 • You can use Hint power-up by pressing H on your keyboard. Then, the key is highlighted on the map and you have 1 second before it dissapears.
                                 
+                PROTECTION VEST
+                                
+                • Protection Vest power-up protects you from being shot by the shooter alien.\s
+                • To use Protection Vest power-up you can use P on your keyboard.\s
+                • You can use it as soon as you get it or you can save it for next levels. When you activate it its protection last 20 seconds
                                 
 
                 """;
