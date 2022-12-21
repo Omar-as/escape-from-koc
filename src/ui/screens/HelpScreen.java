@@ -49,8 +49,8 @@ public class HelpScreen extends Screen {
                 • Extra time power-up adds extra time to your timer.
                                 
                 EXTRA TIME POWER-UP
-                                
-                • The time limit for each object is 5 seconds. If there are 5 objects there is a 25 second time limit for that building. When you collect a Extra Time Power-up you gain 5 extra seconds                              
+                
+                • Extra Life power-up adds one extra life to your life. Like extra time power-up the addition of extra life is automatic.                              
                                 
                 HINT
                                 
@@ -76,6 +76,13 @@ public class HelpScreen extends Screen {
                 • While walking around you encounter some aliens who try to kill you or prevent you from finding the keys
                 • All aliens appear randomly in the buildings every 10 seconds and the type of the alien appearing is selected randomly.
                 • Alien stays in the current building even if you find the key and exit.
+                                
+                                
+                SHOOTER ALIEN
+                                
+                • Shooter alien appears in a random location in the building.\s
+                • If you are closer than 4 squares to the shooter alien 1 of your lives. At the beginning of the game you have 3 lives and you can collect extra lives during the game.
+                • If you wear a protection vest you can get close to shooter alien without losing your lives.
                      
                                 
                 BUILDING MODE
