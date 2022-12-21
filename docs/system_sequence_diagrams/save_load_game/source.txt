@@ -1,0 +1,18 @@
+title Save / Load Game
+
+# Entities
+actor ":Player" as player
+participant ":Game" as game
+
+alt saveButtonClicked
+	player->game: saveGame(currentGame)
+	game-->player: success?
+else loadButtonClicked
+	player->game: loadLastGame()
+	alt savedGame != null
+		game->player: continueGame(savedGame)
+		note over player,game: Player continues where he left off
+	else
+		game->player: error
+	end
+end
