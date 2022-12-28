@@ -48,6 +48,8 @@ class BuildModeBackendTest {
         assertNull(state.getSelectedObject());
         assertEquals(4, scRoom.getObjects().size());
 
+        // Test Case 3:
+        // From Spec
         // If an object is selected AND dropped outside the top border: Unselect and delete object.
         obj = scRoom.getObjects().get(0);
         state.setSelectedObject(obj);
@@ -56,6 +58,8 @@ class BuildModeBackendTest {
         assertNull(state.getSelectedObject());
         assertEquals(3, scRoom.getObjects().size());
 
+        // Test Case 4:
+        // From Spec
         // If an object is selected AND dropped outside the right border: Unselect and delete object.
         obj = scRoom.getObjects().get(0);
         state.setSelectedObject(obj);
@@ -64,6 +68,8 @@ class BuildModeBackendTest {
         assertNull(state.getSelectedObject());
         assertEquals(2, scRoom.getObjects().size());
 
+        // Test Case 5:
+        // From Spec
         // If an object is selected AND dropped outside the bottom border: Unselect and delete object.
         obj = scRoom.getObjects().get(0);
         state.setSelectedObject(obj);
@@ -72,6 +78,8 @@ class BuildModeBackendTest {
         assertNull(state.getSelectedObject());
         assertEquals(1, scRoom.getObjects().size());
 
+        // Test Case 6:
+        // From Spec
         // If an object is selected AND dropped outside the left border: Unselect and delete object.
         obj = scRoom.getObjects().get(0);
         state.setSelectedObject(obj);
