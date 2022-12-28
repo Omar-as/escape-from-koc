@@ -10,6 +10,13 @@ import ui.screens.*;
 
 public class ScreenFactory {
     public static Screen getScreen(ScreenType type) {
+        // EFFECTS:
+        // If type is "SIGN_IN_SIGN_UP" returns getSignInSignUpScreen()
+        // If type is "MAIN"            returns getMainScreen()
+        // If type is "HELP"            returns getHelpScreen()
+        // If type is "BUILD_MODE"      returns getBuildModeScreen()
+        // If type is "RUN_MODE"        throws  IllegalArgumentException()
+        // If type is "GAME_END"        throws  IllegalArgumentException()
         return switch (type) {
             case SIGN_IN_SIGN_UP -> getSignInSignUpScreen();
             case MAIN -> getMainScreen();
