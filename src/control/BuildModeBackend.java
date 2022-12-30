@@ -53,13 +53,13 @@ public class BuildModeBackend implements Backend<BuildModeState> {
     }
 
     public void insertRandomObject(BuildModeState state, ObjectType type) {
-        objectPlacementRandomizer(state, state.getRooms()[state.getCurrentRoom()], type);
+        instertRandomObject(state, state.getRooms()[state.getCurrentRoom()], type);
     }
     public void randomizeObjectPlacementInARoom(BuildModeState state, Room room){
         int NumOfObjs = room.getMinObjects() - room.getObjects().size();
         var random = new Random();
         for(int i = 0; i < NumOfObjs ;i++)
-            objectPlacementRandomizer(state, room,ObjectType.values()[random.nextInt(ObjectType.values().length)]);
+            instertRandomObject(state, room,ObjectType.values()[random.nextInt(ObjectType.values().length)]);
     }
     public void randomizeObjectPlacementForAllRooms(BuildModeState state){
         Room[] rooms = state.getRooms();
@@ -68,7 +68,7 @@ public class BuildModeBackend implements Backend<BuildModeState> {
             randomizeObjectPlacementInARoom(state, rooms[i]);
         }
     }
-    private void objectPlacementRandomizer(BuildModeState state, Room room, ObjectType type){
+    private void instertRandomObject(BuildModeState state, Room room, ObjectType type){
         // TODO: Remove magic numbers
         var minDistance = 100;
         var newObj = new Obj(0, 0, 50, 50, type);
