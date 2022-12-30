@@ -61,4 +61,13 @@ public class Rectangle {
 
         return Math.min(selfX2, otherX2) > Math.max(selfX1, otherX1) && Math.min(selfY2, otherY2) > Math.max(selfY1, otherY1);
     }
+
+    public int distanceBetweenObjects(Rectangle other){
+        var thisCenterX = this.getPosition().getX() + this.getWidth()/2;
+        var thisCenterY = this.getPosition().getY() + this.getHeight()/2;
+        var otherCenterX = other.getPosition().getX() + other.getWidth()/2;
+        var otherCenterY = other.getPosition().getY() + other.getHeight()/2;
+
+        return (int) Math.round(Math.sqrt(Math.pow((thisCenterX - otherCenterX), 2) + Math.pow((thisCenterY - otherCenterY), 2)));
+    }
 }

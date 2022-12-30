@@ -1,6 +1,7 @@
 package control;
 
 import models.BuildModeState;
+import models.Room;
 import models.objects.Obj;
 import models.objects.ObjectType;
 
@@ -51,10 +52,27 @@ public class BuildModeBackend implements Backend<BuildModeState> {
         if (selected.intersects(state.getDoor())) selected.setPosition(backupPosition.getX(), backupPosition.getY());
     }
 
-    public void insertRandomObject(BuildModeState state, ObjectType type) {
+    public void insertRandomObjectInCurrentRoom(BuildModeState state, ObjectType type) {
+        instertRandomObject(state, state.getRooms()[state.getCurrentRoom()], type);
+    }
+    public void fillOneRoomRandomly(BuildModeState state, Room room){
+        int NumOfObjs = room.getMinObjects() - room.getObjects().size();
+        var random = new Random();
+        for(int i = 0; i < NumOfObjs ;i++)
+            instertRandomObject(state, room,ObjectType.values()[random.nextInt(ObjectType.values().length)]);
+    }
+    public void fillAllRoomsRandomly(BuildModeState state){
+        Room[] rooms = state.getRooms();
+        int numOfRooms = state.getRooms().length;
+        for(int i = 0; i < numOfRooms; i ++) {
+            fillOneRoomRandomly(state, rooms[i]);
+        }
+    }
+    private void instertRandomObject(BuildModeState state, Room room, ObjectType type){
         // TODO: Remove magic numbers
+        var minDistance = 100;
         var newObj = new Obj(0, 0, 50, 50, type);
-        var objects = state.getRooms()[state.getCurrentRoom()].getObjects();
+        var objects = room.getObjects();
         var random = new Random();
         var done = false;
 
@@ -64,14 +82,15 @@ public class BuildModeBackend implements Backend<BuildModeState> {
 
             newObj.setPosition(x, y);
 
-            int collisions = objects.stream()
-                    .map(newObj::intersects)
-                    .mapToInt(b -> b ? 1 : 0)
+            int tooClose = objects.stream()
+                    .map(newObj::distanceBetweenObjects)
+                    .mapToInt(b -> (b < minDistance) ? 1 : 0)
                     .sum();
 
-            done = collisions == 0;
+            done = tooClose == 0;
         }
 
         objects.add(newObj);
     }
+
 }
