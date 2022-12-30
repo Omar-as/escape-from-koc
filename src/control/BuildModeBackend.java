@@ -52,20 +52,20 @@ public class BuildModeBackend implements Backend<BuildModeState> {
         if (selected.intersects(state.getDoor())) selected.setPosition(backupPosition.getX(), backupPosition.getY());
     }
 
-    public void insertRandomObject(BuildModeState state, ObjectType type) {
+    public void insertRandomObjectInCurrentRoom(BuildModeState state, ObjectType type) {
         instertRandomObject(state, state.getRooms()[state.getCurrentRoom()], type);
     }
-    public void randomizeObjectPlacementInARoom(BuildModeState state, Room room){
+    public void fillOneRoomRandomly(BuildModeState state, Room room){
         int NumOfObjs = room.getMinObjects() - room.getObjects().size();
         var random = new Random();
         for(int i = 0; i < NumOfObjs ;i++)
             instertRandomObject(state, room,ObjectType.values()[random.nextInt(ObjectType.values().length)]);
     }
-    public void randomizeObjectPlacementForAllRooms(BuildModeState state){
+    public void fillAllRoomsRandomly(BuildModeState state){
         Room[] rooms = state.getRooms();
         int numOfRooms = state.getRooms().length;
         for(int i = 0; i < numOfRooms; i ++) {
-            randomizeObjectPlacementInARoom(state, rooms[i]);
+            fillOneRoomRandomly(state, rooms[i]);
         }
     }
     private void instertRandomObject(BuildModeState state, Room room, ObjectType type){

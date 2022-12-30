@@ -58,7 +58,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         randomizeRoomBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                backend.randomizeObjectPlacementInARoom(state,state.getRooms()[state.getCurrentRoom()]);
+                backend.fillOneRoomRandomly(state,state.getRooms()[state.getCurrentRoom()]);
 
             }
         });
@@ -66,7 +66,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         randomizeAllBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                backend.randomizeObjectPlacementForAllRooms(state);
+                backend.fillAllRoomsRandomly(state);
             }
         });
         var prevBtn = new JButton("Prev Room");
@@ -146,7 +146,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
 
     private void addInsertMenuItem(String text, JPopupMenu insertMenu, BuildModeBackend backend, BuildModeState state, ObjectType type) {
         var menuItem = new JMenuItem(text);
-        menuItem.addActionListener(e -> backend.insertRandomObject(state, type));
+        menuItem.addActionListener(e -> backend.insertRandomObjectInCurrentRoom(state, type));
         insertMenu.add(menuItem);
     }
 }
