@@ -51,26 +51,28 @@ public class RunModeFrontend implements Frontend<RunModeState> {
 
         // Draw player
         var player = state.getPlayer();
-        var playerCurrentAsset = player.getCurrentSprite();
-        var isUpPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_UP);
-        var isLeftPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_LEFT);
-        var isDownPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_DOWN);
-        var isRightPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_RIGHT);
+        if (player.getFramesPassed() == 10) {
+            var playerCurrentAsset = player.getCurrentSprite();
+            var isUpPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_UP);
+            var isLeftPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_LEFT);
+            var isDownPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_DOWN);
+            var isRightPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_RIGHT);
 
-        if (isUpPressed){
-            player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_UP1 ? Asset.PLAYER_MOVE_UP2 : Asset.PLAYER_MOVE_UP1);
-        }
-        else if (isDownPressed) {
-            player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_DOWN1 ? Asset.PLAYER_MOVE_DOWN2 : Asset.PLAYER_MOVE_DOWN1);
-        }
-        else if (isLeftPressed){
-            player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_LEFT1 ? Asset.PLAYER_MOVE_LEFT2 : Asset.PLAYER_MOVE_LEFT1);
-        }
-        else if (isRightPressed){
-            player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_RIGHT1 ? Asset.PLAYER_MOVE_RIGHT2 : Asset.PLAYER_MOVE_RIGHT1);
-        }
-        else {
-            player.setCurrentSprite(Asset.PLAYER_IDLE);
+            if (isUpPressed) {
+                player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_UP1 ? Asset.PLAYER_MOVE_UP2 : Asset.PLAYER_MOVE_UP1);
+            } else if (isDownPressed) {
+                player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_DOWN1 ? Asset.PLAYER_MOVE_DOWN2 : Asset.PLAYER_MOVE_DOWN1);
+            } else if (isLeftPressed) {
+                player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_LEFT1 ? Asset.PLAYER_MOVE_LEFT2 : Asset.PLAYER_MOVE_LEFT1);
+            } else if (isRightPressed) {
+                player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_RIGHT1 ? Asset.PLAYER_MOVE_RIGHT2 : Asset.PLAYER_MOVE_RIGHT1);
+            } else {
+                player.setCurrentSprite(Asset.PLAYER_IDLE);
+            }
+
+            player.setFramesPassed(0);
+        } else {
+            player.setFramesPassed(player.getFramesPassed() + 1);
         }
 
         var playerImage = GraphicsManager.getInstance().getImage(player.getCurrentSprite(), player.getWidth(), player.getHeight());

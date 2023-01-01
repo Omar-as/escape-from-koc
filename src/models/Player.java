@@ -8,6 +8,7 @@ public class Player extends Rectangle {
     private int score;
     private Room currentRoom;
     private Asset currentSprite;
+    private int framesPassed = 10;
 
     public Player(int lives, int score, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
@@ -45,5 +46,13 @@ public class Player extends Rectangle {
 
     public void setCurrentSprite(Asset currentSprite) {
         this.currentSprite = currentSprite;
+    }
+
+    public int getFramesPassed() {
+        return framesPassed;
+    }
+
+    public void setFramesPassed(int framesPassed) {
+        this.framesPassed = framesPassed;
     }
 }
