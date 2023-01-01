@@ -13,7 +13,7 @@ public final class Constants {
     public static final long REPAINT_DELAY_MILLS = 15;
     public static final int SECOND_MILLS = 1000;
     // Run Mode
-    public static final int PLAYER_SPEED = 10;
+    public static final int PLAYER_SPEED = 5;
 
     // This class should not be instanced
     private Constants() {

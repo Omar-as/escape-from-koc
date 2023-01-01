@@ -11,8 +11,6 @@ import java.awt.event.KeyEvent;
 
 public class RunModeFrontend implements Frontend<RunModeState> {
 
-    private Asset playerCurrentAsset  = Asset.PLAYER_IDLE;
-
     @Override
     public void drawState(RunModeState state, Graphics canvas) {
         int width = state.getWidth();
@@ -53,28 +51,29 @@ public class RunModeFrontend implements Frontend<RunModeState> {
 
         // Draw player
         var player = state.getPlayer();
+        var playerCurrentAsset = player.getCurrentSprite();
         var isUpPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_UP);
         var isLeftPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_LEFT);
         var isDownPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_DOWN);
         var isRightPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_RIGHT);
 
         if (isUpPressed){
-            playerCurrentAsset = (playerCurrentAsset == Asset.PLAYER_MOVE_UP1 ? Asset.PLAYER_MOVE_UP2 : Asset.PLAYER_MOVE_UP1);
+            player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_UP1 ? Asset.PLAYER_MOVE_UP2 : Asset.PLAYER_MOVE_UP1);
         }
         else if (isDownPressed) {
-            playerCurrentAsset = (playerCurrentAsset == Asset.PLAYER_MOVE_DOWN1 ? Asset.PLAYER_MOVE_DOWN2 : Asset.PLAYER_MOVE_DOWN1);
+            player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_DOWN1 ? Asset.PLAYER_MOVE_DOWN2 : Asset.PLAYER_MOVE_DOWN1);
         }
         else if (isLeftPressed){
-            playerCurrentAsset = (playerCurrentAsset == Asset.PLAYER_MOVE_LEFT1 ? Asset.PLAYER_MOVE_LEFT2 : Asset.PLAYER_MOVE_LEFT1);
+            player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_LEFT1 ? Asset.PLAYER_MOVE_LEFT2 : Asset.PLAYER_MOVE_LEFT1);
         }
         else if (isRightPressed){
-            playerCurrentAsset = (playerCurrentAsset == Asset.PLAYER_MOVE_RIGHT1 ? Asset.PLAYER_MOVE_RIGHT2 : Asset.PLAYER_MOVE_RIGHT1);
+            player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_RIGHT1 ? Asset.PLAYER_MOVE_RIGHT2 : Asset.PLAYER_MOVE_RIGHT1);
         }
         else {
-            playerCurrentAsset = Asset.PLAYER_IDLE;
+            player.setCurrentSprite(Asset.PLAYER_IDLE);
         }
 
-        var playerImage = GraphicsManager.getInstance().getImage(playerCurrentAsset, player.getWidth(), player.getHeight());
+        var playerImage = GraphicsManager.getInstance().getImage(player.getCurrentSprite(), player.getWidth(), player.getHeight());
         canvas.drawImage(playerImage, player.getPosition().getX(), player.getPosition().getY(), null);
     }
 }

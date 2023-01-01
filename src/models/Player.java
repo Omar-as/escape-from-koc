@@ -1,11 +1,13 @@
 package models;
 
+import utils.Asset;
 import utils.Position;
 
 public class Player extends Rectangle {
     private int lives;
     private int score;
     private Room currentRoom;
+    private Asset currentSprite;
 
     public Player(int lives, int score, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
@@ -35,5 +37,13 @@ public class Player extends Rectangle {
 
     public void setCurrentRoom(Room room) {
         currentRoom = room;
+    }
+
+    public Asset getCurrentSprite() {
+        return currentSprite;
+    }
+
+    public void setCurrentSprite(Asset currentSprite) {
+        this.currentSprite = currentSprite;
     }
 }
