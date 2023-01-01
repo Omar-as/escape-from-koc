@@ -1,7 +1,19 @@
 package utils;
 
 public enum Asset {
-    PLAYER("player"),
+    PLAYER_IDLE("player_idle"),
+    PLAYER_MOVE_RIGHT_IDLE("player_mr"),
+    PLAYER_MOVE_RIGHT1("player_mr1"),
+    PLAYER_MOVE_RIGHT2("player_mr2"),
+    PLAYER_MOVE_LEFT_IDLE("player_ml"),
+    PLAYER_MOVE_LEFT1("player_ml1"),
+    PLAYER_MOVE_LEFT2("player_ml2"),
+    PLAYER_MOVE_DOWN1("player_md1"),
+    PLAYER_MOVE_DOWN2("player_md2"),
+    PLAYER_MOVE_UP_IDLE("player_mu"),
+    PLAYER_MOVE_UP1("player_mu1"),
+    PLAYER_MOVE_UP2("player_mu2"),
+
     KEY("key"),
     ALIEN_BLIND("alien_blind"),
     ALIEN_SHOOTER("alien_shooter"),

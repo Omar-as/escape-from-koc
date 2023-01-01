@@ -1,13 +1,18 @@
 package ui.frontends;
 
+import control.KeyManager;
 import models.RunModeState;
 import ui.Frontend;
 import ui.GraphicsManager;
 import utils.Asset;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class RunModeFrontend implements Frontend<RunModeState> {
+
+    private Asset playerCurrentAsset  = Asset.PLAYER_IDLE;
+
     @Override
     public void drawState(RunModeState state, Graphics canvas) {
         int width = state.getWidth();
@@ -38,7 +43,7 @@ public class RunModeFrontend implements Frontend<RunModeState> {
         for (var obj : objects) {
             if (obj == under && state.getKey().isFound() && state.getShowKeyFor() > 0) {
                 // Remove magic numbers
-                var keyImage = GraphicsManager.getInstance().getImage(Asset.KEY, 50, 50);
+                var keyImage = GraphicsManager.getInstance().getImage(Asset.KEY, obj.getWidth(), obj.getHeight());
                 canvas.drawImage(keyImage, obj.getPosition().getX(), obj.getPosition().getY(), null);
             } else {
                 var objectImage = GraphicsManager.getInstance().getImage(obj.getType().asset, obj.getWidth(), obj.getHeight());
@@ -48,7 +53,28 @@ public class RunModeFrontend implements Frontend<RunModeState> {
 
         // Draw player
         var player = state.getPlayer();
-        var playerImage = GraphicsManager.getInstance().getImage(Asset.PLAYER, player.getWidth(), player.getHeight());
+        var isUpPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_UP);
+        var isLeftPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_LEFT);
+        var isDownPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_DOWN);
+        var isRightPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_RIGHT);
+
+        if (isUpPressed){
+            playerCurrentAsset = (playerCurrentAsset == Asset.PLAYER_MOVE_UP1 ? Asset.PLAYER_MOVE_UP2 : Asset.PLAYER_MOVE_UP1);
+        }
+        else if (isDownPressed) {
+            playerCurrentAsset = (playerCurrentAsset == Asset.PLAYER_MOVE_DOWN1 ? Asset.PLAYER_MOVE_DOWN2 : Asset.PLAYER_MOVE_DOWN1);
+        }
+        else if (isLeftPressed){
+            playerCurrentAsset = (playerCurrentAsset == Asset.PLAYER_MOVE_LEFT1 ? Asset.PLAYER_MOVE_LEFT2 : Asset.PLAYER_MOVE_LEFT1);
+        }
+        else if (isRightPressed){
+            playerCurrentAsset = (playerCurrentAsset == Asset.PLAYER_MOVE_RIGHT1 ? Asset.PLAYER_MOVE_RIGHT2 : Asset.PLAYER_MOVE_RIGHT1);
+        }
+        else {
+            playerCurrentAsset = Asset.PLAYER_IDLE;
+        }
+
+        var playerImage = GraphicsManager.getInstance().getImage(playerCurrentAsset, player.getWidth(), player.getHeight());
         canvas.drawImage(playerImage, player.getPosition().getX(), player.getPosition().getY(), null);
     }
 }
