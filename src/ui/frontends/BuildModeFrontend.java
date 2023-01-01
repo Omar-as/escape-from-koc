@@ -13,7 +13,7 @@ public class BuildModeFrontend implements Frontend<BuildModeState> {
     public void drawState(BuildModeState state, Graphics canvas) {
 
         // Draw background
-        var BackGroundImage = GraphicsManager.getInstance().getImage(Asset.Background, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
+        var BackGroundImage = GraphicsManager.getInstance().getImage(Asset.BACKGROUND, Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
         canvas.drawImage(BackGroundImage, 0, 0, null);
 
         // Draw all objects

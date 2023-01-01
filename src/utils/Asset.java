@@ -8,11 +8,12 @@ public enum Asset {
     ALIEN_TIME_WASTING("alien_time_wasting"),
     TRASH_BIN("trash_bin"),
     CHALK_BOARD("chalk_board"),
-    DESK("desk"),
     BOOKSHELF("bookshelf"),
+    DESK("desk"),
+    PRINTER("printer"),
     DOOR_OPEN("door_open"),
     DOOR_CLOSED("door_closed"),
-    Background("background");
+    BACKGROUND("background");
 
     public final String name;
 
