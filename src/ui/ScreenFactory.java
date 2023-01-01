@@ -45,7 +45,7 @@ public class ScreenFactory {
     }
 
     public static RunModeScreen getRunModeScreen(BuildModeState buildModeState) {
-        var player = new Player(5, 0, 0, 0, 100, 100);
+        var player = new Player(5, 0, 0, 0, 32, 32);
         var state = new RunModeState(null, false, buildModeState.getRooms(), null, player, buildModeState.getDoor());
         var backend = new RunModeBackend();
         return new RunModeScreen(state, backend);
