@@ -9,7 +9,8 @@ public enum Asset {
     TRASH_BIN("trash_bin"),
     CHALK_BOARD("chalk_board"),
     DOOR_OPEN("door_open"),
-    DOOR_CLOSED("door_closed");
+    DOOR_CLOSED("door_closed"),
+    Background("background");
 
     public final String name;
 
