@@ -38,6 +38,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         addInsertMenuItem("Trash Bin", insertMenu, backend, state, ObjectType.TRASH_BIN);
         addInsertMenuItem("Chalk Board", insertMenu, backend, state, ObjectType.CHALK_BOARD);
         addInsertMenuItem("Bookshelf", insertMenu, backend, state, ObjectType.BOOKSHELF);
+        addInsertMenuItem("Desk", insertMenu, backend, state, ObjectType.DESK);
 
         var insertBtn = new JButton("Insert");
         insertBtn.addMouseListener(new MouseAdapter() {

@@ -8,6 +8,7 @@ public enum Asset {
     ALIEN_TIME_WASTING("alien_time_wasting"),
     TRASH_BIN("trash_bin"),
     CHALK_BOARD("chalk_board"),
+    DESK("desk"),
     BOOKSHELF("bookshelf"),
     DOOR_OPEN("door_open"),
     DOOR_CLOSED("door_closed"),
