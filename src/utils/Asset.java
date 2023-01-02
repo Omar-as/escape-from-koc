@@ -12,7 +12,7 @@ public enum Asset {
     PLAYER_MOVE_UP2("player_mu2"),
 
     KEY("key"),
-    ALIEN_BLIND("alien_blind"),
+    ALIEN_BLIND_IDLE("alien_blind_idle"),
     ALIEN_SHOOTER("alien_shooter"),
     ALIEN_TIME_WASTING("alien_time_wasting"),
     TRASH_BIN("trash_bin"),
