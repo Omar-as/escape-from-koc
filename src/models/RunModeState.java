@@ -6,6 +6,7 @@ import utils.Constants;
 import java.util.Random;
 
 public class RunModeState extends State {
+    // OVERVIEW: Holds the state while in Run Mode (player and alien positions, scores and timeouts, etc...). Mutable.
     private int width;
     private int height;
     private Alien[] aliens;
@@ -20,9 +21,11 @@ public class RunModeState extends State {
     private int timeoutAfter;
     private boolean completed;
 
+    // Constructors
+
     public RunModeState(Alien[] aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door) {
-        this.width = 0;
-        this.height = 0;
+        this.width = 1;
+        this.height = 1;
         this.aliens = aliens;
         this.isPaused = isPaused;
         this.rooms = rooms;
@@ -36,11 +39,16 @@ public class RunModeState extends State {
         this.completed = false;
     }
 
+    // Methods
+
     public int getWidth() {
         return width;
     }
 
+    // EFFECT: Update the game width. New width should be positive.
+    // MODIFIES: Game width.
     public void setWidth(int width) {
+        if (width <= 0) throw new IllegalArgumentException();
         this.width = width;
         // TODO: Remove magic number
         this.door.setXPosition(width - 50);
@@ -50,7 +58,10 @@ public class RunModeState extends State {
         return height;
     }
 
+    // EFFECT: Update the game height. New height should be positive.
+    // MODIFIES: Game height.
     public void setHeight(int height) {
+        if (height <= 0) throw new IllegalArgumentException();
         this.height = height;
         // TODO: Remove magic number
         this.door.setYPosition(height - 50);
@@ -154,5 +165,43 @@ public class RunModeState extends State {
 
     public void setCompleted() {
         completed = true;
+    }
+
+    // Invariant Validity Check
+
+    public boolean repOk() {
+        // Width and height should be positive
+        if (width <= 0 || height <= 0) return false;
+
+        // The aliens list cannot be null
+        if (aliens == null) return false;
+
+        // The rooms list cannot be null or empty
+        if (rooms == null || rooms.length == 0) return false;
+
+        // Current room index should be a valid index
+        if (currentRoom < 0 || currentRoom >= rooms.length) return false;
+        // Make sure minimum object requirement is met
+        for (var room : rooms) {
+            if (room.getObjects().size() < room.getMinObjects()) return false;
+        }
+
+        // The powerups list cannot be null
+        if (powerUps == null) return false;
+
+        // The player cannot be null
+        if (player == null) return false;
+
+        // The door cannot be null
+        if (door == null) return false;
+
+        // The key cannot be null
+        if (key == null) return false;
+
+        // showKeyFor should be non-negative
+        if (showKeyFor < 0) return false;
+
+        // timeoutAfter should be non-negative
+        return timeoutAfter >= 0;
     }
 }
