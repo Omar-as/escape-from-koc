@@ -30,7 +30,7 @@ public class RunModeState extends State {
         this.powerUps = powerUps;
         this.player = player;
         this.door = door;
-        setKey();
+        setKey(new Random());
         this.showKeyFor = 0;
         resetTimeoutAfter();
         this.completed = false;
@@ -116,8 +116,7 @@ public class RunModeState extends State {
         return key;
     }
 
-    public void setKey() {
-        var random = new Random();
+    public void setKey(Random random) {
         var room = getRooms()[getCurrentRoom()];
         var objects = room.getObjects();
         var randObj = objects.get(random.nextInt(objects.size()));

@@ -6,6 +6,7 @@ import ui.ScreenManager;
 import utils.Constants;
 
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class RunModeBackend implements Backend<RunModeState> {
     @Override
@@ -61,7 +62,7 @@ public class RunModeBackend implements Backend<RunModeState> {
                     state.setCompleted();
                     ScreenManager.getInstance().setScreen(ScreenFactory.getGameEndScreen(true));
                 } else {
-                    state.setKey();
+                    state.setKey(new Random());
                     state.resetTimeoutAfter();
                 }
             } else player.setPosition(backupPosition);
