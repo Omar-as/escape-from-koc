@@ -172,7 +172,12 @@ public class RunModeState extends State {
         return showKeyFor;
     }
 
+    // EFFECT: Sets/updates showKeyFor in the game. showKeyFor should not be negative
+    // MODIFIES: showKeyFor
     public void setShowKeyFor(int showKeyFor) {
+        // showKeyFor should be non-negative
+        if (showKeyFor < 0) throw new IllegalArgumentException();
+
         this.showKeyFor = showKeyFor;
     }
 
@@ -228,9 +233,6 @@ public class RunModeState extends State {
 
         // The door cannot be null
         if (door == null) return false;
-
-        // The key cannot be null
-        if (key == null) return false;
 
         // showKeyFor should be non-negative
         if (showKeyFor < 0) return false;

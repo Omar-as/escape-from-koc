@@ -6,6 +6,8 @@ import models.objects.Obj;
 import models.objects.ObjectType;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RunModeStateTest {
@@ -116,10 +118,14 @@ class RunModeStateTest {
     }
 
     @Test
-    void setKey() {
-    }
-
-    @Test
     void setShowKeyFor() {
+        var room = new Room("Student Center", 1);
+        var object = new Obj(1,2,3,4,ObjectType.CHALK_BOARD);
+        room.getObjects().add(object);
+        var state = new RunModeState(new Alien[]{}, false, new Room[]{ room }, new PowerUp[]{}, new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50));
+        var key = new Key(object);
+        state.setShowKeyFor(3);
+        assertTrue(state.repOk());
+        assertThrows(IllegalArgumentException.class, () -> { state.setShowKeyFor(-1);});
     }
 }
