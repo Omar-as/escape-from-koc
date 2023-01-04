@@ -35,4 +35,9 @@ public class KeyManager {
             return keyStates.getOrDefault(keyCode, false);
         }
     }
+    public void setKeyPressed(int keyCode,boolean isPressed){
+        synchronized (KeyManager.class) {
+            keyStates.put(keyCode, isPressed);
+        }
+    }
 }
