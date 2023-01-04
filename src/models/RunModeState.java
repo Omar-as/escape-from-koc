@@ -111,7 +111,12 @@ public class RunModeState extends State {
         return currentRoom;
     }
 
+    // EFFECT: Update the current room index in the game. Current room index should not be larger or equal than Room list length.
+    // MODIFIES: Current room
     public void incCurrentRoom() {
+        // Next room index should be a valid index
+        if (currentRoom+1 >= rooms.length) throw new IllegalArgumentException();
+
         currentRoom++;
     }
 
@@ -119,7 +124,10 @@ public class RunModeState extends State {
         return powerUps;
     }
 
+    // EFFECT: Update the powerUps list in the game. PowerUps list should not be null.
+    // MODIFIES: PowerUps
     public void setPowerUps(PowerUp[] powerUps) {
+        if (powerUps == null) throw new IllegalArgumentException();
         this.powerUps = powerUps;
     }
 
