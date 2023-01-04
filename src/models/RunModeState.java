@@ -71,7 +71,10 @@ public class RunModeState extends State {
         return aliens;
     }
 
+    // EFFECT: Update the Aliens List in the game. The array should not be null.
+    // MODIFIES: Aliens
     public void setAliens(Alien[] aliens) {
+        if (aliens == null) throw new IllegalArgumentException();
         this.aliens = aliens;
     }
 
@@ -87,7 +90,20 @@ public class RunModeState extends State {
         return rooms;
     }
 
+
+    // EFFECT: Update the Rooms List in the game. The array should not be null and should not be empty.
+    // MODIFIES: Rooms
     public void setRooms(Room[] rooms) {
+        // The rooms list cannot be null or empty
+        if (rooms == null || rooms.length == 0) throw new IllegalArgumentException();
+
+        // Current room index should be a valid index
+        if (currentRoom < 0 || currentRoom >= rooms.length) throw new IllegalArgumentException();
+        // Make sure minimum object requirement is met
+        for (var room : rooms) {
+            if (room.getObjects().size() < room.getMinObjects()) throw new IllegalArgumentException();
+        }
+
         this.rooms = rooms;
     }
 
