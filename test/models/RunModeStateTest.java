@@ -94,10 +94,25 @@ class RunModeStateTest {
 
     @Test
     void setPlayer() {
+        var room = new Room("Student Center", 1);
+        room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
+        var state = new RunModeState(new Alien[]{}, false, new Room[]{ room }, new PowerUp[]{}, new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50));
+        assertTrue(state.repOk());
+        state.setPlayer(new Player(5, 200, 10, 10, 64, 64));
+        assertTrue(state.repOk());
+        assertThrows(IllegalArgumentException.class, () -> { state.setPlayer(null);});
+
     }
 
     @Test
     void setDoor() {
+        var room = new Room("Student Center", 1);
+        room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
+        var state = new RunModeState(new Alien[]{}, false, new Room[]{ room }, new PowerUp[]{}, new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50));
+        assertTrue(state.repOk());
+        state.setDoor(new Door(200, 100, 100, 100));
+        assertTrue(state.repOk());
+        assertThrows(IllegalArgumentException.class, () -> { state.setDoor(null);});
     }
 
     @Test

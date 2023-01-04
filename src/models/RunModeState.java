@@ -135,7 +135,12 @@ public class RunModeState extends State {
         return player;
     }
 
+    // EFFECT: Sets/Updates `player` in the game. The player should not be null
+    // MODIFIES: player
     public void setPlayer(Player player) {
+        // `player` should not be null
+        if (player == null) throw new IllegalArgumentException();
+
         this.player = player;
     }
 
@@ -143,7 +148,12 @@ public class RunModeState extends State {
         return door;
     }
 
+    // EFFECT: Sets/Updates `door` in the game. The door should not be null
+    // MODIFIES: door
     public void setDoor(Door door) {
+        // `door` should not be null
+        if (door == null) throw new IllegalArgumentException();
+
         this.door = door;
     }
 
