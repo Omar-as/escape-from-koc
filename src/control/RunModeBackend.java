@@ -158,7 +158,6 @@ public class RunModeBackend implements Backend<RunModeState> {
 //                    + (dummyRect.intersects(player) ? 1 : 0)
                     + ((xPosition < 0 || yPosition < 0 || yPosition > (state.getHeight() - alien.getHeight()) || xPosition > (state.getWidth() - alien.getWidth())) ? 1 : 0);
             done = intersects == 0;
-            System.out.println(intersects);
         }
         alien.setPosition(xPosition, yPosition);
     }
