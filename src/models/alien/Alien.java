@@ -9,17 +9,19 @@ import java.util.Random;
 
 public class Alien extends Rectangle {
     private final AlienType type;
-
     private final int[][] directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
     private int[] currentDirection;
     private int actionTimeOut;
     private int framesPassed = 10;
     private Asset currentSprite;
+    private int timeSpawned;
+    private Boolean confused;
 
     public Alien(AlienType type, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
         this.type = type;
-         resetActionTimeOut();
+        this.confused = false;
+        resetActionTimeOut();
         if (type == AlienType.BLIND) setCurrentDirectionRandomly();
     }
 
@@ -54,8 +56,19 @@ public class Alien extends Rectangle {
     public Asset getCurrentSprite() {
         return currentSprite;
     }
-
     public void setCurrentSprite(Asset currentSprite) {
         this.currentSprite = currentSprite;
+    }
+    public int getTimeSpawned() {
+        return timeSpawned;
+    }
+    public void setTimeSpawned(int timeSpawned) {
+        this.timeSpawned = timeSpawned;
+    }
+    public Boolean getConfused() {
+        return confused;
+    }
+    public void setConfused(Boolean confused) {
+        this.confused = confused;
     }
 }

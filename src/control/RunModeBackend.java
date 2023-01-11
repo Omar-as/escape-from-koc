@@ -19,7 +19,9 @@ import java.util.Random;
 public class RunModeBackend implements Backend<RunModeState> {
     @Override
     public void updateState(RunModeState state) {
+
         if (state.isCompleted()) return;
+
         movePlayer(state);
 
         for (var alien : state.getAliens()) {
@@ -35,6 +37,7 @@ public class RunModeBackend implements Backend<RunModeState> {
                     break;
             }
         }
+
         if ((state.getTimeoutAfter() <= 0 && !state.isCompleted()) || state.getPlayer().getLives() == 0) {
             state.setCompleted();
             ScreenManager.getInstance().setScreen(ScreenFactory.getGameEndScreen(false));
@@ -45,7 +48,6 @@ public class RunModeBackend implements Backend<RunModeState> {
             spawnAlien(new Random(), state);
             state.resetTimeForNextAlien();
         }
-
         state.decTimeForNextAlien();
             
     }
@@ -122,6 +124,14 @@ public class RunModeBackend implements Backend<RunModeState> {
         var objects = room.getObjects();
         var done = false;
 
+        if (alien.getType() == AlienType.TIME_WASTING) {
+            alien.setTimeSpawned((int) state.getTimeoutAfter());
+            var percentTime = (int) (alien.getTimeSpawned() / ((state.getRooms()[state.getCurrentRoom()].getObjects().size() * 5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS));
+            if (percentTime >= 70) alien.setConfused(true);
+            else if (30 <= percentTime && percentTime < 70) alien.setConfused(true);
+            else if (percentTime < 30) alien.setConfused(true);
+        }
+
         while (!done) {
             int x = random.nextInt(state.getWidth() - alien.getWidth());
             int y = random.nextInt(state.getHeight() - alien.getHeight());
@@ -178,8 +188,6 @@ public class RunModeBackend implements Backend<RunModeState> {
         alien.decActionTimeOut();
         if (alien.getActionTimeOut() <= 0) {
 
-//            System.out.println(state.getKey().getUnder());
-
             var random = new Random();
             var room = state.getRooms()[state.getCurrentRoom()];
             var objects = room.getObjects();
@@ -189,8 +197,6 @@ public class RunModeBackend implements Backend<RunModeState> {
             } while (randObj == state.getKey().getUnder());
 
             state.setKey(new Key(randObj));
-
-//            System.out.println(state.getKey().getUnder());
 
             alien.resetActionTimeOut();
         }

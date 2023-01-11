@@ -52,6 +52,7 @@ public class RunModeFrontend implements Frontend<RunModeState> {
             else alien.setCurrentSprite(alien.getType().asset);
 
             var alienImage = GraphicsManager.getInstance().getImage(alien.getCurrentSprite(), alien.getWidth(), alien.getHeight());
+//            if (alien.getType() == AlienType.SHOOTER)
             canvas.drawImage(alienImage, alien.getPosition().getX(), alien.getPosition().getY(), null);
         }
 
