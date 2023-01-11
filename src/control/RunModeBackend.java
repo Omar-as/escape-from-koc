@@ -23,15 +23,24 @@ public class RunModeBackend implements Backend<RunModeState> {
         movePlayer(state);
 
         for (var alien : state.getAliens()) {
-            if (alien.getType() == AlienType.BLIND) moveBlindAlien(alien, state);
-            else if (alien.getType() == AlienType.TIME_WASTING) changeKeyPosition(alien, state);
-            else if (alien.getType() == AlienType.SHOOTER) fireProjectile(alien);
+            switch (alien.getType()) {
+                case BLIND:
+                    moveBlindAlien(alien, state);
+                    break;
+                case TIME_WASTING:
+                    changeKeyPosition(alien, state);
+                    break;
+                case SHOOTER:
+                    fireProjectile(alien);
+                    break;
+            }
         }
         if ((state.getTimeoutAfter() <= 0 && !state.isCompleted()) || state.getPlayer().getLives() == 0) {
             state.setCompleted();
             ScreenManager.getInstance().setScreen(ScreenFactory.getGameEndScreen(false));
         }
         state.decTimeoutAfter();
+
         if (state.getTimeForNextAlien() <= 0){
             spawnAlien(new Random(), state);
             state.resetTimeForNextAlien();
@@ -86,6 +95,7 @@ public class RunModeBackend implements Backend<RunModeState> {
                     state.setKey();
                     state.resetTimeoutAfter();
                     state.setAliens(new ArrayList<Alien>());
+                    player.setPosition(0, 0);
                 }
             } else player.setPosition(backupPosition);
         }
@@ -100,17 +110,14 @@ public class RunModeBackend implements Backend<RunModeState> {
         var underY = under.getPosition().getY();
         var player = state.getPlayer();
         var distance = player.distanceBetweenObjects(under);
-        // TODO: Remove magic numbers
-        if (clickX >= underX && clickX <= underX + under.getWidth() && clickY >= underY && clickY <= underY + under.getHeight() && distance <= 100) {
+        if (clickX >= underX && clickX <= underX + under.getWidth() && clickY >= underY && clickY <= underY + under.getHeight() && distance <= Constants.minDistance) {
             state.getKey().setFound();
             state.setShowKeyFor((int) (Constants.SECOND_MILLS / Constants.REPAINT_DELAY_MILLS));
         }
     }
     private void spawnAlien(Random random, RunModeState state) {
         Room room = state.getRooms()[state.getCurrentRoom()];
-        // TODO: Remove magic numbers
-        Alien alien = new Alien(AlienType.values()[random.nextInt(2)], 0, 0 ,64, 64);
-        var minDistance = 100;
+        Alien alien = new Alien(AlienType.values()[random.nextInt(AlienType.values().length)], 0, 0 ,Constants.entityDim, Constants.entityDim);
 
         var objects = room.getObjects();
         var done = false;
@@ -123,7 +130,7 @@ public class RunModeBackend implements Backend<RunModeState> {
 
             int tooClose = objects.stream()
                     .map(alien::distanceBetweenObjects)
-                    .mapToInt(b -> (b < minDistance) ? 1 : 0)
+                    .mapToInt(b -> (b < Constants.minDistance) ? 1 : 0)
                     .sum();
 
             done = tooClose == 0;

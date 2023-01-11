@@ -1,6 +1,7 @@
 package models;
 
 import models.objects.Obj;
+import utils.Constants;
 
 public class BuildModeState extends State {
     private final Room[] rooms;
@@ -16,8 +17,7 @@ public class BuildModeState extends State {
         this.rooms = rooms;
         this.currentRoom = 0;
         this.selectedObject = null;
-        // TODO: Remove magic numbers
-        this.door = new Door(width - 50, height - 50, 50, 50);
+        this.door = new Door(width - Constants.entityDim, height - Constants.entityDim, Constants.entityDim, Constants.entityDim);
     }
 
     public int getWidth() {
@@ -26,8 +26,7 @@ public class BuildModeState extends State {
 
     public void setWidth(int width) {
         this.width = width;
-        // TODO: Remove magic number
-        this.door.setXPosition(width - 50);
+        this.door.setXPosition(width - Constants.entityDim);
     }
 
     public int getHeight() {
@@ -36,8 +35,7 @@ public class BuildModeState extends State {
 
     public void setHeight(int height) {
         this.height = height;
-        // TODO: Remove magic number
-        this.door.setYPosition(height - 50);
+        this.door.setYPosition(height - Constants.entityDim);
     }
 
     public Room[] getRooms() {

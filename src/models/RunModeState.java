@@ -45,8 +45,7 @@ public class RunModeState extends State {
 
     public void setWidth(int width) {
         this.width = width;
-        // TODO: Remove magic number
-        this.door.setXPosition(width - 50);
+        this.door.setXPosition(width - Constants.entityDim);
     }
 
     public int getHeight() {
@@ -55,8 +54,7 @@ public class RunModeState extends State {
 
     public void setHeight(int height) {
         this.height = height;
-        // TODO: Remove magic number
-        this.door.setYPosition(height - 50);
+        this.door.setYPosition(height - Constants.entityDim);
     }
 
     public ArrayList<Alien> getAliens() {
