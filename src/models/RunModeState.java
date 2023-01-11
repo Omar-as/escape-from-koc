@@ -125,6 +125,11 @@ public class RunModeState extends State {
         var objects = room.getObjects();
         var randObj = objects.get(random.nextInt(objects.size()));
         this.key = new Key(randObj);
+        System.out.println(key.getUnder());
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
     }
 
     public int getShowKeyFor() {

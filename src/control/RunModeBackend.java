@@ -1,5 +1,6 @@
 package control;
 
+import models.Key;
 import models.Rectangle;
 import models.Room;
 import models.RunModeState;
@@ -23,7 +24,7 @@ public class RunModeBackend implements Backend<RunModeState> {
 
         for (var alien : state.getAliens()) {
             if (alien.getType() == AlienType.BLIND) moveBlindAlien(alien, state);
-            else if (alien.getType() == AlienType.TIME_WASTING) changeKeyPosition(alien);
+            else if (alien.getType() == AlienType.TIME_WASTING) changeKeyPosition(alien, state);
             else if (alien.getType() == AlienType.SHOOTER) fireProjectile(alien);
         }
         if (state.getTimeoutAfter() <= 0 && !state.isCompleted()) {
@@ -108,8 +109,7 @@ public class RunModeBackend implements Backend<RunModeState> {
     private void spawnAlien(Random random, RunModeState state) {
         Room room = state.getRooms()[state.getCurrentRoom()];
         // TODO: Remove magic numbers
-//        Alien alien = new Alien(AlienType.values()[random.nextInt(3)], 0, 0 ,64, 64);
-        Alien alien = new Alien(AlienType.BLIND, 0, 0 ,64, 64);
+        Alien alien = new Alien(AlienType.values()[random.nextInt(2)], 0, 0 ,64, 64);
         var minDistance = 100;
 
         var objects = room.getObjects();
@@ -133,13 +133,13 @@ public class RunModeBackend implements Backend<RunModeState> {
     private void moveBlindAlien(Alien alien, RunModeState state) {
         var random = new Random();
         var done = false;
-        var xPosition = 0;
-        var yPosition = 0;
+        var xPosition = alien.getPosition().getX();
+        var yPosition = alien.getPosition().getY();
         var objs = state.getRooms()[state.getCurrentRoom()].getObjects();
         var door = state.getDoor();
         var player = state.getPlayer();
         var intersects = 0;
-        while (!done) {
+        while (!done && !alien.intersects(player)) {
             alien.decActionTimeOut();
             if (alien.getActionTimeOut() <= 0 || intersects != 0) {
                 int[][] directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
@@ -149,13 +149,13 @@ public class RunModeBackend implements Backend<RunModeState> {
             }
             xPosition = alien.getPosition().getX() + (2 * alien.getCurrentDirection()[0]);
             yPosition = alien.getPosition().getY() + (2 * alien.getCurrentDirection()[1]);
-            var dummyRect = new Rectangle(new Position(xPosition, yPosition), 64, 64);
+            var dummyRect = new Rectangle(new Position(xPosition, yPosition), alien.getWidth(), alien.getHeight());
             intersects = objs.stream()
                     .map(dummyRect::intersects)
                     .mapToInt(b -> b ? 1 : 0)
                     .sum()
-                    + (alien.intersects(door) ? 1 : 0)
-                    + (alien.intersects(player) ? 1 : 0)
+                    + (dummyRect.intersects(door) ? 1 : 0)
+//                    + (dummyRect.intersects(player) ? 1 : 0)
                     + ((xPosition < 0 || yPosition < 0 || yPosition > (state.getHeight() - alien.getHeight()) || xPosition > (state.getWidth() - alien.getWidth())) ? 1 : 0);
             done = intersects == 0;
             System.out.println(intersects);
@@ -163,8 +163,28 @@ public class RunModeBackend implements Backend<RunModeState> {
         alien.setPosition(xPosition, yPosition);
     }
 
-    private void changeKeyPosition(Alien alien) {
+    private void changeKeyPosition(Alien alien, RunModeState state) {
+        if (state.getKey().isFound()) return;
 
+        alien.decActionTimeOut();
+        if (alien.getActionTimeOut() <= 0) {
+
+//            System.out.println(state.getKey().getUnder());
+
+            var random = new Random();
+            var room = state.getRooms()[state.getCurrentRoom()];
+            var objects = room.getObjects();
+            Obj randObj;
+            do {
+                randObj = objects.get(random.nextInt(objects.size()));
+            } while (randObj == state.getKey().getUnder());
+
+            state.setKey(new Key(randObj));
+
+//            System.out.println(state.getKey().getUnder());
+
+            alien.resetActionTimeOut();
+        }
     }
     private void fireProjectile (Alien alien) {
 

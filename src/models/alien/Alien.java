@@ -12,6 +12,7 @@ public class Alien extends Rectangle {
     public Alien(AlienType type, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
         this.type = type;
+        if (type != AlienType.BLIND) resetActionTimeOut();
     }
 
     public AlienType getType() {
@@ -33,6 +34,6 @@ public class Alien extends Rectangle {
         actionTimeOut = Math.max(actionTimeOut - 1, 0);
     }
     public void resetActionTimeOut(){
-        actionTimeOut = (int) ((2 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+        actionTimeOut = (int) ((5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
     }
 }
