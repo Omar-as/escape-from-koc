@@ -28,6 +28,7 @@ public class RunModeFrontend implements Frontend<RunModeState> {
         // Draw aliens
         for (var alien : state.getAliens()) {
             // draw blind alien
+            Asset alienAsset;
             if (alien.getType() == AlienType.BLIND ) {
                 if (alien.getFramesPassed() == 10) {
                     var alienCurrentAsset = alien.getCurrentSprite();
