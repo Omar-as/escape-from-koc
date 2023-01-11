@@ -3,12 +3,13 @@ package models;
 import models.alien.Alien;
 import utils.Constants;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class RunModeState extends State {
     private int width;
     private int height;
-    private Alien[] aliens;
+    private ArrayList<Alien> aliens;
     private boolean isPaused;
     private Room[] rooms;
     private int currentRoom;
@@ -18,9 +19,10 @@ public class RunModeState extends State {
     private Key key;
     private int showKeyFor;
     private int timeoutAfter;
+    private int timeForNextAlien;
     private boolean completed;
 
-    public RunModeState(Alien[] aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door) {
+    public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door) {
         this.width = 0;
         this.height = 0;
         this.aliens = aliens;
@@ -56,11 +58,11 @@ public class RunModeState extends State {
         this.door.setYPosition(height - 50);
     }
 
-    public Alien[] getAliens() {
+    public ArrayList<Alien> getAliens() {
         return aliens;
     }
 
-    public void setAliens(Alien[] aliens) {
+    public void setAliens(ArrayList<Alien> aliens) {
         this.aliens = aliens;
     }
 
@@ -147,6 +149,19 @@ public class RunModeState extends State {
 
     public void decTimeoutAfter() {
         timeoutAfter = Math.max(timeoutAfter - 1, 0);
+    }
+
+    public long getTimeForNextAlien() {
+        return timeForNextAlien;
+    }
+
+    public void resetTimeForNextAlien() {
+        // TODO: Remove magic numbers
+        timeForNextAlien = (int) ((10 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+
+    public void decTimeForNextAlien() {
+        timeForNextAlien = Math.max(timeForNextAlien - 1, 0);
     }
 
     public boolean isCompleted() {

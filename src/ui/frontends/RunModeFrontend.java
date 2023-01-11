@@ -24,10 +24,10 @@ public class RunModeFrontend implements Frontend<RunModeState> {
         canvas.setColor(Color.BLACK);
 
         // Draw aliens
-        // for (var alien : state.getAliens()) {
-        //     var alienImage = GraphicsManager.getInstance().getImage(alien.getType().asset, alien.getWidth(), alien.getHeight());
-        //     canvas.drawImage(alienImage, alien.getPosition().getX(), alien.getPosition().getY(), null);
-        // }
+        for (var alien : state.getAliens()) {
+            var alienImage = GraphicsManager.getInstance().getImage(alien.getType().asset, alien.getWidth(), alien.getHeight());
+            canvas.drawImage(alienImage, alien.getPosition().getX(), alien.getPosition().getY(), null);
+        }
 
         // Draw door
         var isDoorOpen = state.getKey().isFound() && state.getShowKeyFor() == 0;

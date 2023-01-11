@@ -1,11 +1,14 @@
 package control;
 
 import models.RunModeState;
+import models.alien.Alien;
+import models.alien.AlienType;
 import ui.ScreenFactory;
 import ui.ScreenManager;
 import utils.Constants;
 
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class RunModeBackend implements Backend<RunModeState> {
     @Override
@@ -17,6 +20,13 @@ public class RunModeBackend implements Backend<RunModeState> {
             ScreenManager.getInstance().setScreen(ScreenFactory.getGameEndScreen(false));
         }
         state.decTimeoutAfter();
+        if (state.getTimeForNextAlien() <= 0){
+            spawnAlien(new Random(), state);
+            state.resetTimeForNextAlien();
+        }
+
+        state.decTimeForNextAlien();
+            
     }
 
     private void movePlayer(RunModeState state) {
@@ -82,5 +92,9 @@ public class RunModeBackend implements Backend<RunModeState> {
             state.getKey().setFound();
             state.setShowKeyFor((int) (Constants.SECOND_MILLS / Constants.REPAINT_DELAY_MILLS));
         }
+    }
+    private void spawnAlien(Random random, RunModeState state) {
+        // TODO: Remove magic numbers
+        state.getAliens().add(new Alien(AlienType.values()[random.nextInt(3)], 10, 10 ,64, 64));
     }
 }
