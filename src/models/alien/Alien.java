@@ -5,8 +5,12 @@ import utils.Asset;
 import utils.Constants;
 import utils.Position;
 
+import java.util.Random;
+
 public class Alien extends Rectangle {
     private final AlienType type;
+
+    private final int[][] directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
     private int[] currentDirection;
     private int actionTimeOut;
     private int framesPassed = 10;
@@ -15,7 +19,8 @@ public class Alien extends Rectangle {
     public Alien(AlienType type, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
         this.type = type;
-        if (type != AlienType.BLIND) resetActionTimeOut();
+         resetActionTimeOut();
+        if (type == AlienType.BLIND) setCurrentDirectionRandomly();
     }
 
     public AlienType getType() {
@@ -25,8 +30,9 @@ public class Alien extends Rectangle {
     public int[] getCurrentDirection(){
         return currentDirection;
     }
-    public void setCurrentDirection(int[] direction){
-        currentDirection = direction;
+    public void setCurrentDirectionRandomly(){
+        Random random = new Random();
+        currentDirection = directions[random.nextInt(4)];
     }
 
     public int getActionTimeOut() {

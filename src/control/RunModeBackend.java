@@ -27,7 +27,7 @@ public class RunModeBackend implements Backend<RunModeState> {
             else if (alien.getType() == AlienType.TIME_WASTING) changeKeyPosition(alien, state);
             else if (alien.getType() == AlienType.SHOOTER) fireProjectile(alien);
         }
-        if (state.getTimeoutAfter() <= 0 && !state.isCompleted()) {
+        if ((state.getTimeoutAfter() <= 0 && !state.isCompleted()) || state.getPlayer().getLives() == 0) {
             state.setCompleted();
             ScreenManager.getInstance().setScreen(ScreenFactory.getGameEndScreen(false));
         }
@@ -142,8 +142,7 @@ public class RunModeBackend implements Backend<RunModeState> {
         while (!done && !alien.intersects(player)) {
             alien.decActionTimeOut();
             if (alien.getActionTimeOut() <= 0 || intersects != 0) {
-                int[][] directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
-                alien.setCurrentDirection(directions[random.nextInt(4)]);
+                alien.setCurrentDirectionRandomly();
                 alien.setPosition(alien.getPosition().getX() - alien.getCurrentDirection()[0], alien.getPosition().getY() - alien.getCurrentDirection()[1]);
                 alien.resetActionTimeOut();
             }
@@ -158,6 +157,10 @@ public class RunModeBackend implements Backend<RunModeState> {
 //                    + (dummyRect.intersects(player) ? 1 : 0)
                     + ((xPosition < 0 || yPosition < 0 || yPosition > (state.getHeight() - alien.getHeight()) || xPosition > (state.getWidth() - alien.getWidth())) ? 1 : 0);
             done = intersects == 0;
+        }
+        if (alien.intersects(player)) {
+            player.setLives(player.getLives() - 1);
+            player.setPosition(0, 0);
         }
         alien.setPosition(xPosition, yPosition);
     }
