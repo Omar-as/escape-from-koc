@@ -2,6 +2,8 @@ package ui.frontends;
 
 import control.KeyManager;
 import models.RunModeState;
+import models.alien.Alien;
+import models.alien.AlienType;
 import ui.Frontend;
 import ui.GraphicsManager;
 import utils.Asset;
@@ -25,7 +27,32 @@ public class RunModeFrontend implements Frontend<RunModeState> {
 
         // Draw aliens
         for (var alien : state.getAliens()) {
-            var alienImage = GraphicsManager.getInstance().getImage(alien.getType().asset, alien.getWidth(), alien.getHeight());
+            // draw blind alien
+            Asset alienAsset;
+            if (alien.getType() == AlienType.BLIND ) {
+                if (alien.getFramesPassed() == 10) {
+                    var alienCurrentAsset = alien.getCurrentSprite();
+
+                    if (alien.getCurrentDirection()[0] == 0 && alien.getCurrentDirection()[1] == -1) {
+                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_UP1 ? Asset.ALIEN_BLIND_MOVE_UP2 : Asset.ALIEN_BLIND_MOVE_UP1);
+                    } else if (alien.getCurrentDirection()[0] == 0 && alien.getCurrentDirection()[1] == 1) {
+                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_DOWN1 ? Asset.ALIEN_BLIND_MOVE_DOWN2 : Asset.ALIEN_BLIND_MOVE_DOWN1);
+                    } else if (alien.getCurrentDirection()[0] == -1 && alien.getCurrentDirection()[1] == 0) {
+                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_LEFT1 ? Asset.ALIEN_BLIND_MOVE_LEFT2 : Asset.ALIEN_BLIND_MOVE_LEFT1);
+                    } else if (alien.getCurrentDirection()[0] == 1 && alien.getCurrentDirection()[1] == 0) {
+                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_RIGHT1 ? Asset.ALIEN_BLIND_MOVE_RIGHT2 : Asset.ALIEN_BLIND_MOVE_RIGHT1);
+                    } else {
+                        alien.setCurrentSprite(Asset.ALIEN_BLIND_IDLE);
+                    }
+
+                    alien.setFramesPassed(0);
+                } else {
+                    alien.setFramesPassed(alien.getFramesPassed() + 1);
+                }
+            }
+            else alien.setCurrentSprite(alien.getType().asset);
+
+            var alienImage = GraphicsManager.getInstance().getImage(alien.getCurrentSprite(), alien.getWidth(), alien.getHeight());
             canvas.drawImage(alienImage, alien.getPosition().getX(), alien.getPosition().getY(), null);
         }
 
@@ -74,6 +101,7 @@ public class RunModeFrontend implements Frontend<RunModeState> {
         } else {
             player.setFramesPassed(player.getFramesPassed() + 1);
         }
+
 
         var playerImage = GraphicsManager.getInstance().getImage(player.getCurrentSprite(), player.getWidth(), player.getHeight());
         canvas.drawImage(playerImage, player.getPosition().getX(), player.getPosition().getY(), null);

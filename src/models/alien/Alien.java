@@ -1,6 +1,7 @@
 package models.alien;
 
 import models.Rectangle;
+import utils.Asset;
 import utils.Constants;
 import utils.Position;
 
@@ -8,6 +9,8 @@ public class Alien extends Rectangle {
     private final AlienType type;
     private int[] currentDirection;
     private int actionTimeOut;
+    private int framesPassed = 10;
+    private Asset currentSprite;
 
     public Alien(AlienType type, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
@@ -35,5 +38,18 @@ public class Alien extends Rectangle {
     }
     public void resetActionTimeOut(){
         actionTimeOut = (int) ((5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+    public int getFramesPassed(){
+        return framesPassed;
+    }
+    public void setFramesPassed(int framesPassed) {
+        this.framesPassed = framesPassed;
+    }
+    public Asset getCurrentSprite() {
+        return currentSprite;
+    }
+
+    public void setCurrentSprite(Asset currentSprite) {
+        this.currentSprite = currentSprite;
     }
 }
