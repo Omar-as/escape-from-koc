@@ -1,45 +1,38 @@
 package models.alien;
 
+import models.Rectangle;
+import utils.Constants;
 import utils.Position;
 
-public class Alien {
+public class Alien extends Rectangle {
     private final AlienType type;
-    private final int width;
-    private final int height;
-    private Position position;
+    private int[] currentDirection;
+    private int actionTimeOut;
 
     public Alien(AlienType type, int xPosition, int yPosition, int width, int height) {
+        super(new Position(xPosition, yPosition), width, height);
         this.type = type;
-        this.position = new Position(xPosition, yPosition);
-        this.width = width;
-        this.height = height;
     }
 
     public AlienType getType() {
         return type;
     }
 
-    public Position getPosition() {
-        return position;
+    public int[] getCurrentDirection(){
+        return currentDirection;
+    }
+    public void setCurrentDirection(int[] direction){
+        currentDirection = direction;
     }
 
-    public void setPosition(int xPosition, int yPosition) {
-        position = new Position(xPosition, yPosition);
+    public int getActionTimeOut() {
+        return actionTimeOut;
     }
 
-    public void setXPosition(int xPosition) {
-        position = new Position(xPosition, position.getY());
+    public void decActionTimeOut() {
+        actionTimeOut = Math.max(actionTimeOut - 1, 0);
     }
-
-    public void setYPosition(int yPosition) {
-        position = new Position(position.getX(), yPosition);
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
+    public void resetActionTimeOut(){
+        actionTimeOut = (int) ((2 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
     }
 }

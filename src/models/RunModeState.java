@@ -35,6 +35,7 @@ public class RunModeState extends State {
         setKey();
         this.showKeyFor = 0;
         resetTimeoutAfter();
+        resetTimeForNextAlien();
         this.completed = false;
     }
 
