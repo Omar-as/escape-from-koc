@@ -2,11 +2,11 @@ package ui;
 
 import control.BuildModeBackend;
 import control.RunModeBackend;
-import models.BuildModeState;
-import models.Player;
-import models.Room;
-import models.RunModeState;
+import models.*;
+import models.alien.Alien;
 import ui.screens.*;
+
+import java.util.ArrayList;
 
 public class ScreenFactory {
     public static Screen getScreen(ScreenType type) {
@@ -46,7 +46,7 @@ public class ScreenFactory {
 
     public static RunModeScreen getRunModeScreen(BuildModeState buildModeState) {
         var player = new Player(5, 0, 0, 0, 64, 64);
-        var state = new RunModeState(null, false, buildModeState.getRooms(), null, player, buildModeState.getDoor());
+        var state = new RunModeState(new ArrayList<Alien>() , false, buildModeState.getRooms(), null, player, buildModeState.getDoor(), new ArrayList<Projectile>());
         var backend = new RunModeBackend();
         return new RunModeScreen(state, backend);
     }

@@ -1,6 +1,7 @@
 package ui;
 
 import utils.Asset;
+import utils.Constants;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -24,8 +25,7 @@ public class GraphicsManager {
         try {
             int idx = asset.ordinal();
             if (cache[idx] == null) {
-                // TODO: Remove magic path
-                var bufferedImage = ImageIO.read(new File("assets/%s.png".formatted(asset.name)));
+                var bufferedImage = ImageIO.read(new File(Constants.ASSET_IMAGE_PATH.formatted(asset.name)));
                 var image = bufferedImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
                 cache[idx] = image;
             }

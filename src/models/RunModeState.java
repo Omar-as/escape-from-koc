@@ -3,12 +3,13 @@ package models;
 import models.alien.Alien;
 import utils.Constants;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class RunModeState extends State {
     private int width;
     private int height;
-    private Alien[] aliens;
+    private ArrayList<Alien> aliens;
     private boolean isPaused;
     private Room[] rooms;
     private int currentRoom;
@@ -16,11 +17,13 @@ public class RunModeState extends State {
     private Player player;
     private Door door;
     private Key key;
+    private ArrayList<Projectile> projectiles;
     private int showKeyFor;
     private int timeoutAfter;
+    private int timeForNextAlien;
     private boolean completed;
 
-    public RunModeState(Alien[] aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door) {
+    public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door, ArrayList<Projectile> projectiles) {
         this.width = 0;
         this.height = 0;
         this.aliens = aliens;
@@ -33,7 +36,9 @@ public class RunModeState extends State {
         setKey();
         this.showKeyFor = 0;
         resetTimeoutAfter();
+        resetTimeForNextAlien();
         this.completed = false;
+        this.projectiles = projectiles;
     }
 
     public int getWidth() {
@@ -42,8 +47,7 @@ public class RunModeState extends State {
 
     public void setWidth(int width) {
         this.width = width;
-        // TODO: Remove magic number
-        this.door.setXPosition(width - 50);
+        this.door.setXPosition(width - Constants.entityDim);
     }
 
     public int getHeight() {
@@ -52,15 +56,14 @@ public class RunModeState extends State {
 
     public void setHeight(int height) {
         this.height = height;
-        // TODO: Remove magic number
-        this.door.setYPosition(height - 50);
+        this.door.setYPosition(height - Constants.entityDim);
     }
 
-    public Alien[] getAliens() {
+    public ArrayList<Alien> getAliens() {
         return aliens;
     }
 
-    public void setAliens(Alien[] aliens) {
+    public void setAliens(ArrayList<Alien> aliens) {
         this.aliens = aliens;
     }
 
@@ -124,6 +127,10 @@ public class RunModeState extends State {
         this.key = new Key(randObj);
     }
 
+    public void setKey(Key key) {
+        this.key = key;
+    }
+
     public int getShowKeyFor() {
         return showKeyFor;
     }
@@ -149,11 +156,31 @@ public class RunModeState extends State {
         timeoutAfter = Math.max(timeoutAfter - 1, 0);
     }
 
+    public long getTimeForNextAlien() {
+        return timeForNextAlien;
+    }
+
+    public void resetTimeForNextAlien() {
+        // TODO: Remove magic numbers
+        timeForNextAlien = (int) ((10 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+
+    public void decTimeForNextAlien() {
+        timeForNextAlien = Math.max(timeForNextAlien - 1, 0);
+    }
+
     public boolean isCompleted() {
         return completed;
     }
 
     public void setCompleted() {
         completed = true;
+    }
+
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+    public void setProjectiles(ArrayList<Projectile> projectiles) {
+        this.projectiles = projectiles;
     }
 }
