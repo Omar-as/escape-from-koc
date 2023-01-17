@@ -24,11 +24,8 @@ public class RunModeBackend implements Backend<RunModeState> {
 
         //TODO: remove iterator
         var alienArrayLength = state.getAliens().size();
-//        var iterator = state.getAliens().iterator();
         for (int i = 0 ; i < alienArrayLength ; i++) {
-//        while (iterator.hasNext()) {
             var alien = state.getAliens().get(i);
-//            var alien = iterator.next();
             switch (alien.getType()) {
                 case BLIND:
                     blindAlienBehaviour(alien, state);
@@ -181,7 +178,6 @@ public class RunModeBackend implements Backend<RunModeState> {
                     .mapToInt(b -> b ? 1 : 0)
                     .sum()
                     + (dummyRect.intersects(door) ? 1 : 0)
-//                    + (dummyRect.intersects(player) ? 1 : 0)
                     + ((xPosition < 0 || yPosition < 0 || yPosition > (state.getHeight() - alien.getHeight()) || xPosition > (state.getWidth() - alien.getWidth())) ? 1 : 0);
             done = intersects == 0;
         }
