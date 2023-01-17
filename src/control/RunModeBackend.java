@@ -45,9 +45,8 @@ public class RunModeBackend implements Backend<RunModeState> {
                     break;
             }
         }
-        for(var projectile: state.getProjectiles()){
-            projectile.move();
-        }
+
+        fireProjectile(state);
 
         if ((state.getTimeoutAfter() <= 0 && !state.isCompleted()) || state.getPlayer().getLives() == 0) {
             state.setCompleted();
@@ -108,6 +107,7 @@ public class RunModeBackend implements Backend<RunModeState> {
                     state.setKey();
                     state.resetTimeoutAfter();
                     state.setAliens(new ArrayList<Alien>());
+                    state.setProjectiles(new ArrayList<Projectile>());
                     player.setPosition(0, 0);
                 }
             } else player.setPosition(backupPosition);
@@ -130,8 +130,7 @@ public class RunModeBackend implements Backend<RunModeState> {
     }
     private void spawnAlien(Random random, RunModeState state) {
         Room room = state.getRooms()[state.getCurrentRoom()];
-//        Alien alien = new Alien(AlienType.values()[random.nextInt(AlienType.values().length)], 0, 0 ,Constants.entityDim, Constants.entityDim);
-        Alien alien = new Alien(AlienType.SHOOTER, 0, 0 ,Constants.entityDim, Constants.entityDim);
+        Alien alien = new Alien(AlienType.values()[random.nextInt(AlienType.values().length)], 0, 0 ,Constants.entityDim, Constants.entityDim);
 
         var objects = room.getObjects();
         var done = false;
@@ -237,9 +236,9 @@ public class RunModeBackend implements Backend<RunModeState> {
     }
     private void shooterAlienBehaviour(Alien alien, RunModeState state) {
         var player = state.getPlayer();
-        if (alien.distanceBetweenObjects(player) >= 64){
-            player.setLives(player.getLives() - 1);
+        if (alien.distanceBetweenObjects(player) <= 64){
             player.setPosition(0, 0);
+            player.setLives(player.getLives() - 1);
         }
         alien.decActionTimeOut();
         if (alien.getActionTimeOut() <= 0) {
@@ -247,6 +246,39 @@ public class RunModeBackend implements Backend<RunModeState> {
             var projectile = new Projectile(alien.aim(state.getPlayer()), alien.getPosition().getX() + alien.getWidth()/2, alien.getPosition().getY() + alien.getHeight()/2, 20, 20);
             projectiles.add(projectile);
             alien.resetActionTimeOut();
+        }
+    }
+    private void fireProjectile(RunModeState state){
+        var player = state.getPlayer();
+        var projectiles =  state.getProjectiles();
+        var projectileArrayLength = projectiles.size();
+        var objects = state.getRooms()[state.getCurrentRoom()].getObjects();
+
+        for (int i = 0 ; i < projectileArrayLength ; i++) {
+
+            var projectile = projectiles.get(i);
+            projectile.move();
+
+            var checkOutOfBounds = (projectile.getPosition().getX() < 0 ||
+                                    projectile.getPosition().getY() < 0 ||
+                                    projectile.getPosition().getX() + projectile.getHeight() > Constants.FRAME_WIDTH ||
+                                    projectile.getPosition().getY() + projectile.getHeight() > Constants.FRAME_HEIGHT);
+
+            var intersects = objects.stream()
+                                    .map(projectile::intersects)
+                                    .mapToInt(b -> b ? 1 : 0)
+                                    .sum() != 0;
+            if(projectile.intersects(player)){
+                player.setPosition(0,0);
+                player.setLives(player.getLives() - 1);
+                projectiles.remove(projectile);
+                i--;
+                projectileArrayLength--;
+            } else if (intersects || checkOutOfBounds){
+                projectiles.remove(projectile);
+                i--;
+                projectileArrayLength--;
+            }
         }
     }
 }

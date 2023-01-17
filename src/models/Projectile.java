@@ -5,7 +5,7 @@ import utils.Position;
 
 public class Projectile extends Rectangle {
     private final Asset sprite = Asset.PROJECTILE;
-    private final int speed  = 3;
+    private final int speed  = 9;
     private float[] direction;
     public Projectile(float[] direction, int xPosition, int yPosition, int width, int height){
         super(new Position(xPosition, yPosition), width, height);
