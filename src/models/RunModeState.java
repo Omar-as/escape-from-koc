@@ -17,12 +17,13 @@ public class RunModeState extends State {
     private Player player;
     private Door door;
     private Key key;
+    private ArrayList<Projectile> projectiles;
     private int showKeyFor;
     private int timeoutAfter;
     private int timeForNextAlien;
     private boolean completed;
 
-    public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door) {
+    public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door, ArrayList<Projectile> projectiles) {
         this.width = 0;
         this.height = 0;
         this.aliens = aliens;
@@ -37,6 +38,7 @@ public class RunModeState extends State {
         resetTimeoutAfter();
         resetTimeForNextAlien();
         this.completed = false;
+        this.projectiles = projectiles;
     }
 
     public int getWidth() {
@@ -173,5 +175,12 @@ public class RunModeState extends State {
 
     public void setCompleted() {
         completed = true;
+    }
+
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+    public void setProjectiles(ArrayList<Projectile> projectiles) {
+        this.projectiles = projectiles;
     }
 }

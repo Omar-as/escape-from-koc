@@ -55,6 +55,11 @@ public class RunModeFrontend implements Frontend<RunModeState> {
 //            if (alien.getType() == AlienType.SHOOTER)
             canvas.drawImage(alienImage, alien.getPosition().getX(), alien.getPosition().getY(), null);
         }
+        for(var projectile : state.getProjectiles()){
+            var projectileImage = GraphicsManager.getInstance().getImage(projectile.getSprite(), projectile.getWidth(), projectile.getHeight());
+
+            canvas.drawImage(projectileImage, projectile.getPosition().getX(), projectile.getPosition().getY(), null);
+        }
 
         // Draw door
         var isDoorOpen = state.getKey().isFound() && state.getShowKeyFor() == 0;

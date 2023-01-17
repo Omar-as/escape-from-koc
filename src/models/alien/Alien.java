@@ -101,4 +101,20 @@ public class Alien extends Rectangle {
         else if (30 <= timePercentLeftWhenSpawned && timePercentLeftWhenSpawned < 70) this.mode = timeWastingMode.CONFUSED;
         else if (timePercentLeftWhenSpawned < 30) this.mode = timeWastingMode.PETTY;
     }
+    public float[] aim(Rectangle target){
+        var thisCenterX = this.getPosition().getX() + this.getWidth()/2;
+        var thisCenterY = this.getPosition().getY() + this.getHeight()/2;
+        var targetCenterX = target.getPosition().getX() + target.getWidth()/2;
+        var targetCenterY = target.getPosition().getY() + target.getHeight()/2;
+
+        int xDir = targetCenterX - thisCenterX ;
+        int yDir = targetCenterY - thisCenterY ;
+
+        float distance = (float) Math.sqrt(Math.pow(xDir, 2) + Math.pow(yDir, 2));
+
+        float unitX = (float) xDir/(float) distance;
+        float unitY =(float) yDir/(float)distance;
+
+        return (new float[]{unitX,unitY});
+    }
 }

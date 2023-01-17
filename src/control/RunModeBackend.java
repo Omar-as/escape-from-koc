@@ -1,9 +1,6 @@
 package control;
 
-import models.Key;
-import models.Rectangle;
-import models.Room;
-import models.RunModeState;
+import models.*;
 import models.alien.Alien;
 import models.alien.AlienType;
 import models.objects.Obj;
@@ -47,6 +44,9 @@ public class RunModeBackend implements Backend<RunModeState> {
                     shooterAlienBehaviour(alien, state);
                     break;
             }
+        }
+        for(var projectile: state.getProjectiles()){
+            projectile.move();
         }
 
         if ((state.getTimeoutAfter() <= 0 && !state.isCompleted()) || state.getPlayer().getLives() == 0) {
@@ -130,15 +130,14 @@ public class RunModeBackend implements Backend<RunModeState> {
     }
     private void spawnAlien(Random random, RunModeState state) {
         Room room = state.getRooms()[state.getCurrentRoom()];
-        Alien alien = new Alien(AlienType.values()[random.nextInt(AlienType.values().length)], 0, 0 ,Constants.entityDim, Constants.entityDim);
+//        Alien alien = new Alien(AlienType.values()[random.nextInt(AlienType.values().length)], 0, 0 ,Constants.entityDim, Constants.entityDim);
+        Alien alien = new Alien(AlienType.SHOOTER, 0, 0 ,Constants.entityDim, Constants.entityDim);
 
         var objects = room.getObjects();
         var done = false;
 
         if (alien.getType() == AlienType.TIME_WASTING) {
             var time = ((state.getRooms()[state.getCurrentRoom()].getObjects().size() * 5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
-//            System.out.println(time);
-//            System.out.println((int) (((float) state.getTimeoutAfter() / time) * (float) 100.0));
             alien.setTimePercentLeftWhenSpawned((int) (((float) state.getTimeoutAfter()/ time) * (float) 100.0));
             alien.setTimeLeftWhenSpawned((int) (state.getTimeoutAfter()));
             alien.setMode();
@@ -199,6 +198,9 @@ public class RunModeBackend implements Backend<RunModeState> {
         var random = new Random();
         var room = state.getRooms()[state.getCurrentRoom()];
         var objects = room.getObjects();
+        int timePassed;
+        int confusionDelay;
+
         Obj randObj;
         do {
             randObj = objects.get(random.nextInt(objects.size()));
@@ -206,8 +208,8 @@ public class RunModeBackend implements Backend<RunModeState> {
 
         switch(alien.getMode()) {
             case CONFUSED:
-                int timePassed = (int) (alien.getTimeLeftWhenSpawned() - state.getTimeoutAfter());
-                int confusionDelay = (int) ((2 * Constants.SECOND_MILLS)/Constants.REPAINT_DELAY_MILLS);
+                timePassed = (int) (alien.getTimeLeftWhenSpawned() - state.getTimeoutAfter());
+                confusionDelay = (int) ((2 * Constants.SECOND_MILLS)/Constants.REPAINT_DELAY_MILLS);
                 if (timePassed < confusionDelay) {
                     return;
                 } else if (timePassed > confusionDelay) {
@@ -218,29 +220,33 @@ public class RunModeBackend implements Backend<RunModeState> {
             case NORMAL:
                 alien.decActionTimeOut();
                 if (alien.getActionTimeOut() <= 0) {
-
                     state.setKey(new Key(randObj));
-
                     alien.resetActionTimeOut();
                 }
                 break;
             case PETTY:
-                state.setKey(new Key(randObj));
-                state.getAliens().remove(alien);
+                timePassed = (int) (alien.getTimeLeftWhenSpawned() - state.getTimeoutAfter());
+                confusionDelay = (int) ((1 * Constants.SECOND_MILLS)/Constants.REPAINT_DELAY_MILLS);
+                if (timePassed < confusionDelay) {
+                    state.setKey(new Key(randObj));
+                    state.getAliens().remove(alien);
+                }
                 break;
         }
 
     }
     private void shooterAlienBehaviour(Alien alien, RunModeState state) {
-
+        var player = state.getPlayer();
+        if (alien.distanceBetweenObjects(player) >= 64){
+            player.setLives(player.getLives() - 1);
+            player.setPosition(0, 0);
+        }
         alien.decActionTimeOut();
         if (alien.getActionTimeOut() <= 0) {
-
-            fireProjectile (alien);
+            var projectiles = state.getProjectiles();
+            var projectile = new Projectile(alien.aim(state.getPlayer()), alien.getPosition().getX() + alien.getWidth()/2, alien.getPosition().getY() + alien.getHeight()/2, 20, 20);
+            projectiles.add(projectile);
             alien.resetActionTimeOut();
         }
-    }
-    private void fireProjectile (Alien alien) {
-
     }
 }

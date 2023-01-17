@@ -26,6 +26,7 @@ public enum Asset {
 
     ALIEN_SHOOTER("alien_shooter"),
     ALIEN_TIME_WASTING("alien_time_wasting"),
+    PROJECTILE("projectile"),
 
     KEY("key"),
     TRASH_BIN("trash_bin"),
@@ -36,6 +37,7 @@ public enum Asset {
     DOOR_OPEN("door_open"),
     DOOR_CLOSED("door_closed"),
     BACKGROUND("background");
+
 
     public final String name;
 
