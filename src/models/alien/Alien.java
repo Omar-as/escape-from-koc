@@ -11,18 +11,35 @@ public class Alien extends Rectangle {
     private final AlienType type;
     private final int[][] directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
     private int[] currentDirection;
+    private int actionTimer;
     private int actionTimeOut;
     private int framesPassed = 10;
     private Asset currentSprite;
-    private int timeSpawned;
-    private Boolean confused;
+    private int timeLeftWhenSpawned;
+    private int timePercentLeftWhenSpawned;
+    public enum timeWastingMode {
+        NORMAL,
+        CONFUSED,
+        PETTY;
+    };
+    private timeWastingMode mode;
 
     public Alien(AlienType type, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
         this.type = type;
-        this.confused = false;
         resetActionTimeOut();
-        if (type == AlienType.BLIND) setCurrentDirectionRandomly();
+        switch (type) {
+            case BLIND:
+                actionTimer = 2;
+                setCurrentDirectionRandomly();
+                break;
+            case TIME_WASTING:
+                actionTimer = 3;
+                break;
+            case SHOOTER:
+                actionTimer = 1;
+                break;
+        }
     }
 
     public AlienType getType() {
@@ -45,7 +62,7 @@ public class Alien extends Rectangle {
         actionTimeOut = Math.max(actionTimeOut - 1, 0);
     }
     public void resetActionTimeOut(){
-        actionTimeOut = (int) ((5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+        actionTimeOut = (int) ((actionTimer * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
     }
     public int getFramesPassed(){
         return framesPassed;
@@ -59,16 +76,29 @@ public class Alien extends Rectangle {
     public void setCurrentSprite(Asset currentSprite) {
         this.currentSprite = currentSprite;
     }
-    public int getTimeSpawned() {
-        return timeSpawned;
+
+    public int getTimeLeftWhenSpawned() {
+        return timeLeftWhenSpawned;
     }
-    public void setTimeSpawned(int timeSpawned) {
-        this.timeSpawned = timeSpawned;
+
+    public void setTimeLeftWhenSpawned(int timeLeftWhenSpawned) {
+        this.timeLeftWhenSpawned = timeLeftWhenSpawned;
     }
-    public Boolean getConfused() {
-        return confused;
+
+    public int getTimePercentLeftWhenSpawned() {
+        return timePercentLeftWhenSpawned;
     }
-    public void setConfused(Boolean confused) {
-        this.confused = confused;
+
+    public void setTimePercentLeftWhenSpawned(int timePercentLeftWhenSpawned) {
+        this.timePercentLeftWhenSpawned = timePercentLeftWhenSpawned;
+    }
+
+    public timeWastingMode getMode() {
+        return mode;
+    }
+    public void setMode(){
+        if (timePercentLeftWhenSpawned >= 70) this.mode = timeWastingMode.NORMAL;
+        else if (30 <= timePercentLeftWhenSpawned && timePercentLeftWhenSpawned < 70) this.mode = timeWastingMode.CONFUSED;
+        else if (timePercentLeftWhenSpawned < 30) this.mode = timeWastingMode.PETTY;
     }
 }

@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class RunModeBackend implements Backend<RunModeState> {
     @Override
     public void updateState(RunModeState state) {
@@ -24,16 +25,26 @@ public class RunModeBackend implements Backend<RunModeState> {
 
         movePlayer(state);
 
-        for (var alien : state.getAliens()) {
+        //TODO: remove iterator
+        var alienArrayLength = state.getAliens().size();
+//        var iterator = state.getAliens().iterator();
+        for (int i = 0 ; i < alienArrayLength ; i++) {
+//        while (iterator.hasNext()) {
+            var alien = state.getAliens().get(i);
+//            var alien = iterator.next();
             switch (alien.getType()) {
                 case BLIND:
-                    moveBlindAlien(alien, state);
+                    blindAlienBehaviour(alien, state);
                     break;
                 case TIME_WASTING:
-                    changeKeyPosition(alien, state);
+                    timeWastingAlienBehaviour(alien, state);
+                    if (alien == null){
+                        alienArrayLength--;
+                        i--;
+                    }
                     break;
                 case SHOOTER:
-                    fireProjectile(alien);
+                    shooterAlienBehaviour(alien, state);
                     break;
             }
         }
@@ -125,11 +136,13 @@ public class RunModeBackend implements Backend<RunModeState> {
         var done = false;
 
         if (alien.getType() == AlienType.TIME_WASTING) {
-            alien.setTimeSpawned((int) state.getTimeoutAfter());
-            var percentTime = (int) (alien.getTimeSpawned() / ((state.getRooms()[state.getCurrentRoom()].getObjects().size() * 5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS));
-            if (percentTime >= 70) alien.setConfused(true);
-            else if (30 <= percentTime && percentTime < 70) alien.setConfused(true);
-            else if (percentTime < 30) alien.setConfused(true);
+            var time = ((state.getRooms()[state.getCurrentRoom()].getObjects().size() * 5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+//            System.out.println(time);
+//            System.out.println((int) (((float) state.getTimeoutAfter() / time) * (float) 100.0));
+            alien.setTimePercentLeftWhenSpawned((int) (((float) state.getTimeoutAfter()/ time) * (float) 100.0));
+            alien.setTimeLeftWhenSpawned((int) (state.getTimeoutAfter()));
+            alien.setMode();
+
         }
 
         while (!done) {
@@ -147,8 +160,7 @@ public class RunModeBackend implements Backend<RunModeState> {
         }
         state.getAliens().add(alien);
     }
-    private void moveBlindAlien(Alien alien, RunModeState state) {
-        var random = new Random();
+    private void blindAlienBehaviour(Alien alien, RunModeState state) {
         var done = false;
         var xPosition = alien.getPosition().getX();
         var yPosition = alien.getPosition().getY();
@@ -182,22 +194,49 @@ public class RunModeBackend implements Backend<RunModeState> {
         alien.setPosition(xPosition, yPosition);
     }
 
-    private void changeKeyPosition(Alien alien, RunModeState state) {
+    private void timeWastingAlienBehaviour(Alien alien, RunModeState state) {
         if (state.getKey().isFound()) return;
+        var random = new Random();
+        var room = state.getRooms()[state.getCurrentRoom()];
+        var objects = room.getObjects();
+        Obj randObj;
+        do {
+            randObj = objects.get(random.nextInt(objects.size()));
+        } while (randObj == state.getKey().getUnder());
+
+        switch(alien.getMode()) {
+            case CONFUSED:
+                int timePassed = (int) (alien.getTimeLeftWhenSpawned() - state.getTimeoutAfter());
+                int confusionDelay = (int) ((2 * Constants.SECOND_MILLS)/Constants.REPAINT_DELAY_MILLS);
+                if (timePassed < confusionDelay) {
+                    return;
+                } else if (timePassed > confusionDelay) {
+                    state.getAliens().remove(alien);
+                    return;
+                }
+                break;
+            case NORMAL:
+                alien.decActionTimeOut();
+                if (alien.getActionTimeOut() <= 0) {
+
+                    state.setKey(new Key(randObj));
+
+                    alien.resetActionTimeOut();
+                }
+                break;
+            case PETTY:
+                state.setKey(new Key(randObj));
+                state.getAliens().remove(alien);
+                break;
+        }
+
+    }
+    private void shooterAlienBehaviour(Alien alien, RunModeState state) {
 
         alien.decActionTimeOut();
         if (alien.getActionTimeOut() <= 0) {
 
-            var random = new Random();
-            var room = state.getRooms()[state.getCurrentRoom()];
-            var objects = room.getObjects();
-            Obj randObj;
-            do {
-                randObj = objects.get(random.nextInt(objects.size()));
-            } while (randObj == state.getKey().getUnder());
-
-            state.setKey(new Key(randObj));
-
+            fireProjectile (alien);
             alien.resetActionTimeOut();
         }
     }
