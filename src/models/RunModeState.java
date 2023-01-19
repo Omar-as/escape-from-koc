@@ -1,6 +1,7 @@
 package models;
 
 import models.alien.Alien;
+import models.powerUps.PowerUp;
 import utils.Constants;
 
 import java.util.ArrayList;
