@@ -234,8 +234,8 @@ public class RunModeBackend implements Backend<RunModeState> {
     }
     private void spawnPowerUp(Random random, RunModeState state) {
         Room room = state.getRooms()[state.getCurrentRoom()];
-        PowerUp powerUp = new PowerUp(PowerUpType.Hint, 0, 0 ,Constants.objDim, Constants.objDim);
-//        PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0 ,Constants.objDim, Constants.objDim);
+//        PowerUp powerUp = new PowerUp(PowerUpType.Hint, 0, 0 ,Constants.objDim, Constants.objDim);
+        PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0 ,Constants.objDim, Constants.objDim);
 
         var objects = room.getObjects();
         var done = false;
