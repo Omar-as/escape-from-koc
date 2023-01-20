@@ -49,6 +49,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+                state.setCompleted();
             }
         });
 
