@@ -39,6 +39,7 @@ public class RunModeState extends State {
         this.showKeyFor = 0;
         resetTimeoutAfter();
         resetTimeForNextAlien();
+        resetTimeForNextPowerUp();
         this.completed = false;
         this.projectiles = projectiles;
     }

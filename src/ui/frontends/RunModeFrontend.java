@@ -70,10 +70,8 @@ public class RunModeFrontend implements Frontend<RunModeState> {
         }
 
         // Draw rectangle when hint powerUp is active
-        for(var powerup : state.getPowerUps()) {
-            if (powerup.getType() == PowerUpType.Hint && state.getPlayer().getIsHint()) {
-                canvas.drawRect(powerup.getPosition().getX() - 32, powerup.getPosition().getY() -32, 64, 64);
-            }
+        if (state.getPlayer().getIsHint()) {
+            canvas.drawRect(state.getKey().getUnder().getPosition().getX() - 32, state.getKey().getUnder().getPosition().getY() -32, 64, 64);
         }
 
         // Draw door

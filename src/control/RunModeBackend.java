@@ -55,9 +55,15 @@ public class RunModeBackend implements Backend<RunModeState> {
 
         if (state.getTimeForNextAlien() <= 0){
             spawnAlien(new Random(), state);
+
             state.resetTimeForNextAlien();
         }
         state.decTimeForNextAlien();
+        if (state.getTimeForNextPowerUp() <= 0){
+            spawnPowerUp(new Random(), state);
+            state.resetTimeForNextPowerUp();
+        }
+        state.decTimeForNextPowerUp();
             
     }
 
@@ -108,6 +114,9 @@ public class RunModeBackend implements Backend<RunModeState> {
                     state.setAliens(new ArrayList<Alien>());
                     state.setProjectiles(new ArrayList<Projectile>());
                     player.setPosition(0, 0);
+                    state.setPowerUps(new ArrayList<PowerUp>());
+                    state.resetTimeForNextAlien();
+                    state.resetTimeForNextPowerUp();
                 }
             } else player.setPosition(backupPosition);
         }
@@ -159,7 +168,7 @@ public class RunModeBackend implements Backend<RunModeState> {
     }
     private void spawnPowerUp(Random random, RunModeState state) {
         Room room = state.getRooms()[state.getCurrentRoom()];
-        PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0 ,Constants.entityDim, Constants.entityDim);
+        PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0 ,Constants.objDim, Constants.objDim);
 
         var objects = room.getObjects();
         var done = false;

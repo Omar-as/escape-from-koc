@@ -3,6 +3,8 @@ package models;
 import utils.Asset;
 import utils.Position;
 
+import java.util.HashMap;
+
 public class Player extends Rectangle {
     private int lives;
     private int score;
@@ -11,9 +13,11 @@ public class Player extends Rectangle {
     private int framesPassed = 10;
     private boolean isProtectionVest;
     private boolean isHint;
+    private HashMap<String, Integer> powerUpBag;
 
     public Player(int lives, int score, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
+        this.powerUpBag = new HashMap<String, Integer>();
         this.lives = lives;
         this.score = score;
     }
@@ -62,19 +66,11 @@ public class Player extends Rectangle {
 
     public void setIsProtectionVest(boolean protectionVest) { isProtectionVest = protectionVest; }
 
-    public boolean isProtectionVest() {
-        return isProtectionVest;
-    }
+    public boolean isProtectionVest() { return isProtectionVest; }
 
-    public void setProtectionVest(boolean protectionVest) {
-        isProtectionVest = protectionVest;
-    }
+    public void setProtectionVest(boolean protectionVest) { isProtectionVest = protectionVest; }
 
-    public boolean getIsHint() {
-        return isHint;
-    }
+    public boolean getIsHint() { return isHint; }
 
-    public void setIsHint(boolean hint) {
-        isHint = hint;
-    }
+    public void setIsHint(boolean hint) { isHint = hint; }
 }
