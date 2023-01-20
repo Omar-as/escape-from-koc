@@ -7,7 +7,8 @@ import utils.Position;
 public class PowerUp extends Rectangle {
     private final PowerUpType type;
 
-    private int timer = 12;
+    private int despawnTimer = (int) ((6* Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    private int effectTimer;
     private int actionTimeOut;
     private int actionTimer;
 
@@ -24,17 +25,15 @@ public class PowerUp extends Rectangle {
 //        this.type = type;
 //    }
 
-    public int getTimer() {
-        return timer;
+    public int getDespawnTimer() {
+        return despawnTimer;
     }
 
-    public void setTimer(int timer) {
-        this.timer = timer;
+    public void setDespawnTimer(int despawnTimer) {
+        this.despawnTimer = despawnTimer;
     }
-
-
-    public void resetActionTimeOut(){
-        actionTimeOut = (int) ((actionTimer * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    public void decTimer() {
+        despawnTimer = Math.max(despawnTimer - 1, 0);
     }
 
 }

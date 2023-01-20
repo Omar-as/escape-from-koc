@@ -24,6 +24,8 @@ public class RunModeState extends State {
     private int timeForNextAlien;
     private int timeForNextPowerUp;
     private boolean completed;
+    private int hintEffectTimer;
+    private int protectionVestEffectTimer;
 
     public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, ArrayList<PowerUp> powerUps, Player player, Door door, ArrayList<Projectile> projectiles) {
         this.width = 0;
@@ -201,5 +203,25 @@ public class RunModeState extends State {
 
     public void setProjectiles(ArrayList<Projectile> projectiles) {
         this.projectiles = projectiles;
+    }
+    public void resetHintEffectTimer(){
+        hintEffectTimer = (int) ((10 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+    public void resetProtectionVestEffectTimer(){
+        protectionVestEffectTimer = (int) ((20 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+    public void decHintEffectTimer() {
+        hintEffectTimer = Math.max(hintEffectTimer - 1, 0);
+    }
+    public void decProtectionVestEffectTimer() {
+        protectionVestEffectTimer = Math.max(protectionVestEffectTimer - 1, 0);
+    }
+
+    public int getHintEffectTimer() {
+        return hintEffectTimer;
+    }
+
+    public int getProtectionVestEffectTimer() {
+        return protectionVestEffectTimer;
     }
 }
