@@ -1,7 +1,11 @@
 package models;
 
 import utils.Asset;
+import utils.Constants;
 import utils.Position;
+
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class Player extends Rectangle {
     private int lives;
@@ -9,9 +13,13 @@ public class Player extends Rectangle {
     private Room currentRoom;
     private Asset currentSprite;
     private int framesPassed = 10;
+    private boolean isProtectionVest;
+    private boolean isHint;
+    private HashMap<String, Integer> powerUpBag;
 
     public Player(int lives, int score, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
+        this.powerUpBag = new HashMap<String, Integer>();
         this.lives = lives;
         this.score = score;
     }
@@ -54,5 +62,26 @@ public class Player extends Rectangle {
 
     public void setFramesPassed(int framesPassed) {
         this.framesPassed = framesPassed;
+    }
+
+    public boolean getIsProtectionVest() { return isProtectionVest; }
+
+    public void setIsProtectionVest(boolean protectionVest) { isProtectionVest = protectionVest; }
+
+    public boolean isProtectionVest() { return isProtectionVest; }
+
+    public void setProtectionVest(boolean protectionVest) { isProtectionVest = protectionVest; }
+
+    public boolean getIsHint() { return isHint; }
+
+    public void setIsHint(boolean hint) { isHint = hint; }
+
+    public void editBag(String powerUpName, int additionalPowerUp){ powerUpBag.put(powerUpName, additionalPowerUp); }
+
+    public int getBagPowerUpInfo(String powerUpName){ return powerUpBag.get(powerUpName); }
+
+    public String convertBagToString(){
+        String bagInfo = powerUpBag.keySet().stream().map(key -> key + ":" + powerUpBag.get(key)).collect(Collectors.joining(", "));
+        return bagInfo;
     }
 }

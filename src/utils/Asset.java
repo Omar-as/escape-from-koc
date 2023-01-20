@@ -28,6 +28,13 @@ public enum Asset {
     ALIEN_TIME_WASTING("alien_time_wasting"),
     PROJECTILE("projectile"),
 
+    // Power-ups
+    PLASTIC_BOTTLE("power_up_plastic_bottle"),
+    PROTECCTION_VEST("power_up_protection_vest"),
+    EXTRA_LIFE("power_up_extra_life"),
+    HINT("power_up_hint"),
+    EXTRA_TIME("power_up_extra_time"),
+
     KEY("key"),
     TRASH_BIN("trash_bin"),
     CHALK_BOARD("chalk_board"),

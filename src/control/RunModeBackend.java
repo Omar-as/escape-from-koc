@@ -4,6 +4,8 @@ import models.*;
 import models.alien.Alien;
 import models.alien.AlienType;
 import models.objects.Obj;
+import models.powerUps.PowerUp;
+import models.powerUps.PowerUpType;
 import ui.ScreenFactory;
 import ui.ScreenManager;
 import utils.Constants;
@@ -21,6 +23,7 @@ public class RunModeBackend implements Backend<RunModeState> {
         if (state.isCompleted()) return;
 
         movePlayer(state);
+        usePowerUp(state);
 
         //TODO: remove iterator
         var alienArrayLength = state.getAliens().size();
@@ -43,6 +46,17 @@ public class RunModeBackend implements Backend<RunModeState> {
             }
         }
 
+        var powerUpArrayLength = state.getPowerUps().size();
+        for (int i = 0 ; i < powerUpArrayLength ; i++) {
+            var powerUp = state.getPowerUps().get(i);
+            if (powerUp.getDespawnTimer() <= 0){
+                state.getPowerUps().remove(powerUp);
+                powerUpArrayLength--;
+                i--;
+            }
+            powerUp.decTimer();
+        }
+
         fireProjectile(state);
 
         if ((state.getTimeoutAfter() <= 0 && !state.isCompleted()) || state.getPlayer().getLives() == 0) {
@@ -53,9 +67,17 @@ public class RunModeBackend implements Backend<RunModeState> {
 
         if (state.getTimeForNextAlien() <= 0){
             spawnAlien(new Random(), state);
+
             state.resetTimeForNextAlien();
         }
         state.decTimeForNextAlien();
+        if (state.getTimeForNextPowerUp() <= 0){
+            spawnPowerUp(new Random(), state);
+            state.resetTimeForNextPowerUp();
+        }
+        state.decTimeForNextPowerUp();
+        hintPowerUpBehaviour(state);
+        protectionVestPowerUpBehaviour(state);
             
     }
 
@@ -106,11 +128,66 @@ public class RunModeBackend implements Backend<RunModeState> {
                     state.setAliens(new ArrayList<Alien>());
                     state.setProjectiles(new ArrayList<Projectile>());
                     player.setPosition(0, 0);
+                    state.setPowerUps(new ArrayList<PowerUp>());
+                    state.resetTimeForNextAlien();
+                    state.resetTimeForNextPowerUp();
                 }
             } else player.setPosition(backupPosition);
         }
 
         state.decShowKeyFor();
+    }
+
+    public void usePowerUp(RunModeState state){
+        var player = state.getPlayer();
+
+        var isHintPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_H);
+        var isProtectionVestPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_P);
+
+        if(isHintPressed && player.getBagPowerUpInfo("H") > 0 && !player.getIsHint()){
+//            hintPowerUpBehaviour(state);
+            player.setIsHint(true);
+            state.resetHintEffectTimer();
+            player.editBag("H",player.getBagPowerUpInfo("H") - 1);
+        }
+        if(isProtectionVestPressed && player.getBagPowerUpInfo("PV") > 0 && !player.getIsProtectionVest()){
+//            protectionVestPowerUpBehaviour(state);
+            player.setIsProtectionVest(true);
+            state.resetProtectionVestEffectTimer();
+            player.editBag("PV",player.getBagPowerUpInfo("PV") - 1);
+        }
+    }
+
+    public void pickupPowerUp(RunModeState state, int clickX, int clickY){
+        var player = state.getPlayer();
+        var powerUpLength = state.getPowerUps().size();
+        for(int i = 0; i < powerUpLength; i++){
+            var powerup = state.getPowerUps().get(i);
+            if (clickX >= powerup.getPosition().getX() &&
+                    clickX <= powerup.getPosition().getX() + powerup.getWidth() &&
+                    clickY >= powerup.getPosition().getY() &&
+                    clickY <= powerup.getPosition().getY() + powerup.getHeight()) {
+                if(powerup.getType() == PowerUpType.ExtraTime){
+                    extraTimePowerUpBehaviour(state);
+                } else if (powerup.getType() == PowerUpType.Hint) {
+//                    hintPowerUpBehaviour(state);
+                    player.editBag("H",player.getBagPowerUpInfo("H") + 1);
+                }else if (powerup.getType() == PowerUpType.ProtectionVest) {
+//                    protectionVestPowerUpBehaviour(state);
+                    player.editBag("PV",player.getBagPowerUpInfo("PV") + 1);
+                }else if (powerup.getType() == PowerUpType.PlasticBottle) {
+
+                    // To Be Changeddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+//                    protectionVestPowerUpBehaviour(state);
+                    player.editBag("PB",player.getBagPowerUpInfo("PB") + 1);
+                }else if (powerup.getType() == PowerUpType.ExtraLife) {
+                    extraLifePowerUpBehaviour(state);
+                }
+                state.getPowerUps().remove(powerup);
+                powerUpLength--;
+                i--;
+            }
+        }
     }
 
     public void pickupKey(RunModeState state, int clickX, int clickY) {
@@ -154,6 +231,30 @@ public class RunModeBackend implements Backend<RunModeState> {
             done = tooClose == 0;
         }
         state.getAliens().add(alien);
+    }
+    private void spawnPowerUp(Random random, RunModeState state) {
+        Room room = state.getRooms()[state.getCurrentRoom()];
+//        PowerUp powerUp = new PowerUp(PowerUpType.Hint, 0, 0 ,Constants.objDim, Constants.objDim);
+        PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0 ,Constants.objDim, Constants.objDim);
+
+        var objects = room.getObjects();
+        var done = false;
+
+
+        while (!done) {
+            int x = random.nextInt(state.getWidth() - powerUp.getWidth());
+            int y = random.nextInt(state.getHeight() - powerUp.getHeight());
+
+            powerUp.setPosition(x, y);
+
+            int tooClose = objects.stream()
+                    .map(powerUp::distanceBetweenObjects)
+                    .mapToInt(b -> (b < Constants.minDistance) ? 1 : 0)
+                    .sum();
+
+            done = tooClose == 0;
+        }
+        state.getPowerUps().add(powerUp);
     }
     private void blindAlienBehaviour(Alien alien, RunModeState state) {
         var done = false;
@@ -264,7 +365,7 @@ public class RunModeBackend implements Backend<RunModeState> {
                                     .map(projectile::intersects)
                                     .mapToInt(b -> b ? 1 : 0)
                                     .sum() != 0;
-            if(projectile.intersects(player)){
+            if(projectile.intersects(player) && !player.getIsProtectionVest()){
                 player.setPosition(0,0);
                 player.setLives(player.getLives() - 1);
                 projectiles.remove(projectile);
@@ -274,7 +375,38 @@ public class RunModeBackend implements Backend<RunModeState> {
                 projectiles.remove(projectile);
                 i--;
                 projectileArrayLength--;
+            } else if (projectile.intersects(player) && player.getIsProtectionVest()){
+                projectiles.remove(projectile);
+                i--;
+                projectileArrayLength--;
             }
+        }
+    }
+
+    private void extraLifePowerUpBehaviour(RunModeState state){
+        var player = state.getPlayer();
+        player.setLives(player.getLives() + 1);
+    }
+
+    private void extraTimePowerUpBehaviour(RunModeState state){
+        state.incTimeoutAfter(5);
+    }
+
+    private void protectionVestPowerUpBehaviour(RunModeState state){
+        var player = state.getPlayer();
+        if(player.getIsProtectionVest() && state.getProtectionVestEffectTimer() <= 0){
+            player.setProtectionVest(false);
+        }else{
+            state.decProtectionVestEffectTimer();
+        }
+
+    }
+    private void hintPowerUpBehaviour(RunModeState state){
+        var player = state.getPlayer();
+        if(player.getIsHint() && state.getHintEffectTimer() <= 0){
+            player.setIsHint(false);
+        }else{
+            state.decHintEffectTimer();
         }
     }
 }

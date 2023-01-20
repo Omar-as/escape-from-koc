@@ -1,5 +1,7 @@
 package models;
 
+import models.powerUps.PowerUp;
+
 public class GameData {
     private final int score;
     private final PowerUp[] powerUps;

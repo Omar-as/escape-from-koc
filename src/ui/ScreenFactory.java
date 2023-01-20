@@ -4,6 +4,7 @@ import control.BuildModeBackend;
 import control.RunModeBackend;
 import models.*;
 import models.alien.Alien;
+import models.powerUps.PowerUp;
 import ui.screens.*;
 
 import java.util.ArrayList;
@@ -46,7 +47,10 @@ public class ScreenFactory {
 
     public static RunModeScreen getRunModeScreen(BuildModeState buildModeState) {
         var player = new Player(5, 0, 0, 0, 64, 64);
-        var state = new RunModeState(new ArrayList<Alien>() , false, buildModeState.getRooms(), null, player, buildModeState.getDoor(), new ArrayList<Projectile>());
+        player.editBag("H",0);
+        player.editBag("PV",0);
+        player.editBag("PB",0);
+        var state = new RunModeState(new ArrayList<Alien>() , false, buildModeState.getRooms(), new ArrayList<PowerUp>(), player, buildModeState.getDoor(), new ArrayList<Projectile>());
         var backend = new RunModeBackend();
         return new RunModeScreen(state, backend);
     }
