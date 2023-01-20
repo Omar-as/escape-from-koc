@@ -9,6 +9,7 @@ public class Player extends Rectangle {
     private Room currentRoom;
     private Asset currentSprite;
     private int framesPassed = 10;
+    private boolean isProtectionVest;
 
     public Player(int lives, int score, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
@@ -55,4 +56,8 @@ public class Player extends Rectangle {
     public void setFramesPassed(int framesPassed) {
         this.framesPassed = framesPassed;
     }
+
+    public boolean getIsProtectionVest() { return isProtectionVest; }
+
+    public void setIsProtectionVest(boolean protectionVest) { isProtectionVest = protectionVest; }
 }

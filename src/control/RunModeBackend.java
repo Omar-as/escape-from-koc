@@ -4,6 +4,8 @@ import models.*;
 import models.alien.Alien;
 import models.alien.AlienType;
 import models.objects.Obj;
+import models.powerUps.PowerUp;
+import models.powerUps.PowerUpType;
 import ui.ScreenFactory;
 import ui.ScreenManager;
 import utils.Constants;
@@ -155,6 +157,29 @@ public class RunModeBackend implements Backend<RunModeState> {
         }
         state.getAliens().add(alien);
     }
+    private void spawnPowerUp(Random random, RunModeState state) {
+        Room room = state.getRooms()[state.getCurrentRoom()];
+        PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0 ,Constants.entityDim, Constants.entityDim);
+
+        var objects = room.getObjects();
+        var done = false;
+
+
+        while (!done) {
+            int x = random.nextInt(state.getWidth() - powerUp.getWidth());
+            int y = random.nextInt(state.getHeight() - powerUp.getHeight());
+
+            powerUp.setPosition(x, y);
+
+            int tooClose = objects.stream()
+                    .map(powerUp::distanceBetweenObjects)
+                    .mapToInt(b -> (b < Constants.minDistance) ? 1 : 0)
+                    .sum();
+
+            done = tooClose == 0;
+        }
+        state.getPowerUps().add(powerUp);
+    }
     private void blindAlienBehaviour(Alien alien, RunModeState state) {
         var done = false;
         var xPosition = alien.getPosition().getX();
@@ -264,7 +289,7 @@ public class RunModeBackend implements Backend<RunModeState> {
                                     .map(projectile::intersects)
                                     .mapToInt(b -> b ? 1 : 0)
                                     .sum() != 0;
-            if(projectile.intersects(player)){
+            if(projectile.intersects(player) && !player.getIsProtectionVest()){
                 player.setPosition(0,0);
                 player.setLives(player.getLives() - 1);
                 projectiles.remove(projectile);
@@ -274,7 +299,26 @@ public class RunModeBackend implements Backend<RunModeState> {
                 projectiles.remove(projectile);
                 i--;
                 projectileArrayLength--;
+            } else if (projectile.intersects(player) && player.getIsProtectionVest()){
+                projectiles.remove(projectile);
+                i--;
+                projectileArrayLength--;
             }
         }
+    }
+
+    private void extraLifePowerUpBehaviour(PowerUp powerUp, RunModeState state){
+        var player = state.getPlayer();
+        player.setLives(player.getLives() + 1);
+    }
+
+    private void extraTimePowerUpBehaviour(PowerUp powerUp, RunModeState state){
+        state.incTimeoutAfter(5);
+    }
+
+    private void protectionVestPowerUpBehaviour(PowerUp powerUp, RunModeState state){
+        var player = state.getPlayer();
+
+
     }
 }

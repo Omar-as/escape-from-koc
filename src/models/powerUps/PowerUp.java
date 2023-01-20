@@ -1,25 +1,28 @@
 package models.powerUps;
 
+import models.Rectangle;
+import utils.Constants;
 import utils.Position;
 
-public class PowerUp {
-    private String type;
-    private Position position;
-    private int timer;
+public class PowerUp extends Rectangle {
+    private final PowerUpType type;
 
-    public PowerUp(String type, int xPosition, int yPosition, int timer) {
+    private int timer = 12;
+    private int actionTimeOut;
+    private int actionTimer;
+
+    public PowerUp(PowerUpType type, int xPosition, int yPosition, int width, int height) {
+        super(new Position(xPosition, yPosition), width, height);
         this.type = type;
-        this.position = new Position(xPosition, yPosition);
-        this.timer = timer;
     }
 
-    public String getType() {
+    public PowerUpType getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+//    public void setType(PowerUpType type) {
+//        this.type = type;
+//    }
 
     public int getTimer() {
         return timer;
@@ -30,19 +33,8 @@ public class PowerUp {
     }
 
 
-    public Position getPosition() {
-        return position;
+    public void resetActionTimeOut(){
+        actionTimeOut = (int) ((actionTimer * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
     }
 
-    public void setPosition(int xPosition, int yPosition) {
-        position = new Position(xPosition, yPosition);
-    }
-
-    public void setXPosition(int xPosition) {
-        position = new Position(xPosition, position.getY());
-    }
-
-    public void setYPosition(int yPosition) {
-        position = new Position(position.getX(), yPosition);
-    }
 }

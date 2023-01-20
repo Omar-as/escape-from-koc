@@ -14,7 +14,7 @@ public class RunModeState extends State {
     private boolean isPaused;
     private Room[] rooms;
     private int currentRoom;
-    private PowerUp[] powerUps;
+    private ArrayList<PowerUp> powerUps;
     private Player player;
     private Door door;
     private Key key;
@@ -22,9 +22,10 @@ public class RunModeState extends State {
     private int showKeyFor;
     private int timeoutAfter;
     private int timeForNextAlien;
+    private int timeForNextPowerUp;
     private boolean completed;
 
-    public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door, ArrayList<Projectile> projectiles) {
+    public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, ArrayList<PowerUp> powerUps, Player player, Door door, ArrayList<Projectile> projectiles) {
         this.width = 0;
         this.height = 0;
         this.aliens = aliens;
@@ -92,11 +93,11 @@ public class RunModeState extends State {
         currentRoom++;
     }
 
-    public PowerUp[] getPowerUps() {
+    public ArrayList<PowerUp> getPowerUps() {
         return powerUps;
     }
 
-    public void setPowerUps(PowerUp[] powerUps) {
+    public void setPowerUps(ArrayList<PowerUp> powerUps) {
         this.powerUps = powerUps;
     }
 
@@ -157,6 +158,8 @@ public class RunModeState extends State {
         timeoutAfter = Math.max(timeoutAfter - 1, 0);
     }
 
+    public void incTimeoutAfter(int time){ timeoutAfter += time; }
+
     public long getTimeForNextAlien() {
         return timeForNextAlien;
     }
@@ -170,6 +173,19 @@ public class RunModeState extends State {
         timeForNextAlien = Math.max(timeForNextAlien - 1, 0);
     }
 
+    public long getTimeForNextPowerUp() {
+        return timeForNextPowerUp;
+    }
+
+    public void resetTimeForNextPowerUp() {
+        // TODO: Remove magic numbers
+        timeForNextPowerUp = (int) ((12 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+
+    public void decTimeForNextPowerUp() {
+        timeForNextPowerUp = Math.max(timeForNextPowerUp - 1, 0);
+    }
+
     public boolean isCompleted() {
         return completed;
     }
@@ -181,6 +197,7 @@ public class RunModeState extends State {
     public ArrayList<Projectile> getProjectiles() {
         return projectiles;
     }
+
     public void setProjectiles(ArrayList<Projectile> projectiles) {
         this.projectiles = projectiles;
     }
