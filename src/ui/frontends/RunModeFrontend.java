@@ -4,6 +4,8 @@ import control.KeyManager;
 import models.RunModeState;
 import models.alien.Alien;
 import models.alien.AlienType;
+import models.powerUps.PowerUp;
+import models.powerUps.PowerUpType;
 import ui.Frontend;
 import ui.GraphicsManager;
 import utils.Asset;
@@ -59,6 +61,19 @@ public class RunModeFrontend implements Frontend<RunModeState> {
             var projectileImage = GraphicsManager.getInstance().getImage(projectile.getSprite(), projectile.getWidth(), projectile.getHeight());
 
             canvas.drawImage(projectileImage, projectile.getPosition().getX(), projectile.getPosition().getY(), null);
+        }
+
+        // Draw powerUps
+        for (var powerup : state.getPowerUps()) {
+            var powerUpImage = GraphicsManager.getInstance().getImage(powerup.getType().asset, powerup.getWidth(), powerup.getHeight());
+            canvas.drawImage(powerUpImage, powerup.getPosition().getX(), powerup.getPosition().getY(), null);
+        }
+
+        // Draw rectangle when hint powerUp is active
+        for(var powerup : state.getPowerUps()) {
+            if (powerup.getType() == PowerUpType.Hint && state.getPlayer().getIsHint()) {
+                canvas.drawRect(powerup.getPosition().getX() - 32, powerup.getPosition().getY() -32, 64, 64);
+            }
         }
 
         // Draw door

@@ -10,6 +10,7 @@ public class Player extends Rectangle {
     private Asset currentSprite;
     private int framesPassed = 10;
     private boolean isProtectionVest;
+    private boolean isHint;
 
     public Player(int lives, int score, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
@@ -60,4 +61,20 @@ public class Player extends Rectangle {
     public boolean getIsProtectionVest() { return isProtectionVest; }
 
     public void setIsProtectionVest(boolean protectionVest) { isProtectionVest = protectionVest; }
+
+    public boolean isProtectionVest() {
+        return isProtectionVest;
+    }
+
+    public void setProtectionVest(boolean protectionVest) {
+        isProtectionVest = protectionVest;
+    }
+
+    public boolean getIsHint() {
+        return isHint;
+    }
+
+    public void setIsHint(boolean hint) {
+        isHint = hint;
+    }
 }

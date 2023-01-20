@@ -321,4 +321,7 @@ public class RunModeBackend implements Backend<RunModeState> {
 
 
     }
+    private void hintPowerUpBehaviour(PowerUp powerUp, RunModeState state){
+        var player = state.getPlayer();
+    }
 }
