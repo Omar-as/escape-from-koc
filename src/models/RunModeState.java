@@ -159,7 +159,7 @@ public class RunModeState extends State {
         timeoutAfter = Math.max(timeoutAfter - 1, 0);
     }
 
-    public void incTimeoutAfter(int time){ timeoutAfter += time; }
+    public void incTimeoutAfter(int time){ timeoutAfter += ((time * Constants.SECOND_MILLS)/Constants.REPAINT_DELAY_MILLS); }
 
     public long getTimeForNextAlien() {
         return timeForNextAlien;
