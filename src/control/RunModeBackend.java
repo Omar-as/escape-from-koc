@@ -23,6 +23,7 @@ public class RunModeBackend implements Backend<RunModeState> {
         if (state.isCompleted()) return;
 
         movePlayer(state);
+        usePowerUp(state);
 
         //TODO: remove iterator
         var alienArrayLength = state.getAliens().size();
@@ -132,9 +133,11 @@ public class RunModeBackend implements Backend<RunModeState> {
 
         if(isHintPressed && player.getBagPowerUpInfo("H") > 0 && !player.getIsHint()){
             hintPowerUpBehaviour(state);
+            player.editBag("H",player.getBagPowerUpInfo("H") - 1);
         }
         if(isProtectionVestPressed && player.getBagPowerUpInfo("PV") > 0 && !player.getIsProtectionVest()){
             protectionVestPowerUpBehaviour(state);
+            player.editBag("PV",player.getBagPowerUpInfo("PV") - 1);
         }
     }
 
@@ -150,15 +153,15 @@ public class RunModeBackend implements Backend<RunModeState> {
                 if(powerup.getType() == PowerUpType.ExtraTime){
                     extraTimePowerUpBehaviour(state);
                 } else if (powerup.getType() == PowerUpType.Hint) {
-                    hintPowerUpBehaviour(state);
+//                    hintPowerUpBehaviour(state);
                     player.editBag("H",player.getBagPowerUpInfo("H") + 1);
                 }else if (powerup.getType() == PowerUpType.ProtectionVest) {
-                    protectionVestPowerUpBehaviour(state);
+//                    protectionVestPowerUpBehaviour(state);
                     player.editBag("PV",player.getBagPowerUpInfo("PV") + 1);
                 }else if (powerup.getType() == PowerUpType.PlasticBottle) {
 
                     // To Be Changeddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                    protectionVestPowerUpBehaviour(state);
+//                    protectionVestPowerUpBehaviour(state);
                     player.editBag("PB",player.getBagPowerUpInfo("PB") + 1);
                 }else if (powerup.getType() == PowerUpType.ExtraLife) {
                     extraLifePowerUpBehaviour(state);
@@ -214,6 +217,7 @@ public class RunModeBackend implements Backend<RunModeState> {
     }
     private void spawnPowerUp(Random random, RunModeState state) {
         Room room = state.getRooms()[state.getCurrentRoom()];
+//        PowerUp powerUp = new PowerUp(PowerUpType.Hint, 0, 0 ,Constants.objDim, Constants.objDim);
         PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0 ,Constants.objDim, Constants.objDim);
 
         var objects = room.getObjects();
@@ -373,10 +377,11 @@ public class RunModeBackend implements Backend<RunModeState> {
 
     private void protectionVestPowerUpBehaviour(RunModeState state){
         var player = state.getPlayer();
-
+        player.setIsProtectionVest(true);
 
     }
     private void hintPowerUpBehaviour(RunModeState state){
         var player = state.getPlayer();
+        player.setIsHint(true);
     }
 }

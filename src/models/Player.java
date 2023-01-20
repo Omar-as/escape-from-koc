@@ -4,6 +4,7 @@ import utils.Asset;
 import utils.Position;
 
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class Player extends Rectangle {
     private int lives;
@@ -77,4 +78,9 @@ public class Player extends Rectangle {
     public void editBag(String powerUpName, int additionalPowerUp){ powerUpBag.put(powerUpName, additionalPowerUp); }
 
     public int getBagPowerUpInfo(String powerUpName){ return powerUpBag.get(powerUpName); }
+
+    public String convertBagToString(){
+        String bagInfo = powerUpBag.keySet().stream().map(key -> key + ":" + powerUpBag.get(key)).collect(Collectors.joining(", "));
+        return bagInfo;
+    }
 }

@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 public class RunModeScreen extends AnimatedScreen<RunModeState> {
     private final JLabel roomNameLabel;
     private final JLabel timeLabel;
+    private final JLabel powerUps;
     private final Canvas<RunModeState> canvas;
 
     public RunModeScreen(RunModeState state, RunModeBackend backend) {
@@ -35,6 +36,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
 
         roomNameLabel = new JLabel(state.getRooms()[state.getCurrentRoom()].getName());
         timeLabel = new JLabel();
+        powerUps = new JLabel();
 
         var pauseResumeButton = new JButton("Pause");
         pauseResumeButton.addMouseListener(new MouseAdapter() {
@@ -53,6 +55,8 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
         });
 
         bar.add(timeLabel);
+        bar.add(Box.createGlue());
+        bar.add(powerUps);
         bar.add(Box.createGlue());
         bar.add(roomNameLabel);
         bar.add(Box.createGlue());
@@ -79,6 +83,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
             roomNameLabel.setText(state.getRooms()[state.getCurrentRoom()].getName());
             long remainingSeconds = (state.getTimeoutAfter() * Constants.REPAINT_DELAY_MILLS) / Constants.SECOND_MILLS;
             timeLabel.setText("Remaining: %d s".formatted(remainingSeconds));
+            powerUps.setText(state.getPlayer().convertBagToString());
             canvas.repaint();
         }
     }

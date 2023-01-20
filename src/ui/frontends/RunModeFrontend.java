@@ -71,6 +71,7 @@ public class RunModeFrontend implements Frontend<RunModeState> {
 
         // Draw rectangle when hint powerUp is active
         if (state.getPlayer().getIsHint()) {
+            canvas.setColor(Color.BLACK);
             canvas.drawRect(state.getKey().getUnder().getPosition().getX() - 32, state.getKey().getUnder().getPosition().getY() -32, 64, 64);
         }
 
