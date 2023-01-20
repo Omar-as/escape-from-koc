@@ -124,6 +124,52 @@ public class RunModeBackend implements Backend<RunModeState> {
         state.decShowKeyFor();
     }
 
+    public void usePowerUp(RunModeState state){
+        var player = state.getPlayer();
+
+        var isHintPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_H);
+        var isProtectionVestPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_P);
+
+        if(isHintPressed && player.getBagPowerUpInfo("H") > 0 && !player.getIsHint()){
+            hintPowerUpBehaviour(state);
+        }
+        if(isProtectionVestPressed && player.getBagPowerUpInfo("PV") > 0 && !player.getIsProtectionVest()){
+            protectionVestPowerUpBehaviour(state);
+        }
+    }
+
+    public void pickupPowerUp(RunModeState state, int clickX, int clickY){
+        var player = state.getPlayer();
+        var powerUpLength = state.getPowerUps().size();
+        for(int i = 0; i < powerUpLength; i++){
+            var powerup = state.getPowerUps().get(i);
+            if (clickX >= powerup.getPosition().getX() &&
+                    clickX <= powerup.getPosition().getX() + powerup.getWidth() &&
+                    clickY >= powerup.getPosition().getY() &&
+                    clickY <= powerup.getPosition().getY() + powerup.getHeight()) {
+                if(powerup.getType() == PowerUpType.ExtraTime){
+                    extraTimePowerUpBehaviour(state);
+                } else if (powerup.getType() == PowerUpType.Hint) {
+                    hintPowerUpBehaviour(state);
+                    player.editBag("H",player.getBagPowerUpInfo("H") + 1);
+                }else if (powerup.getType() == PowerUpType.ProtectionVest) {
+                    protectionVestPowerUpBehaviour(state);
+                    player.editBag("PV",player.getBagPowerUpInfo("PV") + 1);
+                }else if (powerup.getType() == PowerUpType.PlasticBottle) {
+
+                    // To Be Changeddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                    protectionVestPowerUpBehaviour(state);
+                    player.editBag("PB",player.getBagPowerUpInfo("PB") + 1);
+                }else if (powerup.getType() == PowerUpType.ExtraLife) {
+                    extraLifePowerUpBehaviour(state);
+                }
+                state.getPowerUps().remove(i);
+                powerUpLength--;
+                i--;
+            }
+        }
+    }
+
     public void pickupKey(RunModeState state, int clickX, int clickY) {
         if (state.getKey().isFound()) return;
         var under = state.getKey().getUnder();
@@ -316,21 +362,21 @@ public class RunModeBackend implements Backend<RunModeState> {
         }
     }
 
-    private void extraLifePowerUpBehaviour(PowerUp powerUp, RunModeState state){
+    private void extraLifePowerUpBehaviour(RunModeState state){
         var player = state.getPlayer();
         player.setLives(player.getLives() + 1);
     }
 
-    private void extraTimePowerUpBehaviour(PowerUp powerUp, RunModeState state){
+    private void extraTimePowerUpBehaviour(RunModeState state){
         state.incTimeoutAfter(5);
     }
 
-    private void protectionVestPowerUpBehaviour(PowerUp powerUp, RunModeState state){
+    private void protectionVestPowerUpBehaviour(RunModeState state){
         var player = state.getPlayer();
 
 
     }
-    private void hintPowerUpBehaviour(PowerUp powerUp, RunModeState state){
+    private void hintPowerUpBehaviour(RunModeState state){
         var player = state.getPlayer();
     }
 }

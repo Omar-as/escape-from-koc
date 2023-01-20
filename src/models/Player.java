@@ -75,4 +75,6 @@ public class Player extends Rectangle {
     public void setIsHint(boolean hint) { isHint = hint; }
 
     public void editBag(String powerUpName, int additionalPowerUp){ powerUpBag.put(powerUpName, additionalPowerUp); }
+
+    public int getBagPowerUpInfo(String powerUpName){ return powerUpBag.get(powerUpName); }
 }

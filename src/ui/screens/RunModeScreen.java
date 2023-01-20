@@ -64,6 +64,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
             @Override
             public void mouseClicked(MouseEvent e) {
                 backend.pickupKey(state, e.getX(), e.getY());
+                backend.pickupPowerUp(state,e.getX(),e.getY());
             }
         });
         mainColumn.add(canvas);
