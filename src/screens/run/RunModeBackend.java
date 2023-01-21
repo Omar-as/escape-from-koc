@@ -313,7 +313,7 @@ public class RunModeBackend implements Backend<RunModeState> {
 
     private void shooterAlienBehaviour(ShooterAlien alien, RunModeState state) {
         var player = state.getPlayer();
-        if (alien.distanceTo(player) <= Constants.SHOOTER_ALIEN_DEADLY_RANGE * Constants.BLOCK_DIM) {
+        if (alien.distanceTo(player) <= Constants.SHOOTER_ALIEN_DEADLY_RANGE * Constants.BLOCK_DIM && !player.isProtectionVest()) {
             player.setPosition(0, 0);
             RandomUtils.runModeRandomize(state, state.getRooms()[state.getCurrentRoom()], player);
             player.setLives(player.getLives() - 1);
