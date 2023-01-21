@@ -1,5 +1,9 @@
-package utils;
+package managers;
 
+/**
+ * Theme Manager
+ * Provides theming and styling utilities.
+ */
 public class ThemeManager {
     public static final int TITLE_FONT_SIZE_MULTIPLIER = 3;
     public static String getTitle(String text) {

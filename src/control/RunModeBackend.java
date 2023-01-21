@@ -7,11 +7,11 @@ import models.objects.Obj;
 import models.powerUps.PowerUp;
 import models.powerUps.PowerUpType;
 import ui.ScreenFactory;
-import ui.ScreenManager;
-import utils.AccountManager;
+import managers.ScreenManager;
+import managers.AccountManager;
 import utils.Constants;
-import utils.DataStoreManager;
-import utils.Position;
+import managers.DataStoreManager;
+import models.Position;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -204,14 +204,14 @@ public class RunModeBackend implements Backend<RunModeState> {
         var underY = under.getPosition().getY();
         var player = state.getPlayer();
         var distance = player.distanceBetweenObjects(under);
-        if (clickX >= underX && clickX <= underX + under.getWidth() && clickY >= underY && clickY <= underY + under.getHeight() && distance <= Constants.minDistance) {
+        if (clickX >= underX && clickX <= underX + under.getWidth() && clickY >= underY && clickY <= underY + under.getHeight() && distance <= Constants.MIN_DISTANCE) {
             state.getKey().setFound();
             state.setShowKeyFor((int) (Constants.SECOND_MILLS / Constants.REPAINT_DELAY_MILLS));
         }
     }
     private void spawnAlien(Random random, RunModeState state) {
         Room room = state.getRooms()[state.getCurrentRoom()];
-        Alien alien = new Alien(AlienType.values()[random.nextInt(AlienType.values().length)], 0, 0 ,Constants.entityDim, Constants.entityDim);
+        Alien alien = new Alien(AlienType.values()[random.nextInt(AlienType.values().length)], 0, 0 ,Constants.ENTITY_DIM, Constants.ENTITY_DIM);
 
         var objects = room.getObjects();
         var done = false;
@@ -232,7 +232,7 @@ public class RunModeBackend implements Backend<RunModeState> {
 
             int tooClose = objects.stream()
                     .map(alien::distanceBetweenObjects)
-                    .mapToInt(b -> (b < Constants.minDistance) ? 1 : 0)
+                    .mapToInt(b -> (b < Constants.MIN_DISTANCE) ? 1 : 0)
                     .sum();
 
             done = tooClose == 0;
@@ -242,7 +242,7 @@ public class RunModeBackend implements Backend<RunModeState> {
     private void spawnPowerUp(Random random, RunModeState state) {
         Room room = state.getRooms()[state.getCurrentRoom()];
 //        PowerUp powerUp = new PowerUp(PowerUpType.Hint, 0, 0 ,Constants.objDim, Constants.objDim);
-        PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0 ,Constants.objDim, Constants.objDim);
+        PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0 ,Constants.OBJ_DIM, Constants.OBJ_DIM);
 
         var objects = room.getObjects();
         var done = false;
@@ -256,7 +256,7 @@ public class RunModeBackend implements Backend<RunModeState> {
 
             int tooClose = objects.stream()
                     .map(powerUp::distanceBetweenObjects)
-                    .mapToInt(b -> (b < Constants.minDistance) ? 1 : 0)
+                    .mapToInt(b -> (b < Constants.MIN_DISTANCE) ? 1 : 0)
                     .sum();
 
             done = tooClose == 0;

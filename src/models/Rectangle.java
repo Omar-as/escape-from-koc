@@ -1,7 +1,5 @@
 package models;
 
-import utils.Position;
-
 public class Rectangle {
     private Position position;
     private int width;

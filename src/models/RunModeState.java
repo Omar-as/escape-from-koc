@@ -54,7 +54,7 @@ public class RunModeState extends State {
 
     public void setWidth(int width) {
         this.width = width;
-        this.door.setXPosition(width - Constants.entityDim);
+        this.door.setXPosition(width - Constants.ENTITY_DIM);
     }
 
     public int getHeight() {
@@ -63,7 +63,7 @@ public class RunModeState extends State {
 
     public void setHeight(int height) {
         this.height = height;
-        this.door.setYPosition(height - Constants.entityDim);
+        this.door.setYPosition(height - Constants.ENTITY_DIM);
     }
 
     public ArrayList<Alien> getAliens() {

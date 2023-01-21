@@ -1,9 +1,12 @@
 import ui.ScreenFactory;
-import ui.ScreenManager;
+import managers.ScreenManager;
 import ui.ScreenType;
 import utils.Constants;
 
 public class Main {
+    /**
+     * Entry point of the program.
+     */
     public static void main(String[] args) {
         // Launch game on the "Sign In / Sign Up" screen
         ScreenManager.getInstance().launch(

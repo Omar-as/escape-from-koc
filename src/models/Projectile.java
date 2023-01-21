@@ -1,7 +1,6 @@
 package models;
 
 import utils.Asset;
-import utils.Position;
 
 public class Projectile extends Rectangle {
     private final Asset sprite = Asset.PROJECTILE;

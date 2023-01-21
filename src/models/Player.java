@@ -1,8 +1,6 @@
 package models;
 
 import utils.Asset;
-import utils.Constants;
-import utils.Position;
 
 import java.util.HashMap;
 import java.util.stream.Collectors;

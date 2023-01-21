@@ -1,6 +1,7 @@
-package utils;
+package managers;
 
 import models.Account;
+import utils.Constants;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -10,8 +11,18 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 import java.util.Objects;
 
-// Based On:
-// https://stackoverflow.com/a/2861125/6835329
+/**
+ * Account Manager
+ * <p>
+ * Handles secure login.
+ * <p>
+ * Patterns:
+ * 1. Low Coupling : This class does not have unnecessary dependencies on other classes.
+ * 2. High Cohesion: This class has one responsibility and does it well.
+ * <p>
+ * Based On:
+ * <a href="https://stackoverflow.com/a/2861125/6835329">StackOverflow Thread</a>
+ */
 public final class AccountManager {
     private static final String ALGORITHM = "PBKDF2WithHmacSHA512";
     private static final int ITERATIONS = 65536; // 2 ^ 16

@@ -3,7 +3,7 @@ package models.alien;
 import models.Rectangle;
 import utils.Asset;
 import utils.Constants;
-import utils.Position;
+import models.Position;
 
 import java.util.Random;
 

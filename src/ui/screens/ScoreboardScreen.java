@@ -3,11 +3,11 @@ package ui.screens;
 import models.GameData;
 import ui.Screen;
 import ui.ScreenFactory;
-import ui.ScreenManager;
+import managers.ScreenManager;
 import ui.ScreenType;
 import utils.Constants;
-import utils.DataStoreManager;
-import utils.ThemeManager;
+import managers.DataStoreManager;
+import managers.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;

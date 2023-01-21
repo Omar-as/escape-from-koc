@@ -5,7 +5,7 @@ import utils.Asset;
 public enum PowerUpType {
     ExtraTime(Asset.EXTRA_TIME),
     Hint(Asset.HINT),
-    ProtectionVest(Asset.PROTECCTION_VEST),
+    ProtectionVest(Asset.PROTECTION_VEST),
     PlasticBottle(Asset.PLASTIC_BOTTLE),
     ExtraLife(Asset.EXTRA_LIFE);
 

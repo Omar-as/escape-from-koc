@@ -2,7 +2,7 @@ package ui.frontends;
 
 import models.BuildModeState;
 import ui.Frontend;
-import ui.GraphicsManager;
+import managers.GraphicsManager;
 import utils.Asset;
 import utils.Constants;
 

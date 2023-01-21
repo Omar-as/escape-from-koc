@@ -2,12 +2,13 @@ package ui.screens;
 
 import control.Backend;
 import control.RunModeBackend;
+import managers.ScreenManager;
 import models.RunModeState;
 import ui.Canvas;
 import ui.*;
 import ui.frontends.RunModeFrontend;
 import utils.Constants;
-import utils.DataStoreManager;
+import managers.DataStoreManager;
 
 import javax.swing.*;
 import java.awt.*;

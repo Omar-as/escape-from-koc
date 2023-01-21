@@ -17,7 +17,7 @@ public class BuildModeState extends State {
         this.rooms = rooms;
         this.currentRoom = 0;
         this.selectedObject = null;
-        this.door = new Door(width - Constants.entityDim, height - Constants.entityDim, Constants.entityDim, Constants.entityDim);
+        this.door = new Door(width - Constants.ENTITY_DIM, height - Constants.ENTITY_DIM, Constants.ENTITY_DIM, Constants.ENTITY_DIM);
     }
 
     public int getWidth() {
@@ -26,7 +26,7 @@ public class BuildModeState extends State {
 
     public void setWidth(int width) {
         this.width = width;
-        this.door.setXPosition(width - Constants.entityDim);
+        this.door.setXPosition(width - Constants.ENTITY_DIM);
     }
 
     public int getHeight() {
@@ -35,7 +35,7 @@ public class BuildModeState extends State {
 
     public void setHeight(int height) {
         this.height = height;
-        this.door.setYPosition(height - Constants.entityDim);
+        this.door.setYPosition(height - Constants.ENTITY_DIM);
     }
 
     public Room[] getRooms() {
