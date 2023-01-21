@@ -88,8 +88,8 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
     @Override
     protected void drawFrame(RunModeState state, Backend<RunModeState> backend) {
         if (!state.isPaused()) {
-            state.setWidth(canvas.getWidth());
-            state.setHeight(canvas.getHeight());
+            state.setWidth(Math.max(canvas.getWidth(), 1));
+            state.setHeight(Math.max(canvas.getHeight(), 1));
             backend.updateState(state);
             roomNameLabel.setText(state.getRooms()[state.getCurrentRoom()].getName());
             long remainingSeconds = (state.getTimeoutAfter() * Constants.REPAINT_DELAY_MILLS) / Constants.SECOND_MILLS;

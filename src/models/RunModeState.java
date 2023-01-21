@@ -125,7 +125,7 @@ public class RunModeState extends State {
     // MODIFIES: Current room
     public void incCurrentRoom() {
         // Next room index should be a valid index
-        if (currentRoom+1 >= rooms.length) throw new IllegalArgumentException();
+        if (currentRoom + 1 >= rooms.length) throw new IllegalArgumentException();
 
         currentRoom++;
     }

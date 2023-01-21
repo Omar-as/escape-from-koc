@@ -129,8 +129,7 @@ public class RunModeBackend implements Backend<RunModeState> {
             }
         if (player.intersects(state.getDoor())) {
             if (state.getKey().isFound() && state.getShowKeyFor() == 0) {
-                state.incCurrentRoom();
-                if (state.getCurrentRoom() == state.getRooms().length) {
+                if (state.getCurrentRoom() == state.getRooms().length - 1) {
                     state.setCompleted();
                     DataStoreManager.getInstance().addToCollection(
                             Constants.SCOREBOARD_COLLECTION_NAME,
@@ -139,12 +138,13 @@ public class RunModeBackend implements Backend<RunModeState> {
                     );
                     ScreenManager.getInstance().setScreen(ScreenFactory.getGameEndScreen(true));
                 } else {
+                    state.incCurrentRoom();
                     state.setKey(new Random());
                     state.resetTimeoutAfter();
-                    state.setAliens(new ArrayList<Alien>());
-                    state.setProjectiles(new ArrayList<Projectile>());
+                    state.setAliens(new ArrayList<>());
+                    state.setProjectiles(new ArrayList<>());
                     player.setPosition(0, 0);
-                    state.setPowerUps(new ArrayList<PowerUp>());
+                    state.setPowerUps(new ArrayList<>());
                     state.resetTimeForNextAlien();
                     state.resetTimeForNextPowerUp();
                 }

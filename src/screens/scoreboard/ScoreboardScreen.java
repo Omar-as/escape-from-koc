@@ -1,39 +1,54 @@
 package screens.scoreboard;
 
 import models.GameData;
-import screens.ScreenFactory;
 import screens.Screen;
-import managers.ScreenManager;
-import screens.ScreenType;
+import screens.main.MainMenuController;
 import utils.Constants;
 import managers.DataStoreManager;
 import managers.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * Scoreboard Screen
+ * Display top scores in a nice list in monospaced font.
+ */
 public class ScoreboardScreen extends Screen {
     public ScoreboardScreen() {
         this.setLayout(new GridBagLayout());
 
-        var mainColumn = Box.createVerticalBox();
-        this.add(mainColumn);
+        var mainColumn = new JPanel();
+        mainColumn.setLayout(new GridLayout(0, 1));
 
-        var titleLabel = new JLabel(ThemeManager.getTitle("ScoreBoard"));
-        titleLabel.setAlignmentX(CENTER_ALIGNMENT);
-        mainColumn.add(titleLabel);
+        var title = new JLabel(ThemeManager.getTitle("Scoreboard"));
+        title.setAlignmentX(CENTER_ALIGNMENT);
+        mainColumn.add(title);
 
+        // Get best 10 timings
         var gameData = DataStoreManager.getInstance().getCollection(Constants.SCOREBOARD_COLLECTION_NAME, GameData.class);
-        var topScores = String.join("\n", gameData.stream()
+        var top = gameData.stream()
                 .sorted(Comparator.comparingInt(GameData::getTime))
-                .map(d -> "%s - %d".formatted(d.getUsername(), d.getTime()))
-                .toArray(String[]::new));
-        var topScoresField = new JTextArea(topScores);
-        mainColumn.add(topScoresField);
+                .limit(Constants.SCOREBOARD_MAX)
+                .toArray(GameData[]::new);
 
-        var backButton = new JButton("Back");
-        backButton.addActionListener(e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN)));
+        var maxUsernameLength = Arrays.stream(top)
+                .mapToInt(i -> i.getUsername().length())
+                .max()
+                .orElse(0);
+
+        for (var i : top) {
+            var listItem = new JLabel(("%-" + maxUsernameLength + "s -> %d").formatted(i.getUsername(), i.getTime()));
+            listItem.setFont(ThemeManager.getMonospacedFont());
+            mainColumn.add(listItem);
+        }
+
+        var backButton = new JButton("Main Menu");
+        backButton.addActionListener(MainMenuController::handleBackToMain);
         mainColumn.add(backButton);
+
+        this.add(mainColumn);
     }
 }
