@@ -1,6 +1,6 @@
-package ui.screens;
+package screens.end;
 
-import ui.Screen;
+import screens.Screen;
 
 import javax.swing.*;
 import java.awt.*;

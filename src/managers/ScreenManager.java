@@ -1,6 +1,6 @@
 package managers;
 
-import ui.Screen;
+import screens.Screen;
 
 import javax.swing.*;
 

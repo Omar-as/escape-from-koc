@@ -1,4 +1,4 @@
-package frontends;
+package screens;
 
 import models.State;
 

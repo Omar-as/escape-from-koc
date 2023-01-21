@@ -1,10 +1,10 @@
-package ui.screens;
+package screens.scoreboard;
 
 import models.GameData;
-import ui.Screen;
-import ui.ScreenFactory;
+import screens.ScreenFactory;
+import screens.Screen;
 import managers.ScreenManager;
-import ui.ScreenType;
+import screens.ScreenType;
 import utils.Constants;
 import managers.DataStoreManager;
 import managers.ThemeManager;

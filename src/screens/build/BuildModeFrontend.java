@@ -1,7 +1,8 @@
-package frontends;
+package screens.build;
 
 import models.BuildModeState;
 import managers.GraphicsManager;
+import screens.Frontend;
 import utils.Asset;
 import utils.Constants;
 

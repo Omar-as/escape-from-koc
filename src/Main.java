@@ -1,6 +1,6 @@
-import ui.ScreenFactory;
+import screens.ScreenFactory;
 import managers.ScreenManager;
-import ui.ScreenType;
+import screens.ScreenType;
 import utils.Constants;
 
 public class Main {

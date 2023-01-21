@@ -1,4 +1,4 @@
-package ui;
+package screens;
 
 public enum ScreenType {
     SIGN_IN_SIGN_UP,

@@ -1,8 +1,6 @@
-package ui;
+package screens;
 
-import com.sun.tools.javac.Main;
-import ui.screens.*;
-import utils.Constants;
+import screens.auth.SignInSignUpScreen;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,19 +19,19 @@ class ScreenFactoryTest {
         // From Spec
         // If type is "MAIN" returns getMainScreen()
         var MainScreen = ScreenFactory.getScreen(ScreenType.MAIN);
-        assertInstanceOf(MainScreen.class, MainScreen);
+        assertInstanceOf(screens.main.MainScreen.class, MainScreen);
 
         // Test Case 3:
         // From Spec
         // If type is "HELP" returns getHelpScreen()
         var HelpScreen = ScreenFactory.getScreen(ScreenType.HELP);
-        assertInstanceOf(ui.screens.HelpScreen.class, HelpScreen);
+        assertInstanceOf(screens.help.HelpScreen.class, HelpScreen);
 
         // Test Case 4:
         // From Spec
         // If type is "BUILD_MODE" returns getBuildModeScreen()
         var BuildModeScreen = ScreenFactory.getScreen(ScreenType.BUILD_MODE);
-        assertInstanceOf(ui.screens.BuildModeScreen.class, BuildModeScreen);
+        assertInstanceOf(screens.build.BuildModeScreen.class, BuildModeScreen);
 
         // Test Case 5:
         // From Spec

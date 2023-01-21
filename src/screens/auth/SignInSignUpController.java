@@ -1,8 +1,8 @@
-package controllers;
+package screens.auth;
 
-import ui.ScreenFactory;
+import screens.ScreenFactory;
 import managers.ScreenManager;
-import ui.ScreenType;
+import screens.ScreenType;
 import managers.AccountManager;
 import managers.DataStoreManager;
 

@@ -1,11 +1,17 @@
-package ui;
+package screens;
 
-import backends.BuildModeBackend;
-import backends.RunModeBackend;
+import screens.build.BuildModeBackend;
+import screens.run.RunModeBackend;
 import models.*;
 import models.alien.Alien;
 import models.powerUps.PowerUp;
-import ui.screens.*;
+import screens.auth.SignInSignUpScreen;
+import screens.build.BuildModeScreen;
+import screens.end.GameEndScreen;
+import screens.help.HelpScreen;
+import screens.main.MainScreen;
+import screens.run.RunModeScreen;
+import screens.scoreboard.ScoreboardScreen;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,5 @@
-package ui;
+package screens;
 
-import frontends.Frontend;
 import models.State;
 
 import javax.swing.*;

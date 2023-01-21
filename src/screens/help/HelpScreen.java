@@ -1,10 +1,10 @@
-package ui.screens;
+package screens.help;
 
 import managers.ScreenManager;
 import managers.ThemeManager;
-import ui.Screen;
-import ui.ScreenFactory;
-import ui.ScreenType;
+import screens.ScreenFactory;
+import screens.Screen;
+import screens.ScreenType;
 
 import javax.swing.*;
 import java.awt.*;

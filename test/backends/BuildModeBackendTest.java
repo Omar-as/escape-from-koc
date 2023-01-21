@@ -5,6 +5,7 @@ import models.Room;
 import models.objects.Obj;
 import models.objects.ObjectType;
 import org.junit.jupiter.api.Test;
+import screens.build.BuildModeBackend;
 
 import static org.junit.jupiter.api.Assertions.*;
 

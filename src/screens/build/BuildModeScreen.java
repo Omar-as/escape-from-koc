@@ -1,13 +1,13 @@
-package ui.screens;
+package screens.build;
 
-import backends.Backend;
-import backends.BuildModeBackend;
+import screens.Backend;
 import managers.ScreenManager;
 import models.BuildModeState;
 import models.objects.ObjectType;
-import ui.Canvas;
-import ui.*;
-import frontends.BuildModeFrontend;
+import screens.ScreenFactory;
+import screens.AnimatedScreen;
+import screens.Canvas;
+import screens.ScreenType;
 import utils.Constants;
 
 import javax.swing.*;

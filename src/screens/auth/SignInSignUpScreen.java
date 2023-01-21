@@ -1,7 +1,6 @@
-package ui.screens;
+package screens.auth;
 
-import controllers.SignInSignUpController;
-import ui.Screen;
+import screens.Screen;
 import managers.DataStoreManager;
 import managers.ThemeManager;
 

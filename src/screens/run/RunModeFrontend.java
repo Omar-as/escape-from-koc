@@ -1,9 +1,10 @@
-package frontends;
+package screens.run;
 
 import managers.KeyManager;
 import models.RunModeState;
 import models.alien.AlienType;
 import managers.GraphicsManager;
+import screens.Frontend;
 import utils.Asset;
 
 import java.awt.*;
