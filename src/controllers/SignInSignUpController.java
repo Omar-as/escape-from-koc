@@ -1,7 +1,7 @@
 package controllers;
 
 import ui.ScreenFactory;
-import ui.ScreenManager;
+import managers.ScreenManager;
 import ui.ScreenType;
 import managers.AccountManager;
 import managers.DataStoreManager;

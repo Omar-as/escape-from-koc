@@ -1,5 +1,5 @@
 import ui.ScreenFactory;
-import ui.ScreenManager;
+import managers.ScreenManager;
 import ui.ScreenType;
 import utils.Constants;
 

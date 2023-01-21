@@ -7,7 +7,7 @@ import models.objects.Obj;
 import models.powerUps.PowerUp;
 import models.powerUps.PowerUpType;
 import ui.ScreenFactory;
-import ui.ScreenManager;
+import managers.ScreenManager;
 import managers.AccountManager;
 import utils.Constants;
 import managers.DataStoreManager;
