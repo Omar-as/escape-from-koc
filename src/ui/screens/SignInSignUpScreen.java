@@ -45,7 +45,10 @@ public class SignInSignUpScreen extends Screen {
             var isLoginSuccessful = AccountManager.isValidAuthInput(username, password);
 
             var screenManager = ScreenManager.getInstance();
-            if (isLoginSuccessful) screenManager.setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+            if (isLoginSuccessful) {
+                AccountManager.setUsername(username);
+                screenManager.setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+            }
             else screenManager.showErrorDialog("Incorrect username or password.");
         });
         signUpButton.addActionListener(a -> {

@@ -16,6 +16,7 @@ public class ScreenFactory {
             case MAIN -> getMainScreen();
             case HELP -> getHelpScreen();
             case BUILD_MODE -> getBuildModeScreen();
+            case SCOREBOARD -> getScoreboardScreen();
             case RUN_MODE, GAME_END -> throw new IllegalArgumentException();
         };
     }
@@ -30,6 +31,10 @@ public class ScreenFactory {
 
     private static HelpScreen getHelpScreen() {
         return new HelpScreen();
+    }
+
+    private static ScoreboardScreen getScoreboardScreen() {
+        return new ScoreboardScreen();
     }
 
     private static BuildModeScreen getBuildModeScreen() {

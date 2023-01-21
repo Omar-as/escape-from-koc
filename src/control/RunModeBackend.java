@@ -8,7 +8,9 @@ import models.powerUps.PowerUp;
 import models.powerUps.PowerUpType;
 import ui.ScreenFactory;
 import ui.ScreenManager;
+import utils.AccountManager;
 import utils.Constants;
+import utils.DataStoreManager;
 import utils.Position;
 
 import java.awt.event.KeyEvent;
@@ -20,6 +22,7 @@ public class RunModeBackend implements Backend<RunModeState> {
     @Override
     public void updateState(RunModeState state) {
         if (state.isCompleted()) return;
+        state.incFrames();
 
         movePlayer(state);
         usePowerUp(state);
@@ -120,6 +123,11 @@ public class RunModeBackend implements Backend<RunModeState> {
                 state.incCurrentRoom();
                 if (state.getCurrentRoom() == state.getRooms().length) {
                     state.setCompleted();
+                    DataStoreManager.getInstance().addToCollection(
+                            Constants.SCOREBOARD_COLLECTION_NAME,
+                            new GameData(AccountManager.getUsername(), state.getFrames() * (int) Constants.REPAINT_DELAY_MILLS / Constants.SECOND_MILLS),
+                            GameData.class
+                    );
                     ScreenManager.getInstance().setScreen(ScreenFactory.getGameEndScreen(true));
                 } else {
                     state.setKey();
