@@ -20,10 +20,14 @@ import java.io.IOException;
  */
 public class GraphicsManager {
     private static GraphicsManager instance = null;
-    private final Image[] cache;
+    private final Image[] imageCache;
+    private final int[] widthCache;
+    private final int[] heightCache;
 
     private GraphicsManager() {
-        cache = new Image[Asset.values().length];
+        imageCache = new Image[Asset.values().length];
+        widthCache = new int[Asset.values().length];
+        heightCache = new int[Asset.values().length];
     }
 
     public static GraphicsManager getInstance() {
@@ -34,16 +38,18 @@ public class GraphicsManager {
     public Image getImage(Asset asset, int width, int height) {
         try {
             int idx = asset.ordinal();
-            if (cache[idx] == null) {
-                // Image not found in cash
+            if (imageCache[idx] == null || widthCache[idx] != width || heightCache[idx] != height) {
+                // Image not found in cash, or requested with different dimensions.
                 // Load image
                 var bufferedImage = ImageIO.read(new File(Constants.ASSET_IMAGE_PATH.formatted(asset.name)));
                 var image = bufferedImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
                 // Cache image
-                cache[idx] = image;
+                imageCache[idx] = image;
+                widthCache[idx] = width;
+                heightCache[idx] = height;
             }
             // Return image from cache
-            return cache[idx];
+            return imageCache[idx];
         } catch (IOException e) {
             System.exit(-1);
             return null;

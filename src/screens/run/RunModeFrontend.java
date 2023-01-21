@@ -17,8 +17,6 @@ public class RunModeFrontend implements Frontend<RunModeState> {
         int width = state.getWidth();
         int height = state.getHeight();
 
-        canvas.clearRect(0, 0, width, height); // Clear entire canvas
-
         var BackGroundImage = GraphicsManager.getInstance().getImage(Asset.BACKGROUND, width, height);
         canvas.drawImage(BackGroundImage, 0, 0, null);
 
