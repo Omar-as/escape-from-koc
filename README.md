@@ -56,7 +56,6 @@ different license. It also does not provide a warranty of any sort.
 ## Todo:
 
 - Prevent objects from spawning over the door and player section.
-- Pickup power-up on right click.
 - Implement the plastic bottle power-up.
 - Add player sprites with armour.
 - Make key easier to recognize.
