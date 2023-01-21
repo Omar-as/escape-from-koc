@@ -1,4 +1,4 @@
-package ui;
+package frontends;
 
 import models.State;
 

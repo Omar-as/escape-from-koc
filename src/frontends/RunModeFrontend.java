@@ -3,7 +3,6 @@ package frontends;
 import managers.KeyManager;
 import models.RunModeState;
 import models.alien.AlienType;
-import ui.Frontend;
 import managers.GraphicsManager;
 import utils.Asset;
 

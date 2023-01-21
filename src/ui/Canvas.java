@@ -1,5 +1,6 @@
 package ui;
 
+import frontends.Frontend;
 import models.State;
 
 import javax.swing.*;
