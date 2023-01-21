@@ -108,16 +108,30 @@ public class RunModeFrontend implements Frontend<RunModeState> {
             var isDownPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_DOWN);
             var isRightPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_RIGHT);
 
-            if (isUpPressed) {
-                player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_UP1 ? Asset.PLAYER_MOVE_UP2 : Asset.PLAYER_MOVE_UP1);
-            } else if (isDownPressed) {
-                player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_DOWN1 ? Asset.PLAYER_MOVE_DOWN2 : Asset.PLAYER_MOVE_DOWN1);
-            } else if (isLeftPressed) {
-                player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_LEFT1 ? Asset.PLAYER_MOVE_LEFT2 : Asset.PLAYER_MOVE_LEFT1);
-            } else if (isRightPressed) {
-                player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_RIGHT1 ? Asset.PLAYER_MOVE_RIGHT2 : Asset.PLAYER_MOVE_RIGHT1);
+            if (!player.isProtectionVest()) {
+                if (isUpPressed) {
+                    player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_UP1 ? Asset.PLAYER_MOVE_UP2 : Asset.PLAYER_MOVE_UP1);
+                } else if (isDownPressed) {
+                    player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_DOWN1 ? Asset.PLAYER_MOVE_DOWN2 : Asset.PLAYER_MOVE_DOWN1);
+                } else if (isLeftPressed) {
+                    player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_LEFT1 ? Asset.PLAYER_MOVE_LEFT2 : Asset.PLAYER_MOVE_LEFT1);
+                } else if (isRightPressed) {
+                    player.setCurrentSprite(playerCurrentAsset == Asset.PLAYER_MOVE_RIGHT1 ? Asset.PLAYER_MOVE_RIGHT2 : Asset.PLAYER_MOVE_RIGHT1);
+                } else {
+                    player.setCurrentSprite(Asset.PLAYER_IDLE);
+                }
             } else {
-                player.setCurrentSprite(Asset.PLAYER_IDLE);
+                if (isUpPressed) {
+                    player.setCurrentSprite(playerCurrentAsset == Asset.ARMOUR_PLAYER_MOVE_UP1 ? Asset.ARMOUR_PLAYER_MOVE_UP2 : Asset.ARMOUR_PLAYER_MOVE_UP1);
+                } else if (isDownPressed) {
+                    player.setCurrentSprite(playerCurrentAsset == Asset.ARMOUR_PLAYER_MOVE_DOWN1 ? Asset.ARMOUR_PLAYER_MOVE_DOWN2 : Asset.ARMOUR_PLAYER_MOVE_DOWN1);
+                } else if (isLeftPressed) {
+                    player.setCurrentSprite(playerCurrentAsset == Asset.ARMOUR_PLAYER_MOVE_LEFT1 ? Asset.ARMOUR_PLAYER_MOVE_LEFT2 : Asset.ARMOUR_PLAYER_MOVE_LEFT1);
+                } else if (isRightPressed) {
+                    player.setCurrentSprite(playerCurrentAsset == Asset.ARMOUR_PLAYER_MOVE_RIGHT1 ? Asset.ARMOUR_PLAYER_MOVE_RIGHT2 : Asset.ARMOUR_PLAYER_MOVE_RIGHT1);
+                } else {
+                    player.setCurrentSprite(Asset.ARMOUR_PLAYER_IDLE);
+                }
             }
 
             player.setFramesPassed(0);

@@ -15,6 +15,15 @@ public enum Asset {
     PLAYER_MOVE_DOWN2("player_md2"),
     PLAYER_MOVE_UP1("player_mu1"),
     PLAYER_MOVE_UP2("player_mu2"),
+    ARMOUR_PLAYER_IDLE("arm_player_idle"),
+    ARMOUR_PLAYER_MOVE_RIGHT1("arm_player_mr1"),
+    ARMOUR_PLAYER_MOVE_RIGHT2("arm_player_mr2"),
+    ARMOUR_PLAYER_MOVE_LEFT1("arm_player_ml1"),
+    ARMOUR_PLAYER_MOVE_LEFT2("arm_player_ml2"),
+    ARMOUR_PLAYER_MOVE_DOWN1("arm_player_md1"),
+    ARMOUR_PLAYER_MOVE_DOWN2("arm_player_md2"),
+    ARMOUR_PLAYER_MOVE_UP1("arm_player_mu1"),
+    ARMOUR_PLAYER_MOVE_UP2("arm_player_mu2"),
 
     // Blind Alien Sprites
     ALIEN_BLIND_IDLE("alien_blind"),
