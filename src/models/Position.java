@@ -1,4 +1,4 @@
-package utils;
+package models;
 
 /**
  * Immutable 2D Position

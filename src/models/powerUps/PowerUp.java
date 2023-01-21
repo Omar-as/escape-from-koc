@@ -2,7 +2,7 @@ package models.powerUps;
 
 import models.Rectangle;
 import utils.Constants;
-import utils.Position;
+import models.Position;
 
 public class PowerUp extends Rectangle {
     private final PowerUpType type;

@@ -11,7 +11,7 @@ import managers.ScreenManager;
 import managers.AccountManager;
 import utils.Constants;
 import managers.DataStoreManager;
-import utils.Position;
+import models.Position;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
