@@ -1,11 +1,12 @@
 package utils;
 
+import models.Account;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Objects;
 
@@ -22,25 +23,23 @@ public final class AccountManager {
         var hash = generateHash(salt, password);
 
         var encoder = Base64.getUrlEncoder().withoutPadding();
-        var encodedSalt = encoder.encodeToString(salt);
         var encodedHash = encoder.encodeToString(hash);
+        var encodedSalt = encoder.encodeToString(salt);
 
-        var accountRecord = "%s %s %s".formatted(username, encodedSalt, encodedHash);
+        var account = new Account(username, encodedHash, encodedSalt);
 
-        ConfigManager.writeLineToConfigFile(Constants.ACCOUNTS_FILE_NAME, accountRecord);
+        DataStoreManager.getInstance().addToCollection(Constants.ACCOUNTS_COLLECTION_NAME, account, Account.class);
     }
 
     public static boolean isValidAuthInput(String username, char[] password) {
-        var accountRecords = ConfigManager.readConfigFile(Constants.ACCOUNTS_FILE_NAME);
+        var accounts = DataStoreManager.getInstance().getCollection(Constants.ACCOUNTS_COLLECTION_NAME, Account.class);
 
-        for (var record : accountRecords) {
-            var recordFields = record.split(" ");
-            var recordUsername = recordFields[0];
-            if (!Objects.equals(username, recordUsername)) continue;
+        for (var account : accounts) {
+            if (!Objects.equals(username, account.getUsername())) continue;
 
             var decoder = Base64.getUrlDecoder();
-            var recordSalt = decoder.decode(recordFields[1]);
-            var recordHash = decoder.decode(recordFields[2]);
+            var recordHash = decoder.decode(account.getBase64EncodedHash());
+            var recordSalt = decoder.decode(account.getBase64EncodedSalt());
 
             var inputHash = generateHash(recordSalt, password);
             return secureEquals(inputHash, recordHash);
@@ -50,12 +49,10 @@ public final class AccountManager {
     }
 
     public static boolean doesAccountExist(String username) {
-        var accountRecords = ConfigManager.readConfigFile(Constants.ACCOUNTS_FILE_NAME);
+        var accounts = DataStoreManager.getInstance().getCollection(Constants.ACCOUNTS_COLLECTION_NAME, Account.class);
 
-        for (var record : accountRecords) {
-            var recordFields = record.split(" ");
-            var recordUsername = recordFields[0];
-            if (Objects.equals(username, recordUsername)) return true;
+        for (var account : accounts) {
+            if (Objects.equals(username, account.getUsername())) return true;
         }
 
         return false;

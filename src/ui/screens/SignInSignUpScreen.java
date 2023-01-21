@@ -4,8 +4,7 @@ import ui.Screen;
 import ui.ScreenFactory;
 import ui.ScreenManager;
 import ui.ScreenType;
-import utils.AccountManager;
-import utils.ThemeManager;
+import utils.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,11 +61,23 @@ public class SignInSignUpScreen extends Screen {
             else screenManager.showInformationDialog("Account created successfully!");
         });
 
+        var dataStoreLabel   = new JLabel("Data Store");
+        var dataStoreOptions = new String[]{ "File (JSON)", "Database (MongoDB)" };
+        var dataStoreSelect  = new JComboBox(dataStoreOptions);
+        dataStoreSelect.setSelectedIndex(0);
+        dataStoreSelect.addActionListener(e -> {
+            var cb = (JComboBox) e.getSource();
+            if (cb.getSelectedIndex() == 0) DataStoreManager.setInstance(JSONDataStore.getInstance());
+            else DataStoreManager.setInstance(MongoDBDataStore.getInstance());
+        });
+
         form.add(usernameLabel);
         form.add(usernameField);
         form.add(passwordLabel);
         form.add(passwordField);
         form.add(signInButton);
         form.add(signUpButton);
+        form.add(dataStoreLabel);
+        form.add(dataStoreSelect);
     }
 }
