@@ -8,6 +8,8 @@ import utils.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class SignInSignUpScreen extends Screen {
 
@@ -62,13 +64,11 @@ public class SignInSignUpScreen extends Screen {
         });
 
         var dataStoreLabel   = new JLabel("Data Store");
-        var dataStoreOptions = new String[]{ "File (JSON)", "Database (MongoDB)" };
-        var dataStoreSelect  = new JComboBox(dataStoreOptions);
+        var dataStoreSelect  = new JComboBox(DataStoreManager.DataStoreType.values());
         dataStoreSelect.setSelectedIndex(0);
         dataStoreSelect.addActionListener(e -> {
             var cb = (JComboBox) e.getSource();
-            if (cb.getSelectedIndex() == 0) DataStoreManager.setInstance(JSONDataStore.getInstance());
-            else DataStoreManager.setInstance(MongoDBDataStore.getInstance());
+            DataStoreManager.setDataStoreType((DataStoreManager.DataStoreType) cb.getSelectedItem());
         });
 
         form.add(usernameLabel);

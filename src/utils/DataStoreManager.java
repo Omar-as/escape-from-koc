@@ -1,16 +1,31 @@
 package utils;
 
-import java.lang.reflect.InvocationTargetException;
-
 public final class DataStoreManager {
-    private static IDataStore instance = JSONDataStore.getInstance();
+    public enum DataStoreType {
+        JSON("File (JSON)", JSONDataStore.getInstance()),
+        MONGO_DB("Database (MongoDB)", MongoDBDataStore.getInstance());
 
-    public static IDataStore getInstance() {
-        return instance;
+        public final String label;
+        public final IDataStore instance;
+
+        DataStoreType(String label, IDataStore instance) {
+            this.label = label;
+            this.instance = instance;
+        }
+
+        public String toString() {
+            return this.label;
+        }
     }
 
-    public static void setInstance(IDataStore store) {
-        instance = store;
+    private static DataStoreType dataStoreType = DataStoreType.JSON;
+
+    public static IDataStore getInstance() {
+        return dataStoreType.instance;
+    }
+
+    public static void setDataStoreType(DataStoreType dataStoreType) {
+        DataStoreManager.dataStoreType = dataStoreType;
     }
 
     private DataStoreManager() { }
