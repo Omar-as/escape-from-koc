@@ -2,12 +2,9 @@ package ui.frontends;
 
 import control.KeyManager;
 import models.RunModeState;
-import models.alien.Alien;
 import models.alien.AlienType;
-import models.powerUps.PowerUp;
-import models.powerUps.PowerUpType;
 import ui.Frontend;
-import ui.GraphicsManager;
+import managers.GraphicsManager;
 import utils.Asset;
 
 import java.awt.*;
