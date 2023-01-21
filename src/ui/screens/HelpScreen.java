@@ -1,7 +1,7 @@
 package ui.screens;
 
 import ui.Screen;
-import utils.ThemeManager;
+import managers.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;

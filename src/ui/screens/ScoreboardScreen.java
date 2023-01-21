@@ -7,7 +7,7 @@ import managers.ScreenManager;
 import ui.ScreenType;
 import utils.Constants;
 import managers.DataStoreManager;
-import utils.ThemeManager;
+import managers.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
