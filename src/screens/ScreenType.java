@@ -7,5 +7,6 @@ public enum ScreenType {
     BUILD_MODE,
     RUN_MODE,
     GAME_END,
-    SCOREBOARD
+    SCOREBOARD,
+    CREDITS
 }

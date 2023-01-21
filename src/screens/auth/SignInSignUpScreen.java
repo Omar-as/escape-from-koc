@@ -59,13 +59,10 @@ public class SignInSignUpScreen extends Screen {
         });
 
         var dataStoreLabel = new JLabel("Data Store");
-        var dataStoreSelect = new JComboBox(DataStoreManager.DataStoreType.values());
+        var dataStoreSelect = new JComboBox<>(DataStoreManager.DataStoreType.values());
         dataStoreSelect.setSelectedIndex(0);
-        // Observer Pattern
-        dataStoreSelect.addActionListener(e -> {
-            // Controller Pattern
-            SignInSignUpController.handleDataStoreChoiceChange((DataStoreManager.DataStoreType) dataStoreSelect.getSelectedItem());
-        });
+        // Observer + Controller Pattern
+        dataStoreSelect.addActionListener(SignInSignUpController::handleDataStoreChoiceChange);
 
         form.add(usernameLabel);
         form.add(usernameField);

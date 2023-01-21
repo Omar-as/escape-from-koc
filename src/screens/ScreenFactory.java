@@ -1,6 +1,7 @@
 package screens;
 
 import screens.build.BuildModeBackend;
+import screens.credits.CreditsScreen;
 import screens.run.RunModeBackend;
 import models.*;
 import models.alien.Alien;
@@ -18,10 +19,12 @@ import java.util.ArrayList;
 public class ScreenFactory {
     public static Screen getScreen(ScreenType type) {
         // EFFECTS:
-        // If type is "SIGN_IN_SIGN_UP" returns getSignInSignUpScreen()
-        // If type is "MAIN"            returns getMainScreen()
-        // If type is "HELP"            returns getHelpScreen()
-        // If type is "BUILD_MODE"      returns getBuildModeScreen()
+        // If type is "SIGN_IN_SIGN_UP" returns SignInSignUpScreen
+        // If type is "MAIN"            returns MainScreen
+        // If type is "HELP"            returns HelpScreen
+        // If type is "BUILD_MODE"      returns BuildModeScreen
+        // If type is "SCOREBOARD"      returns ScoreboardScreen
+        // If type is "CREDITS"         returns CreditsScreen
         // If type is "RUN_MODE"        throws  IllegalArgumentException()
         // If type is "GAME_END"        throws  IllegalArgumentException()
         return switch (type) {
@@ -30,6 +33,7 @@ public class ScreenFactory {
             case HELP -> getHelpScreen();
             case BUILD_MODE -> getBuildModeScreen();
             case SCOREBOARD -> getScoreboardScreen();
+            case CREDITS -> getCreditsScreen();
             case RUN_MODE, GAME_END -> throw new IllegalArgumentException();
         };
     }
@@ -48,6 +52,10 @@ public class ScreenFactory {
 
     private static ScoreboardScreen getScoreboardScreen() {
         return new ScoreboardScreen();
+    }
+
+    private static CreditsScreen getCreditsScreen() {
+        return new CreditsScreen();
     }
 
     private static BuildModeScreen getBuildModeScreen() {

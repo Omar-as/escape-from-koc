@@ -6,6 +6,9 @@ import screens.ScreenType;
 import managers.AccountManager;
 import managers.DataStoreManager;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
 /**
  * Sign In / Sign Up Controller
  * <p>
@@ -43,7 +46,9 @@ public final class SignInSignUpController {
         else screenManager.showInformationDialog("Account created successfully!");
     }
 
-    public static void handleDataStoreChoiceChange(DataStoreManager.DataStoreType selectedItem) {
-        DataStoreManager.setDataStoreType(selectedItem);
+    public static void handleDataStoreChoiceChange(ActionEvent e) {
+        var select           = (JComboBox) e.getSource();
+        var newDataStoreType = (DataStoreManager.DataStoreType) select.getSelectedItem();
+        DataStoreManager.setDataStoreType(newDataStoreType);
     }
 }

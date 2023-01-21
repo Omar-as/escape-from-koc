@@ -1,18 +1,22 @@
 package screens.main;
 
-import models.RunModeState;
-import screens.ScreenFactory;
-import screens.Screen;
-import managers.ScreenManager;
-import screens.ScreenType;
-import utils.Constants;
-import managers.DataStoreManager;
 import managers.ThemeManager;
+import screens.Screen;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Main Menu Screen
+ * <p>
+ * Patterns:
+ * 1. Observer  : Listen for events of interest, and act when they happen.
+ * 2. Controller: Pass control to a controller instead of handling events in the UI.
+ * <p>
+ * Model-View Separation:
+ * No logic implemented in the UI.
+ */
 public class MainScreen extends Screen {
     public MainScreen() {
         this.setLayout(new GridBagLayout());
@@ -26,27 +30,19 @@ public class MainScreen extends Screen {
 
         var mainMenu = new JPanel();
         mainMenu.setLayout(new GridLayout(0, 1));
-        addMainMenuButton(mainMenu, "New Game", e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.BUILD_MODE)));
-        addMainMenuButton(mainMenu, "Load Game", e -> {
-            var games = DataStoreManager.getInstance().getCollection(Constants.SAVED_GAMES_COLLECTION_NAME, RunModeState.class);
-            if (games.isEmpty()) {
-                ScreenManager.getInstance().showErrorDialog("No saved games.");
-                return;
-            }
-            ScreenManager.getInstance().setScreen(ScreenFactory.getRunModeScreen(games.get(games.size() - 1)));
-        });
-        addMainMenuButton(mainMenu, "Credits", e -> {
-        });
-        addMainMenuButton(mainMenu, "Help", e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.HELP)));
-        addMainMenuButton(mainMenu, "Scoreboard", e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.SCOREBOARD)));
+
+        // Observer + Controller Pattern
+        addMainMenuButton(mainMenu, "New Game", MainMenuController::handleNewGameBtn);
+        addMainMenuButton(mainMenu, "Load Game", MainMenuController::handleLoadGameBtn);
+        addMainMenuButton(mainMenu, "Scoreboard", MainMenuController::handleScoreboardBtn);
+        addMainMenuButton(mainMenu, "Credits", MainMenuController::handleCreditsBtn);
+        addMainMenuButton(mainMenu, "Help", MainMenuController::handleHelpBtn);
+
         mainColumn.add(mainMenu);
     }
 
     private void addMainMenuButton(JComponent mainMenu, String text, ActionListener listener) {
         var btn = new JButton(text);
-        // TODO: Set uniform style
-        // btn.setBackground(Color.GRAY);
-        // btn.setForeground(Color.BLACK);
         btn.addActionListener(listener);
         mainMenu.add(btn);
     }
