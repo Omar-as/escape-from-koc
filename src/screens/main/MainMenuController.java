@@ -51,4 +51,8 @@ public final class MainMenuController {
     public static void handleHelpBtn(ActionEvent e) {
         ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.HELP));
     }
+
+    public static void handleBackToMain(ActionEvent e) {
+        ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+    }
 }

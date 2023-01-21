@@ -32,6 +32,9 @@ public final class Constants {
     // Frame Rate: 67 FPS
     public static final long REPAINT_DELAY_MILLS = 15;
 
+    // Theme
+    public static final int MONOSPACE_FONT_SIZE = 16;
+
     // MISC
     public static final String HOME_DIRECTORY = System.getProperty("user.home");
     public static final int SECOND_MILLS = 1000;
