@@ -1,12 +1,12 @@
 package ui.screens;
 
-import control.Backend;
-import control.RunModeBackend;
+import backends.Backend;
+import backends.RunModeBackend;
 import managers.ScreenManager;
 import models.RunModeState;
 import ui.Canvas;
 import ui.*;
-import ui.frontends.RunModeFrontend;
+import frontends.RunModeFrontend;
 import utils.Constants;
 import managers.DataStoreManager;
 

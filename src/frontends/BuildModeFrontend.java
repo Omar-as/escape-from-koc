@@ -1,4 +1,4 @@
-package ui.frontends;
+package frontends;
 
 import models.BuildModeState;
 import ui.Frontend;

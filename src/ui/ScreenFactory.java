@@ -1,7 +1,7 @@
 package ui;
 
-import control.BuildModeBackend;
-import control.RunModeBackend;
+import backends.BuildModeBackend;
+import backends.RunModeBackend;
 import models.*;
 import models.alien.Alien;
 import models.powerUps.PowerUp;

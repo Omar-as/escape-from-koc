@@ -1,7 +1,7 @@
 package models;
 
 
-import control.RunModeBackend;
+import backends.RunModeBackend;
 import models.objects.*;
 import org.junit.jupiter.api.Test;
 

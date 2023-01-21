@@ -1,4 +1,4 @@
-package ui.frontends;
+package frontends;
 
 import managers.KeyManager;
 import models.RunModeState;

@@ -1,11 +1,10 @@
-package control;
+package backends;
 
 import models.BuildModeState;
 import models.Room;
 import models.objects.Obj;
 import models.objects.ObjectType;
 import org.junit.jupiter.api.Test;
-import ui.screens.BuildModeScreen;
 
 import static org.junit.jupiter.api.Assertions.*;
 
