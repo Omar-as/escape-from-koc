@@ -1,5 +1,12 @@
 # Escape From Koç
 
+## Dependencies
+
+This project needs the following library dependencies:
+
+- [`Gson v2.10.1`](https://github.com/google/gson/releases/tag/gson-parent-2.10.1): Convert Java objects into JSON and back.
+- [`MongoDB Java Driver v3.12.5`](https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver/3.12.5): Use MongoDB from within Java.
+
 ## Features
 
 ### Secure Login
@@ -46,3 +53,15 @@ and modify the code, even for commercial or private use. However, it does not
 allow people to distribute the project in a closed-source manner, or under a
 different license. It also does not provide a warranty of any sort.
 
+## Todo:
+When we press exit the game timer keeps on going
+Objects spawn over the door and player section
+Back button when game ends
+Right click for powerups
+Help me
+index out of bounds when game ends
+plastic bottle powerup
+Player sprites with armour
+make key more visible
+save/load 
+scoreboard

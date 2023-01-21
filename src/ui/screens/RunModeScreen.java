@@ -2,11 +2,13 @@ package ui.screens;
 
 import control.Backend;
 import control.RunModeBackend;
+import managers.ScreenManager;
 import models.RunModeState;
 import ui.Canvas;
 import ui.*;
 import ui.frontends.RunModeFrontend;
 import utils.Constants;
+import managers.DataStoreManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,7 @@ import java.awt.event.MouseEvent;
 public class RunModeScreen extends AnimatedScreen<RunModeState> {
     private final JLabel roomNameLabel;
     private final JLabel timeLabel;
+    private final JLabel powerUps;
     private final Canvas<RunModeState> canvas;
 
     public RunModeScreen(RunModeState state, RunModeBackend backend) {
@@ -35,6 +38,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
 
         roomNameLabel = new JLabel(state.getRooms()[state.getCurrentRoom()].getName());
         timeLabel = new JLabel();
+        powerUps = new JLabel();
 
         var pauseResumeButton = new JButton("Pause");
         pauseResumeButton.addMouseListener(new MouseAdapter() {
@@ -44,19 +48,30 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
                 pauseResumeButton.setText(state.isPaused() ? "Resume" : "Pause");
             }
         });
+        var saveGameButton = new JButton("Save");
+        saveGameButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                DataStoreManager.getInstance().addToCollection(Constants.SAVED_GAMES_COLLECTION_NAME, state, RunModeState.class);
+            }
+        });
         var exitBtn = new JButton("Exit");
         exitBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+                state.setCompleted();
             }
         });
 
         bar.add(timeLabel);
         bar.add(Box.createGlue());
+        bar.add(powerUps);
+        bar.add(Box.createGlue());
         bar.add(roomNameLabel);
         bar.add(Box.createGlue());
         bar.add(pauseResumeButton);
+        bar.add(saveGameButton);
         bar.add(exitBtn);
 
         canvas = new Canvas<>(state, frontend);
@@ -64,6 +79,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
             @Override
             public void mouseClicked(MouseEvent e) {
                 backend.pickupKey(state, e.getX(), e.getY());
+                backend.pickupPowerUp(state,e.getX(),e.getY());
             }
         });
         mainColumn.add(canvas);
@@ -78,6 +94,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
             roomNameLabel.setText(state.getRooms()[state.getCurrentRoom()].getName());
             long remainingSeconds = (state.getTimeoutAfter() * Constants.REPAINT_DELAY_MILLS) / Constants.SECOND_MILLS;
             timeLabel.setText("Remaining: %d s".formatted(remainingSeconds));
+            powerUps.setText(state.getPlayer().convertBagToString());
             canvas.repaint();
         }
     }

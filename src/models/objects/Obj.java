@@ -1,7 +1,7 @@
 package models.objects;
 
 import models.Rectangle;
-import utils.Position;
+import models.Position;
 
 public class Obj extends Rectangle {
     private final ObjectType type;

@@ -2,6 +2,7 @@ package ui.screens;
 
 import control.Backend;
 import control.BuildModeBackend;
+import managers.ScreenManager;
 import models.BuildModeState;
 import models.objects.ObjectType;
 import ui.Canvas;
@@ -37,6 +38,9 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         var insertMenu = new JPopupMenu();
         addInsertMenuItem("Trash Bin", insertMenu, backend, state, ObjectType.TRASH_BIN);
         addInsertMenuItem("Chalk Board", insertMenu, backend, state, ObjectType.CHALK_BOARD);
+        addInsertMenuItem("Bookshelf", insertMenu, backend, state, ObjectType.BOOKSHELF);
+        addInsertMenuItem("Desk", insertMenu, backend, state, ObjectType.DESK);
+        addInsertMenuItem("Printer", insertMenu, backend, state, ObjectType.PRINTER);
 
         var insertBtn = new JButton("Insert");
         insertBtn.addMouseListener(new MouseAdapter() {
@@ -54,7 +58,21 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
                 roomLabel.setText(state.getRooms()[state.getCurrentRoom()].getName());
             }
         });
+        var randomizeRoomBtn = new JButton("Randomize Room");
+        randomizeRoomBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backend.fillOneRoomRandomly(state,state.getRooms()[state.getCurrentRoom()]);
 
+            }
+        });
+        var randomizeAllBtn = new JButton("Randomize All");
+        randomizeAllBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backend.fillAllRoomsRandomly(state);
+            }
+        });
         var prevBtn = new JButton("Prev Room");
         prevBtn.addMouseListener(new MouseAdapter() {
             @Override
@@ -90,6 +108,8 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         bar.add(insertBtn);
         bar.add(prevBtn);
         bar.add(nextBtn);
+        bar.add(randomizeRoomBtn);
+        bar.add(randomizeAllBtn);
         bar.add(Box.createGlue());
         bar.add(roomLabel);
         bar.add(Box.createGlue());
@@ -130,7 +150,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
 
     private void addInsertMenuItem(String text, JPopupMenu insertMenu, BuildModeBackend backend, BuildModeState state, ObjectType type) {
         var menuItem = new JMenuItem(text);
-        menuItem.addActionListener(e -> backend.insertRandomObject(state, type));
+        menuItem.addActionListener(e -> backend.insertRandomObjectInCurrentRoom(state, type));
         insertMenu.add(menuItem);
     }
 }
