@@ -7,6 +7,7 @@ public final class Constants {
     public static final String CONFIG_FILE_PATH = CONFIG_DIR_PATH + "%s/";
     public static final String ASSET_IMAGE_PATH = "assets/%s.png";
     public static final String ACCOUNTS_COLLECTION_NAME = "accounts";
+    public static final String SAVED_GAMES_COLLECTION_NAME = "games";
     public static final int FRAME_WIDTH = 1366;
     public static final int FRAME_HEIGHT = 768;
     public static final int entityDim = 64;

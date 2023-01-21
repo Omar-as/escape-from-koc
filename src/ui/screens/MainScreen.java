@@ -1,9 +1,12 @@
 package ui.screens;
 
+import models.RunModeState;
 import ui.Screen;
 import ui.ScreenFactory;
 import ui.ScreenManager;
 import ui.ScreenType;
+import utils.Constants;
+import utils.DataStoreManager;
 import utils.ThemeManager;
 
 import javax.swing.*;
@@ -23,7 +26,15 @@ public class MainScreen extends Screen {
 
         var mainMenu = new JPanel();
         mainMenu.setLayout(new GridLayout(0, 1));
-        addMainMenuButton(mainMenu, "Play Game", e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.BUILD_MODE)));
+        addMainMenuButton(mainMenu, "New Game", e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.BUILD_MODE)));
+        addMainMenuButton(mainMenu, "Load Game", e -> {
+            var games = DataStoreManager.getInstance().getCollection(Constants.SAVED_GAMES_COLLECTION_NAME, RunModeState.class);
+            if (games.isEmpty()) {
+                ScreenManager.getInstance().showErrorDialog("No saved games.");
+                return;
+            }
+            ScreenManager.getInstance().setScreen(ScreenFactory.getRunModeScreen(games.get(games.size() - 1)));
+        });
         addMainMenuButton(mainMenu, "Credits", e -> {
         });
         addMainMenuButton(mainMenu, "Help", e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.HELP)));

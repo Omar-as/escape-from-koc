@@ -19,7 +19,6 @@ import java.util.Random;
 public class RunModeBackend implements Backend<RunModeState> {
     @Override
     public void updateState(RunModeState state) {
-
         if (state.isCompleted()) return;
 
         movePlayer(state);

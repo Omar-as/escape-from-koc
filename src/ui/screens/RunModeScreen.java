@@ -7,6 +7,7 @@ import ui.Canvas;
 import ui.*;
 import ui.frontends.RunModeFrontend;
 import utils.Constants;
+import utils.DataStoreManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,6 +47,13 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
                 pauseResumeButton.setText(state.isPaused() ? "Resume" : "Pause");
             }
         });
+        var saveGameButton = new JButton("Save");
+        saveGameButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                DataStoreManager.getInstance().addToCollection(Constants.SAVED_GAMES_COLLECTION_NAME, state, RunModeState.class);
+            }
+        });
         var exitBtn = new JButton("Exit");
         exitBtn.addMouseListener(new MouseAdapter() {
             @Override
@@ -62,6 +70,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
         bar.add(roomNameLabel);
         bar.add(Box.createGlue());
         bar.add(pauseResumeButton);
+        bar.add(saveGameButton);
         bar.add(exitBtn);
 
         canvas = new Canvas<>(state, frontend);

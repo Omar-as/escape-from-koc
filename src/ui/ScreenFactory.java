@@ -51,6 +51,10 @@ public class ScreenFactory {
         player.editBag("PV",0);
         player.editBag("PB",0);
         var state = new RunModeState(new ArrayList<Alien>() , false, buildModeState.getRooms(), new ArrayList<PowerUp>(), player, buildModeState.getDoor(), new ArrayList<Projectile>());
+        return getRunModeScreen(state);
+    }
+
+    public static RunModeScreen getRunModeScreen(RunModeState state) {
         var backend = new RunModeBackend();
         return new RunModeScreen(state, backend);
     }
