@@ -6,6 +6,7 @@ import models.RunModeState;
 import models.alien.AlienType;
 import screens.Frontend;
 import utils.Asset;
+import utils.Constants;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -24,32 +25,34 @@ public class RunModeFrontend implements Frontend<RunModeState> {
 
         // Draw aliens
         for (var alien : state.getAliens()) {
-            // draw blind alien
-            if (alien.getType() == AlienType.BLIND) {
-                if (alien.getFramesPassed() == 10) {
-                    var alienCurrentAsset = alien.getCurrentSprite();
-
-                    if (alien.getCurrentDirection()[0] == 0 && alien.getCurrentDirection()[1] == -1) {
-                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_UP1 ? Asset.ALIEN_BLIND_MOVE_UP2 : Asset.ALIEN_BLIND_MOVE_UP1);
-                    } else if (alien.getCurrentDirection()[0] == 0 && alien.getCurrentDirection()[1] == 1) {
-                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_DOWN1 ? Asset.ALIEN_BLIND_MOVE_DOWN2 : Asset.ALIEN_BLIND_MOVE_DOWN1);
-                    } else if (alien.getCurrentDirection()[0] == -1 && alien.getCurrentDirection()[1] == 0) {
-                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_LEFT1 ? Asset.ALIEN_BLIND_MOVE_LEFT2 : Asset.ALIEN_BLIND_MOVE_LEFT1);
-                    } else if (alien.getCurrentDirection()[0] == 1 && alien.getCurrentDirection()[1] == 0) {
-                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_RIGHT1 ? Asset.ALIEN_BLIND_MOVE_RIGHT2 : Asset.ALIEN_BLIND_MOVE_RIGHT1);
-                    } else {
-                        alien.setCurrentSprite(Asset.ALIEN_BLIND_IDLE);
-                    }
-
-                    alien.setFramesPassed(0);
-                } else {
-                    alien.setFramesPassed(alien.getFramesPassed() + 1);
-                }
-            } else alien.setCurrentSprite(alien.getType().asset);
-
-            var alienImage = GraphicsManager.getInstance().getImage(alien.getCurrentSprite(), alien.getWidth(), alien.getHeight());
-//            if (alien.getType() == AlienType.SHOOTER)
+            var alienSprite = alien.getCurrentSprite();
+            var alienImage = GraphicsManager.getInstance().getImage(alienSprite, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
             canvas.drawImage(alienImage, alien.getPosition().getX(), alien.getPosition().getY(), null);
+
+//            // draw blind alien
+//            if (alien.getType() == AlienType.BLIND) {
+//                if (alien.getFramesPassed() == 10) {
+//                    var alienCurrentAsset = alien.getCurrentSprite();
+//
+//                    if (alien.getCurrentDirection()[0] == 0 && alien.getCurrentDirection()[1] == -1) {
+//                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_UP1 ? Asset.ALIEN_BLIND_MOVE_UP2 : Asset.ALIEN_BLIND_MOVE_UP1);
+//                    } else if (alien.getCurrentDirection()[0] == 0 && alien.getCurrentDirection()[1] == 1) {
+//                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_DOWN1 ? Asset.ALIEN_BLIND_MOVE_DOWN2 : Asset.ALIEN_BLIND_MOVE_DOWN1);
+//                    } else if (alien.getCurrentDirection()[0] == -1 && alien.getCurrentDirection()[1] == 0) {
+//                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_LEFT1 ? Asset.ALIEN_BLIND_MOVE_LEFT2 : Asset.ALIEN_BLIND_MOVE_LEFT1);
+//                    } else if (alien.getCurrentDirection()[0] == 1 && alien.getCurrentDirection()[1] == 0) {
+//                        alien.setCurrentSprite(alienCurrentAsset == Asset.ALIEN_BLIND_MOVE_RIGHT1 ? Asset.ALIEN_BLIND_MOVE_RIGHT2 : Asset.ALIEN_BLIND_MOVE_RIGHT1);
+//                    } else {
+//                        alien.setCurrentSprite(Asset.ALIEN_BLIND_IDLE);
+//                    }
+//
+//                    alien.setFramesPassed(0);
+//                } else {
+//                    alien.setFramesPassed(alien.getFramesPassed() + 1);
+//                }
+//            } else alien.setCurrentSprite(alien.getType().asset);
+
+//            if (alien.getType() == AlienType.SHOOTER)
         }
         for (var projectile : state.getProjectiles()) {
             var projectileImage = GraphicsManager.getInstance().getImage(projectile.getSprite(), projectile.getWidth(), projectile.getHeight());

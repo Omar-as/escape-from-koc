@@ -5,8 +5,7 @@ import managers.DataStoreManager;
 import managers.KeyManager;
 import managers.ScreenManager;
 import models.*;
-import models.alien.Alien;
-import models.alien.AlienType;
+import models.alien.*;
 import models.objects.Obj;
 import models.powerUps.PowerUp;
 import models.powerUps.PowerUpType;
@@ -17,7 +16,12 @@ import utils.RandomUtils;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Stream;
+
+import static models.alien.AlienType.SHOOTER;
+import static models.alien.AlienType.TIME_WASTING;
 
 public class RunModeBackend implements Backend<RunModeState> {
     @Override
@@ -28,24 +32,13 @@ public class RunModeBackend implements Backend<RunModeState> {
         movePlayer(state);
         usePowerUp(state);
 
-        //TODO: remove iterator
-        var alienArrayLength = state.getAliens().size();
-        for (int i = 0; i < alienArrayLength; i++) {
-            var alien = state.getAliens().get(i);
+        var aliens = state.getAliens();
+        for (int i = aliens.size() - 1; i >= 0; i--) {
+            var alien = aliens.get(i);
             switch (alien.getType()) {
-                case BLIND:
-                    blindAlienBehaviour(alien, state);
-                    break;
-                case TIME_WASTING:
-                    timeWastingAlienBehaviour(alien, state);
-                    if (alien == null) {
-                        alienArrayLength--;
-                        i--;
-                    }
-                    break;
-                case SHOOTER:
-                    shooterAlienBehaviour(alien, state);
-                    break;
+                case SHOOTER -> shooterAlienBehaviour((ShooterAlien) alien, state);
+                case TIME_WASTING -> timeWastingAlienBehaviour((TimeWastingAlien) alien, state);
+                case BLIND -> blindAlienBehaviour((BlindAlien) alien, state);
             }
         }
 
@@ -146,6 +139,7 @@ public class RunModeBackend implements Backend<RunModeState> {
                     state.resetTimeForNextAlien();
                     state.resetTimeForNextPowerUp();
                     player.setPosition(Constants.STARTING_X, Constants.STARTING_Y);
+                    state.setPlasticBottleActive(false);
                 }
             } else player.setPosition(backupPosition);
         }
@@ -158,6 +152,12 @@ public class RunModeBackend implements Backend<RunModeState> {
 
         var isHintPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_H);
         var isProtectionVestPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_P);
+        var isPlasticBottlePressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_B);
+
+        if (KeyManager.getInstance().isKeyPressed(KeyEvent.VK_W)) state.setPlasticBottleDir(new int[] {0, -1});
+        if (KeyManager.getInstance().isKeyPressed(KeyEvent.VK_A)) state.setPlasticBottleDir(new int[] {-1, 0});
+        if (KeyManager.getInstance().isKeyPressed(KeyEvent.VK_D)) state.setPlasticBottleDir(new int[] {1, 0});
+        if (KeyManager.getInstance().isKeyPressed(KeyEvent.VK_X)) state.setPlasticBottleDir(new int[] {0, 1});
 
         if (isHintPressed && player.getBagHints() > 0 && !player.getIsHint()) {
 //            hintPowerUpBehaviour(state);
@@ -170,6 +170,10 @@ public class RunModeBackend implements Backend<RunModeState> {
             player.setIsProtectionVest(true);
             state.resetProtectionVestEffectTimer();
             player.decBagProtectionVests();
+        }
+        if(isPlasticBottlePressed && player.getBagPlasticBottles() > 0 && !state.isPlasticBottleActive()) {
+            state.setPlasticBottleActive(true);
+            player.decBagPlasticBottles();
         }
     }
 
@@ -185,15 +189,10 @@ public class RunModeBackend implements Backend<RunModeState> {
                 if (powerup.getType() == PowerUpType.ExtraTime) {
                     extraTimePowerUpBehaviour(state);
                 } else if (powerup.getType() == PowerUpType.Hint) {
-//                    hintPowerUpBehaviour(state);
                     player.incBagHints();
                 } else if (powerup.getType() == PowerUpType.ProtectionVest) {
-//                    protectionVestPowerUpBehaviour(state);
                     player.incBagProtectionVests();
                 } else if (powerup.getType() == PowerUpType.PlasticBottle) {
-
-                    // To Be Changeddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-//                    protectionVestPowerUpBehaviour(state);
                     player.incBagPlasticBottles();
                 } else if (powerup.getType() == PowerUpType.ExtraLife) {
                     extraLifePowerUpBehaviour(state);
@@ -219,15 +218,13 @@ public class RunModeBackend implements Backend<RunModeState> {
     }
 
     private void spawnAlien(Random random, RunModeState state) {
-        Room room = state.getRooms()[state.getCurrentRoom()];
-        Alien alien = new Alien(AlienType.values()[random.nextInt(AlienType.values().length)], 0, 0, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
+        var room = state.getRooms()[state.getCurrentRoom()];
+        var alienType = AlienType.values()[random.nextInt(AlienType.values().length)];
+        Alien alien;
 
-        if (alien.getType() == AlienType.TIME_WASTING) {
-            var time = (((long) state.getRooms()[state.getCurrentRoom()].getObjects().size() * 5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
-            alien.setTimePercentLeftWhenSpawned((int) (((float) state.getTimeoutAfter() / time) * (float) 100.0));
-            alien.setTimeLeftWhenSpawned((int) (state.getTimeoutAfter()));
-            alien.setMode();
-        }
+        if (alienType == SHOOTER) alien = new ShooterAlien(0, 0, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
+        else if (alienType == TIME_WASTING) alien = new TimeWastingAlien(0, 0, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
+        else alien = new BlindAlien(0, 0, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
 
         RandomUtils.runModeRandomize(state, room, alien);
         state.getAliens().add(alien);
@@ -240,95 +237,112 @@ public class RunModeBackend implements Backend<RunModeState> {
         state.getPowerUps().add(powerUp);
     }
 
-    private void blindAlienBehaviour(Alien alien, RunModeState state) {
-        var done = false;
-        var xPosition = alien.getPosition().getX();
-        var yPosition = alien.getPosition().getY();
-        var objs = state.getRooms()[state.getCurrentRoom()].getObjects();
-        var door = state.getDoor();
+    private void blindAlienBehaviour(BlindAlien alien, RunModeState state) {
+        var random = new Random();
         var player = state.getPlayer();
-        var intersects = 0;
-        alien.decActionTimeOut();
-        while (!done && !alien.intersects(player)) {
-            if (alien.getActionTimeOut() <= 0 || intersects != 0) {
-                alien.setCurrentDirectionRandomly();
-                alien.setPosition(alien.getPosition().getX() - alien.getCurrentDirection()[0], alien.getPosition().getY() - alien.getCurrentDirection()[1]);
-                alien.resetActionTimeOut();
-            }
-            xPosition = alien.getPosition().getX() + (2 * alien.getCurrentDirection()[0]);
-            yPosition = alien.getPosition().getY() + (2 * alien.getCurrentDirection()[1]);
-            var dummyRect = new Rectangle(new Position(xPosition, yPosition), alien.getWidth(), alien.getHeight());
-            intersects = objs.stream()
-                    .map(dummyRect::intersects)
-                    .mapToInt(b -> b ? 1 : 0)
-                    .sum()
-                    + (dummyRect.intersects(door) ? 1 : 0)
-                    + ((xPosition < 0 || yPosition < 0 || yPosition > (state.getHeight() - alien.getHeight()) || xPosition > (state.getWidth() - alien.getWidth())) ? 1 : 0);
-            done = intersects == 0;
-        }
-        if (alien.intersects(player)) {
-            player.setLives(player.getLives() - 1);
+        if (alien.distanceTo(player) <= Constants.BLIND_ALIEN_DEADLY_RANGE * Constants.BLOCK_DIM) {
             player.setPosition(0, 0);
+            RandomUtils.runModeRandomize(state, state.getRooms()[state.getCurrentRoom()], player);
+            player.setLives(player.getLives() - 1);
         }
-        alien.setPosition(xPosition, yPosition);
+        alien.decFramesTillSwitch();
+        if (alien.getFramesTillSwitch() <= 0 && !state.isPlasticBottleActive()) {
+            int[][] directions = new int[][]{{0, 1}, {-1, 0}, {0, -1}, {1, 0}};
+            var direction = directions[random.nextInt(directions.length)];
+            alien.setDirection(direction[0], direction[1]);
+            alien.resetFramesTillSwitch();
+        } else if (alien.getFramesTillSwitch() <= 0 && state.isPlasticBottleActive()) {
+            alien.setDirection(state.getPlasticBottleDir()[0], state.getPlasticBottleDir()[1]);
+        }
+
+        var backup = alien.getPosition();
+        alien.setPosition(
+                Math.min(Math.max(alien.getPosition().getX() + alien.getDirectionX() * Constants.BLIND_SPEED, 0), state.getWidth() - alien.getWidth()),
+                Math.min(Math.max(alien.getPosition().getY() + alien.getDirectionY() * Constants.BLIND_SPEED, 0), state.getHeight() - alien.getHeight())
+        );
+        var objs = state.getRooms()[state.getCurrentRoom()].getObjects().stream();
+        var others = Arrays.stream(new Rectangle[]{state.getDoor()});
+        var aliens = state.getAliens().stream().filter(a -> !a.equals(alien));
+        var powerUps = state.getPowerUps().stream();
+        var avoid = Stream.of(objs, others, aliens, powerUps).reduce(Stream::concat).orElseGet(Stream::empty).toArray(Rectangle[]::new);
+        for (var a : avoid) {
+            if (alien.intersects(a)) {
+                alien.setPosition(backup);
+                return;
+            }
+        }
+
+        alien.alternateSprite();
     }
 
-    private void timeWastingAlienBehaviour(Alien alien, RunModeState state) {
+    private void timeWastingAlienBehaviour(TimeWastingAlien alien, RunModeState state) {
         if (state.getKey().isFound()) return;
+
+        if (state.getPercentPassed() < Constants.PERCENT_PASSED_FRIENDLY) alien.setStrategy(new FriendlyStrategy());
+        else if (state.getPercentPassed() > Constants.PERCENT_PASSED_AGGRESSIVE) alien.setStrategy(new AggressiveStrategy());
+        else alien.setStrategy(new ConfusedStrategy());
+
+        alien.decFramesTillAction();
+
+        if (alien.getFramesTillAction() <= 0) {
+            if (alien.getStrategy() instanceof FriendlyStrategy) {
+                switchKey(state);
+                state.getAliens().remove(alien);
+            } else if (alien.getStrategy() instanceof ConfusedStrategy) {
+                state.getAliens().remove(alien);
+            } else {
+                switchKey(state);
+            }
+
+            alien.resetFramesTillAction(alien.getStrategy().getFramesTillAction());
+        }
+    }
+
+    private void switchKey(RunModeState state) {
         var random = new Random();
         var room = state.getRooms()[state.getCurrentRoom()];
         var objects = room.getObjects();
-        int timePassed;
-        int confusionDelay;
 
         Obj randObj;
         do {
             randObj = objects.get(random.nextInt(objects.size()));
         } while (randObj == state.getKey().getUnder());
 
-        switch (alien.getMode()) {
-            case CONFUSED:
-                timePassed = (int) (alien.getTimeLeftWhenSpawned() - state.getTimeoutAfter());
-                confusionDelay = (int) ((2 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
-                if (timePassed < confusionDelay) {
-                    return;
-                } else if (timePassed > confusionDelay) {
-                    state.getAliens().remove(alien);
-                    return;
-                }
-                break;
-            case NORMAL:
-                alien.decActionTimeOut();
-                if (alien.getActionTimeOut() <= 0) {
-                    state.setKey(new Key(randObj));
-                    alien.resetActionTimeOut();
-                }
-                break;
-            case PETTY:
-                timePassed = (int) (alien.getTimeLeftWhenSpawned() - state.getTimeoutAfter());
-                confusionDelay = (int) ((Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
-                if (timePassed < confusionDelay) {
-                    state.setKey(new Key(randObj));
-                    state.getAliens().remove(alien);
-                }
-                break;
-        }
-
+        state.setKey(new Key(randObj));
     }
 
-    private void shooterAlienBehaviour(Alien alien, RunModeState state) {
+    private void shooterAlienBehaviour(ShooterAlien alien, RunModeState state) {
         var player = state.getPlayer();
-        if (alien.distanceTo(player) <= 64) {
+        if (alien.distanceTo(player) <= Constants.SHOOTER_ALIEN_DEADLY_RANGE * Constants.BLOCK_DIM) {
             player.setPosition(0, 0);
+            RandomUtils.runModeRandomize(state, state.getRooms()[state.getCurrentRoom()], player);
             player.setLives(player.getLives() - 1);
         }
-        alien.decActionTimeOut();
-        if (alien.getActionTimeOut() <= 0) {
+        alien.decFramesTillShoot();
+        if (alien.getFramesTillShoot() <= 0) {
             var projectiles = state.getProjectiles();
-            var projectile = new Projectile(alien.aim(state.getPlayer()), alien.getPosition().getX() + alien.getWidth() / 2, alien.getPosition().getY() + alien.getHeight() / 2, 20, 20);
+            var aim = shooterAlienAim(alien, player);
+            var projectile = new Projectile(aim, alien.getPosition().getX() + alien.getWidth() / 2, alien.getPosition().getY() + alien.getHeight() / 2, 20, 20);
             projectiles.add(projectile);
-            alien.resetActionTimeOut();
+            alien.resetFramesTillShoot();
         }
+    }
+
+    public float[] shooterAlienAim(ShooterAlien alien, Player player) {
+        var alienCenterX = alien.getPosition().getX() + alien.getWidth() / 2;
+        var alienCenterY = alien.getPosition().getY() + alien.getHeight() / 2;
+        var playerCenterX = player.getPosition().getX() + player.getWidth() / 2;
+        var playerCenterY = player.getPosition().getY() + player.getHeight() / 2;
+
+        int xDirection = playerCenterX - alienCenterX;
+        int yDirection = playerCenterY - alienCenterY;
+
+        float distance = (float) Math.sqrt(Math.pow(xDirection, 2) + Math.pow(yDirection, 2));
+
+        float unitX = (float) xDirection / distance;
+        float unitY = (float) yDirection / distance;
+
+        return new float[]{unitX, unitY};
     }
 
     private void fireProjectile(RunModeState state) {

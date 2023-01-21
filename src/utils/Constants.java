@@ -27,6 +27,7 @@ public final class Constants {
 
     // In-Game
     public static final int PLAYER_SPEED = 5;
+    public static final int BLIND_SPEED = 3;
     public static final int MIN_DISTANCE = 100;
     public static final String DEFAULT_ROOMS = new Gson().toJson(new Room[]{
             new Room("Student Center", 5),
@@ -36,14 +37,21 @@ public final class Constants {
             new Room("ENG Building", 19),
             new Room("SNA Building", 25)
     });
-    public static final int STARTING_LIVES = 5;
+    public static final int STARTING_LIVES = 3;
     public static final int STARTING_X = 0;
     public static final int STARTING_Y = 0;
     public static final int PLAYER_DIM = 64;
     public static final int DOOR_DIM = 64;
     public static final int ALIEN_DIM = 64;
     public static final int OBJ_DIM = 32;
+    public static final int BLOCK_DIM = 32;
     public static final int POWER_UP_DIM = 32;
+    public static final int SHOOTER_ALIEN_DEADLY_RANGE = 4;
+    public static final int BLIND_ALIEN_DEADLY_RANGE = 2;
+    public static final int SECONDS_PER_OBJECT = 5;
+    public static final float PERCENT_PASSED_FRIENDLY = 0.3f;
+    public static final float PERCENT_PASSED_AGGRESSIVE = 0.7f;
+
 
     // Animation
     // Frame Rate: 67 FPS

@@ -32,7 +32,9 @@ public enum Asset {
     PROJECTILE("projectile"),
 
     // Time Wasting Alien Sprites
-    ALIEN_TIME_WASTING("alien_time_wasting"),
+    ALIEN_FRIENDLY_TIME_WASTING("alien_friendly_time_wasting"),
+    ALIEN_CONFUSED_TIME_WASTING("alien_confused_time_wasting"),
+    ALIEN_AGGRESSIVE_TIME_WASTING("alien_aggressive_time_wasting"),
 
     // PowerUps
     PLASTIC_BOTTLE("power_up_plastic_bottle"),

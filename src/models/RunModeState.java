@@ -30,6 +30,8 @@ public class RunModeState extends State {
     private int hintEffectTimer;
     private int protectionVestEffectTimer;
     private int frames;
+    private boolean plasticBottleActive;
+    private int[] plasticBottleDir;
 
     // Constructors
 
@@ -58,6 +60,8 @@ public class RunModeState extends State {
         this.projectiles = new ArrayList<>();
         this.frames = 0;
         this.username = AccountManager.getUsername();
+        this.plasticBottleActive = false;
+        this.plasticBottleDir = new int[]{1, 0};
     }
 
     // Methods
@@ -213,8 +217,15 @@ public class RunModeState extends State {
     }
 
     public void resetTimeoutAfter() {
-        // TODO: Remove magic numbers
-        timeoutAfter = (int) ((getRooms()[getCurrentRoom()].getObjects().size() * 5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+        timeoutAfter = (int) ((getRooms()[getCurrentRoom()].getObjects().size() * Constants.SECONDS_PER_OBJECT * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+
+    public int getMaxTime() {
+        return (int) ((getRooms()[getCurrentRoom()].getObjects().size() * Constants.SECONDS_PER_OBJECT * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+
+    public float getPercentPassed() {
+        return (float) timeoutAfter / getMaxTime();
     }
 
     public void decTimeoutAfter() {
@@ -301,6 +312,22 @@ public class RunModeState extends State {
 
     public String getUsername() {
         return username;
+    }
+
+    public boolean isPlasticBottleActive() {
+        return plasticBottleActive;
+    }
+
+    public void setPlasticBottleActive(boolean active) {
+        plasticBottleActive = active;
+    }
+
+    public int[] getPlasticBottleDir() {
+        return plasticBottleDir;
+    }
+
+    public void setPlasticBottleDir(int[] dir) {
+        plasticBottleDir = dir;
     }
 
     // Invariant Validity Check

@@ -10,6 +10,7 @@ public class RandomUtils {
     public static void runModeRandomize(RunModeState state, Room room, Rectangle target) {
         var objs = room.getObjects().stream();
         var others = Arrays.stream(new Rectangle[]{state.getPlayer(), state.getDoor()});
+        if (target == state.getPlayer()) others = Arrays.stream(new Rectangle[]{state.getDoor()});
         var aliens = state.getAliens().stream();
         var powerUps = state.getPowerUps().stream();
         var avoid = Stream.of(objs, others, aliens, powerUps).reduce(Stream::concat).orElseGet(Stream::empty).toArray(Rectangle[]::new);
