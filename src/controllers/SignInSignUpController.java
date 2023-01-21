@@ -3,8 +3,8 @@ package controllers;
 import ui.ScreenFactory;
 import ui.ScreenManager;
 import ui.ScreenType;
-import utils.AccountManager;
-import utils.DataStoreManager;
+import managers.AccountManager;
+import managers.DataStoreManager;
 
 /**
  * Sign In / Sign Up Controller

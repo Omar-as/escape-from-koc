@@ -7,7 +7,7 @@ import ui.Canvas;
 import ui.*;
 import ui.frontends.RunModeFrontend;
 import utils.Constants;
-import utils.DataStoreManager;
+import managers.DataStoreManager;
 
 import javax.swing.*;
 import java.awt.*;

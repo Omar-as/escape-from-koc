@@ -8,9 +8,9 @@ import models.powerUps.PowerUp;
 import models.powerUps.PowerUpType;
 import ui.ScreenFactory;
 import ui.ScreenManager;
-import utils.AccountManager;
+import managers.AccountManager;
 import utils.Constants;
-import utils.DataStoreManager;
+import managers.DataStoreManager;
 import utils.Position;
 
 import java.awt.event.KeyEvent;

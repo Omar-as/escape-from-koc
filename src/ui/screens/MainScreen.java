@@ -6,7 +6,7 @@ import ui.ScreenFactory;
 import ui.ScreenManager;
 import ui.ScreenType;
 import utils.Constants;
-import utils.DataStoreManager;
+import managers.DataStoreManager;
 import utils.ThemeManager;
 
 import javax.swing.*;

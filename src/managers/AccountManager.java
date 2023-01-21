@@ -1,6 +1,7 @@
-package utils;
+package managers;
 
 import models.Account;
+import utils.Constants;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

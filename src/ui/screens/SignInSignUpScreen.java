@@ -2,7 +2,7 @@ package ui.screens;
 
 import controllers.SignInSignUpController;
 import ui.Screen;
-import utils.DataStoreManager;
+import managers.DataStoreManager;
 import utils.ThemeManager;
 
 import javax.swing.*;

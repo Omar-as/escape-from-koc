@@ -1,5 +1,19 @@
-package utils;
+package managers;
 
+import utils.IDataStoreAdapter;
+import utils.JSONDataStore;
+import utils.MongoDBDataStore;
+
+/**
+ * Data Store Manager
+ * <p>
+ * Handles storing data on disk.
+ * It uses a data store based on the user's choice.
+ * <p>
+ * Patterns:
+ * 1. Adapter  : Works with any type of Data Store.
+ * 2. Singleton: Only one instance of the Data Store can be created.
+ */
 public final class DataStoreManager {
     public enum DataStoreType {
         JSON("File (JSON)", JSONDataStore.getInstance()),
@@ -28,5 +42,6 @@ public final class DataStoreManager {
         DataStoreManager.dataStoreType = dataStoreType;
     }
 
-    private DataStoreManager() { }
+    private DataStoreManager() {
+    }
 }
