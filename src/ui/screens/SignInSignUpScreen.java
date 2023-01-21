@@ -1,18 +1,24 @@
 package ui.screens;
 
+import controllers.SignInSignUpController;
 import ui.Screen;
-import ui.ScreenFactory;
-import ui.ScreenManager;
-import ui.ScreenType;
-import utils.*;
+import utils.DataStoreManager;
+import utils.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
+/**
+ * Sign In / Sign Up Screen
+ * <p>
+ * Patterns:
+ * 1. Observer  : Listen for events of interest, and act when they happen.
+ * 2. Controller: Pass control to a controller instead of handling events in the UI.
+ * <p>
+ * Model-View Separation:
+ * No logic implemented in the UI.
+ */
 public class SignInSignUpScreen extends Screen {
-
     public SignInSignUpScreen() {
         this.setLayout(new GridBagLayout());
 
@@ -36,40 +42,31 @@ public class SignInSignUpScreen extends Screen {
         passwordLabel.setLabelFor(passwordField);
 
         var signInButton = new JButton("Sign In");
-        var signUpButton = new JButton("Sign Up");
-
+        // Observer Pattern
         signInButton.addActionListener(event -> {
             var username = usernameField.getText();
             var password = passwordField.getPassword();
-
-            var isLoginSuccessful = AccountManager.isValidAuthInput(username, password);
-
-            var screenManager = ScreenManager.getInstance();
-            if (isLoginSuccessful) {
-                AccountManager.setUsername(username);
-                screenManager.setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
-            }
-            else screenManager.showErrorDialog("Incorrect username or password.");
+            // Controller Pattern
+            SignInSignUpController.handleSignInTry(username, password);
         });
+
+        var signUpButton = new JButton("Sign Up");
+        // Observer Pattern
         signUpButton.addActionListener(a -> {
             var username = usernameField.getText();
             var password = passwordField.getPassword();
-
-            var isFieldMissing   = username.isEmpty() || password.length == 0;
-            var doesAccountExist = AccountManager.doesAccountExist(username);
-
-            if (!isFieldMissing && !doesAccountExist) AccountManager.createNewAccount(username, password);
-
-            var screenManager = ScreenManager.getInstance();
-            if (isFieldMissing) screenManager.showErrorDialog("Missing username or password.");
-            else if (doesAccountExist) screenManager.showErrorDialog("User already has an account.");
-            else screenManager.showInformationDialog("Account created successfully!");
+            // Controller Pattern
+            SignInSignUpController.handleSignUpTry(username, password);
         });
 
-        var dataStoreLabel   = new JLabel("Data Store");
-        var dataStoreSelect  = new JComboBox(DataStoreManager.DataStoreType.values());
+        var dataStoreLabel = new JLabel("Data Store");
+        var dataStoreSelect = new JComboBox(DataStoreManager.DataStoreType.values());
         dataStoreSelect.setSelectedIndex(0);
-        dataStoreSelect.addActionListener(e -> DataStoreManager.setDataStoreType((DataStoreManager.DataStoreType) dataStoreSelect.getSelectedItem()));
+        // Observer Pattern
+        dataStoreSelect.addActionListener(e -> {
+            // Controller Pattern
+            SignInSignUpController.handleDataStoreChoiceChange((DataStoreManager.DataStoreType) dataStoreSelect.getSelectedItem());
+        });
 
         form.add(usernameLabel);
         form.add(usernameField);
