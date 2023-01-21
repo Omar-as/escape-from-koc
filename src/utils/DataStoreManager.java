@@ -6,9 +6,9 @@ public final class DataStoreManager {
         MONGO_DB("Database (MongoDB)", MongoDBDataStore.getInstance());
 
         public final String label;
-        public final IDataStore instance;
+        public final IDataStoreAdapter instance;
 
-        DataStoreType(String label, IDataStore instance) {
+        DataStoreType(String label, IDataStoreAdapter instance) {
             this.label = label;
             this.instance = instance;
         }
@@ -20,7 +20,7 @@ public final class DataStoreManager {
 
     private static DataStoreType dataStoreType = DataStoreType.JSON;
 
-    public static IDataStore getInstance() {
+    public static IDataStoreAdapter getInstance() {
         return dataStoreType.instance;
     }
 

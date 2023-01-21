@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class JSONDataStore implements IDataStore {
+public class JSONDataStore implements IDataStoreAdapter {
     private static JSONDataStore instance = null;
 
     public static JSONDataStore getInstance() {

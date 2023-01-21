@@ -1,20 +1,15 @@
 package utils;
 
 import com.google.gson.Gson;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.util.JSON;
 import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MongoDBDataStore implements IDataStore {
+public class MongoDBDataStore implements IDataStoreAdapter {
     private static MongoDBDataStore instance = null;
 
     public static MongoDBDataStore getInstance() {
