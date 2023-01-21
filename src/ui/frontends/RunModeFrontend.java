@@ -1,6 +1,6 @@
 package ui.frontends;
 
-import control.KeyManager;
+import managers.KeyManager;
 import models.RunModeState;
 import models.alien.AlienType;
 import ui.Frontend;

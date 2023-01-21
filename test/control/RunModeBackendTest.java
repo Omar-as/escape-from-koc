@@ -1,5 +1,6 @@
 package control;
 
+import managers.KeyManager;
 import models.*;
 import models.objects.Obj;
 import models.objects.ObjectType;

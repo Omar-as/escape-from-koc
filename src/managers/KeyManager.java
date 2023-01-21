@@ -1,9 +1,19 @@
-package control;
+package managers;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
+/**
+ * Key Manager
+ * <p>
+ * Handles keyboard key presses.
+ * <p>
+ * Patterns:
+ * 1. Low Coupling : This class does not have unnecessary dependencies on other classes.
+ * 2. High Cohesion: This class has one responsibility and does it well.
+ * 2. Singleton    : Only one instance of this class can be created.
+ */
 public class KeyManager {
     private static KeyManager instance = null;
     private final HashMap<Integer, Boolean> keyStates;
@@ -35,6 +45,9 @@ public class KeyManager {
             return keyStates.getOrDefault(keyCode, false);
         }
     }
+
+    // Method for testing
+    // Simulates key presses
     public void setKeyPressed(int keyCode,boolean isPressed){
         synchronized (KeyManager.class) {
             keyStates.put(keyCode, isPressed);
