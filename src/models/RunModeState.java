@@ -31,7 +31,7 @@ public class RunModeState extends State {
 
     // Constructors
 
-    public RunModeState(Alien[] aliens, boolean isPaused, Room[] rooms, PowerUp[] powerUps, Player player, Door door) {
+    public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, ArrayList<PowerUp> powerUps, Player player, Door door, ArrayList<Projectile> projectiles) {
         this.width = 1;
         this.height = 1;
         this.aliens = aliens;
@@ -83,7 +83,7 @@ public class RunModeState extends State {
 
     // EFFECT: Update the Aliens List in the game. The array should not be null.
     // MODIFIES: Aliens
-    public void setAliens(Alien[] aliens) {
+    public void setAliens(ArrayList<Alien> aliens) {
         if (aliens == null) throw new IllegalArgumentException();
         this.aliens = aliens;
     }
@@ -136,7 +136,7 @@ public class RunModeState extends State {
     
     // EFFECT: Update the powerUps list in the game. PowerUps list should not be null.
     // MODIFIES: PowerUps
-    public void setPowerUps(PowerUp[] powerUps) {
+    public void setPowerUps(ArrayList<PowerUp> powerUps) {
         if (powerUps == null) throw new IllegalArgumentException();
         this.powerUps = powerUps;
     }
