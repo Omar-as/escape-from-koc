@@ -1,11 +1,10 @@
 package ui.screens;
 
+import managers.ScreenManager;
+import managers.ThemeManager;
 import ui.Screen;
 import ui.ScreenFactory;
-import ui.ScreenManager;
 import ui.ScreenType;
-import utils.Constants;
-import utils.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +37,6 @@ public class HelpScreen extends Screen {
                 • To find the keys, you use a left click on the object on the building. If a key is present it appears for a second and the door is unlocked.
                 • You need to be next to objects to check if key exists
                                 
-                                
                 POWER-UPS
                                 
                 • You can use power-ups to escape aliens and find keys easily.
@@ -47,7 +45,6 @@ public class HelpScreen extends Screen {
                 • You are not required to be next to power-ups to collect them.
                 • Other than extra time and extra life power-ups, power-ups can be stored in your bag for later use.
                 • Extra time power-up adds extra time to your timer.
-                    
                               
                 EXTRA TIME POWER-UP
                     
@@ -69,13 +66,11 @@ public class HelpScreen extends Screen {
                 • To use the power-up click B button and then press one of the buttons A, D, W, or X
                 • A: West, D: East, W: north, X: South.
                                 
-                                
                 ALIENS
                                 
                 • While walking around you encounter some aliens who try to kill you or prevent you from finding the keys
                 • All aliens appear randomly in the buildings every 10 seconds and the type of the alien appearing is selected randomly.
                 • Alien stays in the current building even if you find the key and exit.
-                                
                                 
                 SHOOTER ALIEN
                                 
@@ -83,14 +78,11 @@ public class HelpScreen extends Screen {
                 • If you are closer than 4 squares to the shooter alien 1 of your lives. At the beginning of the game you have 3 lives and you can collect extra lives during the game.
                 • If you wear a protection vest you can get close to shooter alien without losing your lives.
                                 
-                                
                 BLIND ALIEN
                  
                 • Blind alien tries to kill you. In order to kill you it should be right next to you.
                 • It is sensitive to voices and you can fool the blind alien by throwing plastic bottles to the opposite direction where you want to go.
                 • Protection vest does not protect you from the blind alien.
-                                
-                     
                                 
                 BUILDING MODE
                                 
@@ -102,13 +94,11 @@ public class HelpScreen extends Screen {
                 • There must be at least 19 objects in the ENG building.
                 • There must be at least 25 objects in the SNA building.
                 
-                
                 TIME-WASTING ALIEN
                 
                  • Time-wasting alien does not kill you
                  • It changes the location of the key randomly every 5 seconds.
                  • It does not walk around but just resides wherever it appears and you cannot see how it changes the location of the key
-                                
                                 
                 RUNNING MODE
                                 
@@ -116,13 +106,9 @@ public class HelpScreen extends Screen {
                 • Number of lives you currently have and your remaining time is displayed on the screen.
                 • The items you have on your bag are visible on the screen as well.
                                 
-                                
                 PAUSE/RESUME
                                 
                 • At any point in the game you can pause and resume the game by pressing ESC on your keyboard.
-                                
-                                
-
                 """;
 
         // Initialize components
@@ -140,17 +126,8 @@ public class HelpScreen extends Screen {
         var backButton = new JButton("Back");
         // TODO: Remove magic numbers
         backButton.setPreferredSize(new Dimension(20, 60));
+        backButton.addActionListener(e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN)));
         backButton.setForeground(Color.BLUE);
         mainColumn.add(backButton);
-    }
-
-
-    public static void main(String[] args) {
-        ScreenManager.getInstance().launch(
-                Constants.FRAME_WIDTH,
-                Constants.FRAME_HEIGHT,
-                Constants.FRAME_TITLE,
-                ScreenFactory.getScreen(ScreenType.HELP)
-        );
     }
 }
