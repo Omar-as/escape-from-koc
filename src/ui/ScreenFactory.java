@@ -2,11 +2,12 @@ package ui;
 
 import control.BuildModeBackend;
 import control.RunModeBackend;
-import models.BuildModeState;
-import models.Player;
-import models.Room;
-import models.RunModeState;
+import models.*;
+import models.alien.Alien;
+import models.powerUps.PowerUp;
 import ui.screens.*;
+
+import java.util.ArrayList;
 
 public class ScreenFactory {
     public static Screen getScreen(ScreenType type) {
@@ -22,6 +23,7 @@ public class ScreenFactory {
             case MAIN -> getMainScreen();
             case HELP -> getHelpScreen();
             case BUILD_MODE -> getBuildModeScreen();
+            case SCOREBOARD -> getScoreboardScreen();
             case RUN_MODE, GAME_END -> throw new IllegalArgumentException();
         };
     }
@@ -38,6 +40,10 @@ public class ScreenFactory {
         return new HelpScreen();
     }
 
+    private static ScoreboardScreen getScoreboardScreen() {
+        return new ScoreboardScreen();
+    }
+
     private static BuildModeScreen getBuildModeScreen() {
         var backend = new BuildModeBackend();
         // TODO: Make array constant
@@ -52,8 +58,15 @@ public class ScreenFactory {
     }
 
     public static RunModeScreen getRunModeScreen(BuildModeState buildModeState) {
-        var player = new Player(5, 0, 0, 0, 100, 100);
-        var state = new RunModeState(null, false, buildModeState.getRooms(), null, player, buildModeState.getDoor());
+        var player = new Player(5, 0, 0, 0, 64, 64);
+        player.editBag("H",0);
+        player.editBag("PV",0);
+        player.editBag("PB",0);
+        var state = new RunModeState(new ArrayList<Alien>() , false, buildModeState.getRooms(), new ArrayList<PowerUp>(), player, buildModeState.getDoor(), new ArrayList<Projectile>());
+        return getRunModeScreen(state);
+    }
+
+    public static RunModeScreen getRunModeScreen(RunModeState state) {
         var backend = new RunModeBackend();
         return new RunModeScreen(state, backend);
     }

@@ -1,7 +1,19 @@
-package ui;
+package managers;
+
+import ui.Screen;
 
 import javax.swing.*;
 
+/**
+ * Screen Manager
+ * <p>
+ * Handles changing screens, and provides useful dialog utilities.
+ * <p>
+ * Patterns:
+ * 1. Low Coupling : This class does not have unnecessary dependencies on other classes.
+ * 2. High Cohesion: This class has one responsibility and does it well.
+ * 2. Singleton    : Only one instance of this class can be created.
+ */
 public class ScreenManager {
     private static ScreenManager instance = null;
     private JFrame frame;
@@ -10,7 +22,8 @@ public class ScreenManager {
         try {
             // Make program look like a native application
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
     }

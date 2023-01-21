@@ -1,19 +1,19 @@
 package models;
 
 public class GameData {
-    private final int score;
-    private final PowerUp[] powerUps;
+    private final String username;
+    private final int time;
 
-    public GameData(int score, PowerUp[] powerUps) {
-        this.score = score;
-        this.powerUps = powerUps;
+    public GameData(String username, int time) {
+        this.username = username;
+        this.time = time;
     }
 
-    public int getScore() {
-        return score;
+    public String getUsername() {
+        return username;
     }
 
-    public PowerUp[] getPowerUps() {
-        return powerUps;
+    public int getTime() {
+        return time;
     }
 }

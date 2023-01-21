@@ -4,6 +4,7 @@ import models.BuildModeState;
 import models.Room;
 import models.objects.Obj;
 import models.objects.ObjectType;
+import utils.Constants;
 
 import java.util.Random;
 
@@ -79,9 +80,7 @@ public class BuildModeBackend implements Backend<BuildModeState> {
         }
     }
     private void instertRandomObject(BuildModeState state, Room room, ObjectType type){
-        // TODO: Remove magic numbers
-        var minDistance = 100;
-        var newObj = new Obj(0, 0, 50, 50, type);
+        var newObj = new Obj(0, 0, Constants.OBJ_DIM, Constants.OBJ_DIM, type);
         var objects = room.getObjects();
         var random = new Random();
         var done = false;
@@ -94,7 +93,7 @@ public class BuildModeBackend implements Backend<BuildModeState> {
 
             int tooClose = objects.stream()
                     .map(newObj::distanceBetweenObjects)
-                    .mapToInt(b -> (b < minDistance) ? 1 : 0)
+                    .mapToInt(b -> (b < Constants.MIN_DISTANCE) ? 1 : 0)
                     .sum();
 
             done = tooClose == 0;

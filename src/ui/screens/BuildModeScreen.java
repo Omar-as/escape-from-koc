@@ -2,6 +2,7 @@ package ui.screens;
 
 import control.Backend;
 import control.BuildModeBackend;
+import managers.ScreenManager;
 import models.BuildModeState;
 import models.objects.ObjectType;
 import ui.Canvas;
@@ -37,6 +38,9 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         var insertMenu = new JPopupMenu();
         addInsertMenuItem("Trash Bin", insertMenu, backend, state, ObjectType.TRASH_BIN);
         addInsertMenuItem("Chalk Board", insertMenu, backend, state, ObjectType.CHALK_BOARD);
+        addInsertMenuItem("Bookshelf", insertMenu, backend, state, ObjectType.BOOKSHELF);
+        addInsertMenuItem("Desk", insertMenu, backend, state, ObjectType.DESK);
+        addInsertMenuItem("Printer", insertMenu, backend, state, ObjectType.PRINTER);
 
         var insertBtn = new JButton("Insert");
         insertBtn.addMouseListener(new MouseAdapter() {
