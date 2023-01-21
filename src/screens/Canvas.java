@@ -5,6 +5,10 @@ import models.State;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Canvas
+ * Draw frames of animated screens.
+ */
 public class Canvas<T extends State> extends JPanel {
     private final T state;
     private final Frontend<T> frontend;

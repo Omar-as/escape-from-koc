@@ -3,6 +3,10 @@ package screens;
 import models.State;
 import utils.Constants;
 
+/**
+ * Animated Screen
+ * A screen with abstract animation logic.
+ */
 public abstract class AnimatedScreen<T extends State> extends Screen implements Runnable {
     private final T state;
     private final Backend<T> backend;
