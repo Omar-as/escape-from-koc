@@ -5,6 +5,7 @@ import control.RunModeBackend;
 import models.objects.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +31,8 @@ public class RunModeBackendTest {
                 new Room[]{studentCenter},
                 null,
                 player,
-                new Door(1000, 1000, 32, 32));
+                new Door(1000, 1000, 32, 32),
+                new ArrayList<>());
 
         RunModeBackend backend = new RunModeBackend();
         state.setWidth(1000);

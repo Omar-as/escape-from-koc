@@ -5,8 +5,7 @@ import models.objects.Obj;
 import models.objects.ObjectType;
 
 import java.awt.event.KeyEvent;
-import utils.Constants;
-import utils.Position;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +30,7 @@ class RunModeBackendTest {
 
 
         var player = new Player(5, 0, 500, 500, 100, 100);
-        var state = new RunModeState(null, false, new Room[]{ scRoom, caseRoom, sosRoom, sciRoom, engRoom, snaRoom }, null, player, new Door(1000 - 50, 1000 - 50, 50, 50));
+        var state = new RunModeState(null, false, new Room[]{ scRoom, caseRoom, sosRoom, sciRoom, engRoom, snaRoom }, null, player, new Door(1000 - 50, 1000 - 50, 50, 50), new ArrayList<>());
         state.setWidth(1000);
         state.setHeight(1000);
         var backend = new RunModeBackend();
@@ -39,27 +38,27 @@ class RunModeBackendTest {
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_UP,true);
         backend.movePlayer(state);
         assertEquals(500,player.getPosition().getX());
-        assertEquals(490,player.getPosition().getY());
+        assertEquals(495,player.getPosition().getY());
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_UP,false);
         player.setPosition(new Position(500,500));
         //case 2
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_DOWN,true);
         backend.movePlayer(state);
         assertEquals(500,player.getPosition().getX());
-        assertEquals(510,player.getPosition().getY());
+        assertEquals(505,player.getPosition().getY());
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_DOWN,false);
         player.setPosition(new Position(500,500));
         //case 3
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_LEFT,true);
         backend.movePlayer(state);
-        assertEquals(490,player.getPosition().getX());
+        assertEquals(495,player.getPosition().getX());
         assertEquals(500,player.getPosition().getY());
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_LEFT,false);
         player.setPosition(new Position(500,500));
         //case 4
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_RIGHT,true);
         backend.movePlayer(state);
-        assertEquals(510,player.getPosition().getX());
+        assertEquals(505,player.getPosition().getX());
         assertEquals(500,player.getPosition().getY());
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_RIGHT,false);
         player.setPosition(new Position(500,500));
@@ -67,8 +66,8 @@ class RunModeBackendTest {
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_RIGHT,true);
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_UP,true);
         backend.movePlayer(state);
-        assertEquals(507,player.getPosition().getX());
-        assertEquals(493,player.getPosition().getY());
+        assertEquals(503,player.getPosition().getX());
+        assertEquals(497,player.getPosition().getY());
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_RIGHT,false);
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_UP,false);
         player.setPosition(new Position(500,500));
