@@ -32,15 +32,10 @@ public class RunModeBackend implements Backend<RunModeState> {
         movePlayer(state);
         usePowerUp(state);
 
-        var aliens = state.getAliens();
-        for (int i = aliens.size() - 1; i >= 0; i--) {
-            var alien = aliens.get(i);
-            switch (alien.getType()) {
-                case SHOOTER -> shooterAlienBehaviour((ShooterAlien) alien, state);
-                case TIME_WASTING -> timeWastingAlienBehaviour((TimeWastingAlien) alien, state);
-                case BLIND -> blindAlienBehaviour((BlindAlien) alien, state);
-            }
-        }
+        for (var alien : state.getShooterAliens()) shooterAlienBehaviour(alien, state);
+        for (var alien : state.getBlindAliens()) blindAlienBehaviour(alien, state);
+        var timeWastingAliens = state.getTimeWastingAliens();
+        for (int i = timeWastingAliens.size() - 1; i >= 0; i--) timeWastingAlienBehaviour(timeWastingAliens.get(i), state);
 
         var powerUpArrayLength = state.getPowerUps().size();
         for (int i = 0; i < powerUpArrayLength; i++) {
@@ -133,7 +128,9 @@ public class RunModeBackend implements Backend<RunModeState> {
                     state.incCurrentRoom();
                     state.setKey(new Random());
                     state.resetTimeoutAfter();
-                    state.setAliens(new ArrayList<>());
+                    state.getShooterAliens().clear();
+                    state.getBlindAliens().clear();
+                    state.getTimeWastingAliens().clear();
                     state.setProjectiles(new ArrayList<>());
                     state.setPowerUps(new ArrayList<>());
                     state.resetTimeForNextAlien();
@@ -220,14 +217,22 @@ public class RunModeBackend implements Backend<RunModeState> {
     private void spawnAlien(Random random, RunModeState state) {
         var room = state.getRooms()[state.getCurrentRoom()];
         var alienType = AlienType.values()[random.nextInt(AlienType.values().length)];
+
         Alien alien;
-
-        if (alienType == SHOOTER) alien = new ShooterAlien(0, 0, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
-        else if (alienType == TIME_WASTING) alien = new TimeWastingAlien(0, 0, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
-        else alien = new BlindAlien(0, 0, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
-
+        if (alienType == SHOOTER) {
+            var shooter = new ShooterAlien(0, 0, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
+            state.getShooterAliens().add(shooter);
+            alien = shooter;
+        } else if (alienType == TIME_WASTING) {
+            var waster = new TimeWastingAlien(0, 0, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
+            state.getTimeWastingAliens().add(waster);
+            alien = waster;
+        } else {
+            var blind = new BlindAlien(0, 0, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
+            state.getBlindAliens().add(blind);
+            alien = blind;
+        }
         RandomUtils.runModeRandomize(state, room, alien);
-        state.getAliens().add(alien);
     }
 
     private void spawnPowerUp(Random random, RunModeState state) {
@@ -262,9 +267,11 @@ public class RunModeBackend implements Backend<RunModeState> {
         );
         var objs = state.getRooms()[state.getCurrentRoom()].getObjects().stream();
         var others = Arrays.stream(new Rectangle[]{state.getDoor()});
-        var aliens = state.getAliens().stream().filter(a -> !a.equals(alien));
+        var shooters = state.getShooterAliens().stream();
+        var blinds = state.getBlindAliens().stream().filter(a -> !a.equals(alien));
+        var wasters = state.getTimeWastingAliens().stream();
         var powerUps = state.getPowerUps().stream();
-        var avoid = Stream.of(objs, others, aliens, powerUps).reduce(Stream::concat).orElseGet(Stream::empty).toArray(Rectangle[]::new);
+        var avoid = Stream.of(objs, others, shooters, blinds, wasters, powerUps).reduce(Stream::concat).orElseGet(Stream::empty).toArray(Rectangle[]::new);
         for (var a : avoid) {
             if (alien.intersects(a)) {
                 alien.setPosition(backup);
@@ -278,23 +285,23 @@ public class RunModeBackend implements Backend<RunModeState> {
     private void timeWastingAlienBehaviour(TimeWastingAlien alien, RunModeState state) {
         if (state.getKey().isFound()) return;
 
-        if (state.getPercentPassed() < Constants.PERCENT_PASSED_FRIENDLY) alien.setStrategy(new FriendlyStrategy());
-        else if (state.getPercentPassed() > Constants.PERCENT_PASSED_AGGRESSIVE) alien.setStrategy(new AggressiveStrategy());
-        else alien.setStrategy(new ConfusedStrategy());
+        if (state.getPercentPassed() < Constants.PERCENT_PASSED_FRIENDLY) alien.setFactor(new FriendlyStrategy());
+        else if (state.getPercentPassed() > Constants.PERCENT_PASSED_AGGRESSIVE) alien.setFactor(new AggressiveStrategy());
+        else alien.setFactor(new ConfusedStrategy());
 
         alien.decFramesTillAction();
 
         if (alien.getFramesTillAction() <= 0) {
-            if (alien.getStrategy() instanceof FriendlyStrategy) {
+            if (alien.getFactor() == new FriendlyStrategy().getFramesTillAction()) {
                 switchKey(state);
-                state.getAliens().remove(alien);
-            } else if (alien.getStrategy() instanceof ConfusedStrategy) {
-                state.getAliens().remove(alien);
+                state.getTimeWastingAliens().remove(alien);
+            } else if (alien.getFactor() == new ConfusedStrategy().getFramesTillAction()) {
+                state.getTimeWastingAliens().remove(alien);
             } else {
                 switchKey(state);
             }
 
-            alien.resetFramesTillAction(alien.getStrategy().getFramesTillAction());
+            alien.resetFramesTillAction();
         }
     }
 

@@ -2,7 +2,9 @@ package screens.run;
 
 import managers.GraphicsManager;
 import managers.KeyManager;
+import models.Rectangle;
 import models.RunModeState;
+import models.alien.Alien;
 import models.alien.AlienType;
 import screens.Frontend;
 import utils.Asset;
@@ -10,6 +12,7 @@ import utils.Constants;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.stream.Stream;
 
 public class RunModeFrontend implements Frontend<RunModeState> {
 
@@ -23,8 +26,12 @@ public class RunModeFrontend implements Frontend<RunModeState> {
 
         canvas.setColor(Color.BLACK);
 
+        var shooters = state.getShooterAliens().stream();
+        var blinds = state.getBlindAliens().stream();
+        var wasters = state.getTimeWastingAliens().stream();
+        var aliens = Stream.of(shooters, blinds, wasters).reduce(Stream::concat).orElseGet(Stream::empty).toArray(Alien[]::new);
         // Draw aliens
-        for (var alien : state.getAliens()) {
+        for (var alien : aliens) {
             var alienSprite = alien.getCurrentSprite();
             var alienImage = GraphicsManager.getInstance().getImage(alienSprite, Constants.ALIEN_DIM, Constants.ALIEN_DIM);
             canvas.drawImage(alienImage, alien.getPosition().getX(), alien.getPosition().getY(), null);

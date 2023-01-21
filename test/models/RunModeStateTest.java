@@ -2,6 +2,7 @@ package models;
 
 import models.alien.Alien;
 import models.alien.AlienType;
+import models.alien.TimeWastingAlien;
 import models.objects.Obj;
 import models.objects.ObjectType;
 import org.junit.jupiter.api.Test;
@@ -50,10 +51,9 @@ class RunModeStateTest {
         room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
         var state = new RunModeState(new Room[]{ room });
         assertTrue(state.repOk());
-        assertThrows(IllegalArgumentException.class, () -> { state.setAliens(null); });
         assertTrue(state.repOk());
-        state.getAliens().add(new Alien(AlienType.TIME_WASTING, 1,1,64,64));
-        assertEquals(1, state.getAliens().size());
+        state.getTimeWastingAliens().add(new TimeWastingAlien(1,1,64,64));
+        assertEquals(1, state.getTimeWastingAliens().size());
         assertTrue(state.repOk());
 
     }

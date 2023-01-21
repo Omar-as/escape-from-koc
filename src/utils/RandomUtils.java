@@ -1,6 +1,7 @@
 package utils;
 
 import models.*;
+import models.alien.Alien;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -11,7 +12,10 @@ public class RandomUtils {
         var objs = room.getObjects().stream();
         var others = Arrays.stream(new Rectangle[]{state.getPlayer(), state.getDoor()});
         if (target == state.getPlayer()) others = Arrays.stream(new Rectangle[]{state.getDoor()});
-        var aliens = state.getAliens().stream();
+        var shooters = state.getShooterAliens().stream().filter(s -> !s.equals(target));
+        var blinds = state.getBlindAliens().stream().filter(b -> !b.equals(target));
+        var wasters = state.getTimeWastingAliens().stream().filter(w -> !w.equals(target));
+        var aliens = Stream.of(shooters, blinds, wasters).reduce(Stream::concat).orElseGet(Stream::empty);
         var powerUps = state.getPowerUps().stream();
         var avoid = Stream.of(objs, others, aliens, powerUps).reduce(Stream::concat).orElseGet(Stream::empty).toArray(Rectangle[]::new);
         RandomUtils.randomizePosition(state.getWidth(), state.getHeight(), target, avoid);

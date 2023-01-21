@@ -52,9 +52,3 @@ We chose GPL-3.0 because it's very permissive. It allows people to distribute
 and modify the code, even for commercial or private use. However, it does not
 allow people to distribute the project in a closed-source manner, or under a
 different license. It also does not provide a warranty of any sort.
-
-## Todo:
-
-- Implement the plastic bottle power-up.
-- Check strategy.
-- Add player sprites with armour.

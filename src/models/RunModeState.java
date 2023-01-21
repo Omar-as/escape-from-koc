@@ -2,6 +2,9 @@ package models;
 
 import managers.AccountManager;
 import models.alien.Alien;
+import models.alien.BlindAlien;
+import models.alien.ShooterAlien;
+import models.alien.TimeWastingAlien;
 import models.powerUps.PowerUp;
 import utils.Constants;
 
@@ -13,7 +16,9 @@ public class RunModeState extends State {
     // OVERVIEW: Holds the state while in Run Mode (player and alien positions, scores and timeouts, etc...). Mutable.
     private int width;
     private int height;
-    private ArrayList<Alien> aliens;
+    private ArrayList<ShooterAlien> shooterAliens;
+    private ArrayList<BlindAlien> blindAliens;
+    private ArrayList<TimeWastingAlien> timeWastingAliens;
     private boolean isPaused;
     private Room[] rooms;
     private int currentRoom;
@@ -38,7 +43,9 @@ public class RunModeState extends State {
     public RunModeState(Room[] rooms) {
         this.width = 1;
         this.height = 1;
-        this.aliens = new ArrayList<>();
+        this.shooterAliens = new ArrayList<>();
+        this.blindAliens = new ArrayList<>();
+        this.timeWastingAliens = new ArrayList<>();
         this.isPaused = false;
         this.rooms = rooms;
         this.currentRoom = 0;
@@ -90,15 +97,16 @@ public class RunModeState extends State {
         this.door.setYPosition(height - Constants.DOOR_DIM);
     }
 
-    public ArrayList<Alien> getAliens() {
-        return aliens;
+    public ArrayList<ShooterAlien> getShooterAliens() {
+        return shooterAliens;
     }
 
-    // EFFECT: Update the Aliens List in the game. The array should not be null.
-    // MODIFIES: Aliens
-    public void setAliens(ArrayList<Alien> aliens) {
-        if (aliens == null) throw new IllegalArgumentException();
-        this.aliens = aliens;
+    public ArrayList<BlindAlien> getBlindAliens() {
+        return blindAliens;
+    }
+
+    public ArrayList<TimeWastingAlien> getTimeWastingAliens() {
+        return timeWastingAliens;
     }
 
     public boolean isPaused() {
@@ -335,9 +343,6 @@ public class RunModeState extends State {
     public boolean repOk() {
         // Width and height should be positive
         if (width <= 0 || height <= 0) return false;
-
-        // The aliens list cannot be null
-        if (aliens == null) return false;
 
         // The rooms list cannot be null or empty
         if (rooms == null || rooms.length == 0) return false;
