@@ -19,7 +19,7 @@ public class RunModeFrontend implements Frontend<RunModeState> {
 
         canvas.clearRect(0, 0, width, height); // Clear entire canvas
 
-        var BackGroundImage = GraphicsManager.getInstance().getImage(Asset.BACKGROUND, height, width);
+        var BackGroundImage = GraphicsManager.getInstance().getImage(Asset.BACKGROUND, width, height);
         canvas.drawImage(BackGroundImage, 0, 0, null);
 
         canvas.setColor(Color.BLACK);

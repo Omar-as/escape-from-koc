@@ -1,6 +1,8 @@
 package screens;
 
+import com.google.gson.Gson;
 import models.BuildModeState;
+import models.Room;
 import models.RunModeState;
 import screens.auth.SignInSignUpScreen;
 import screens.build.BuildModeBackend;
@@ -60,7 +62,8 @@ public class ScreenFactory {
         // EFFECTS:
         // Constructs and returns a BuildModeScreen
         var backend = new BuildModeBackend();
-        return new BuildModeScreen(new BuildModeState(Constants.DEFAULT_ROOMS), backend);
+        var rooms   = new Gson().fromJson(Constants.DEFAULT_ROOMS, Room[].class);
+        return new BuildModeScreen(new BuildModeState(rooms), backend);
     }
 
     public static RunModeScreen getRunModeScreen(BuildModeState state) {

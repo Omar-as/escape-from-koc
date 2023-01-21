@@ -86,7 +86,7 @@ public class BuildModeBackend implements Backend<BuildModeState> {
 
     private void insertRandomObject(BuildModeState state, Room room, ObjectType type) {
         var newObj = new Obj(0, 0, Constants.OBJ_DIM, Constants.OBJ_DIM, type);
-        newObj.setPosition(RandomUtils.getRandomPosition(room, state.getWidth(), state.getHeight(), newObj));
+        RandomUtils.randomizePosition(room, state.getWidth(), state.getHeight(), newObj);
         room.getObjects().add(newObj);
     }
 }

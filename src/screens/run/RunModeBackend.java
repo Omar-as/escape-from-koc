@@ -229,7 +229,7 @@ public class RunModeBackend implements Backend<RunModeState> {
             alien.setMode();
         }
 
-        alien.setPosition(RandomUtils.getRandomPosition(room, state.getWidth(), state.getHeight(), alien));
+        RandomUtils.randomizePosition(room, state.getWidth(), state.getHeight(), alien);
         state.getAliens().add(alien);
     }
 
@@ -237,7 +237,7 @@ public class RunModeBackend implements Backend<RunModeState> {
         Room room = state.getRooms()[state.getCurrentRoom()];
 //        PowerUp powerUp = new PowerUp(PowerUpType.Hint, 0, 0 ,Constants.objDim, Constants.objDim);
         PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0, Constants.OBJ_DIM, Constants.OBJ_DIM);
-        powerUp.setPosition(RandomUtils.getRandomPosition(room, state.getWidth(), state.getHeight(), powerUp));
+        RandomUtils.randomizePosition(room, state.getWidth(), state.getHeight(), powerUp);
         state.getPowerUps().add(powerUp);
     }
 
