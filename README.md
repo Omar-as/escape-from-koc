@@ -55,12 +55,10 @@ different license. It also does not provide a warranty of any sort.
 
 ## Todo:
 
-- When we press exit the game timer keeps on going
-- Objects spawn over the door and player section
-- Back button when game ends
-- Right click for powerups
-- Help me
-- index out of bounds when game ends
-- plastic bottle powerup
-- Player sprites with armour
-- make key more visible
+- When we press exit the game timer keeps on going.
+- Prevent objects from spawning over the door and player section.
+- Pickup power-up on right click.
+- Help me.
+- Implement the plastic bottle power-up.
+- Add player sprites with armour.
+- Make key easier to recognize.
