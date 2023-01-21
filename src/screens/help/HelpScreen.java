@@ -3,6 +3,7 @@ package screens.help;
 import managers.ThemeManager;
 import screens.Screen;
 import screens.main.MainMenuController;
+import utils.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,9 +13,7 @@ public class HelpScreen extends Screen {
         this.setLayout(new GridBagLayout());
 
         var mainColumn = Box.createVerticalBox();
-        this.add(mainColumn);
 
-        // TODO: Fix help text
         var helpText = """
                 AIM
                                 
@@ -50,7 +49,7 @@ public class HelpScreen extends Screen {
                                 
                 • Hint power-up gives information about the location of the key to you. Once you collect it is held in your bag.
                 • You can use it as soon as you get it or you can save it for next levels.
-                • You can use Hint power-up by pressing H on your keyboard. Then, the key is highlighted on the map and you have 1 second before it dissapears.
+                • You can use Hint power-up by pressing H on your keyboard. Then, the key is highlighted on the map and you have 1 second before it disappears.
                                 
                 PROTECTION VEST
                                 
@@ -116,16 +115,22 @@ public class HelpScreen extends Screen {
 
         var helpTextArea = new JTextArea();
         helpTextArea.setEditable(false);
-        // TODO: Remove magic numbers
         helpTextArea.append(helpText);
-        helpTextArea.setFont(new Font("Arial", Font.PLAIN, 10));
+        helpTextArea.setFont(ThemeManager.getMonospacedFont());
+        // Show help text from the beginning
+        helpTextArea.setCaretPosition(0);
         mainColumn.add(helpTextArea);
 
+        // Allow help text to scroll
+        var scrollView = new JScrollPane(helpTextArea);
+        helpTextArea.setAutoscrolls(true);
+        scrollView.setPreferredSize(new Dimension(Constants.HELP_TEXT_WIDTH, Constants.HELP_TEXT_HEIGHT));
+        mainColumn.add(scrollView);
+
         var backButton = new JButton("Back");
-        // TODO: Remove magic numbers
-        backButton.setPreferredSize(new Dimension(20, 60));
         backButton.addActionListener(MainMenuController::handleBackToMain);
-        backButton.setForeground(Color.BLUE);
         mainColumn.add(backButton);
+
+        this.add(mainColumn);
     }
 }

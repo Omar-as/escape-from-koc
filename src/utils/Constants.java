@@ -48,6 +48,8 @@ public final class Constants {
 
     // Theme
     public static final int MONOSPACE_FONT_SIZE = 16;
+    public static final int HELP_TEXT_WIDTH = 1000;
+    public static final int HELP_TEXT_HEIGHT = 500;
 
     // MISC
     public static final String HOME_DIRECTORY = System.getProperty("user.home");

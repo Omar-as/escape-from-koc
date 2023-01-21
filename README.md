@@ -55,10 +55,8 @@ different license. It also does not provide a warranty of any sort.
 
 ## Todo:
 
-- When we press exit the game timer keeps on going.
 - Prevent objects from spawning over the door and player section.
 - Pickup power-up on right click.
-- Help me.
 - Implement the plastic bottle power-up.
 - Add player sprites with armour.
 - Make key easier to recognize.
