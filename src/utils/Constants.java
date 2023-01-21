@@ -38,7 +38,7 @@ public final class Constants {
     // MISC
     public static final String HOME_DIRECTORY = System.getProperty("user.home");
     public static final int SECOND_MILLS = 1000;
-    public static final int SCOREBOARD_MAX = 10;
+    public static final int SCOREBOARD_MAX = 5;
 
     // This class should not be instanced
     private Constants() {
