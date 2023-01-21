@@ -1,8 +1,8 @@
 package screens.auth;
 
-import screens.Screen;
 import managers.DataStoreManager;
 import managers.ThemeManager;
+import screens.Screen;
 
 import javax.swing.*;
 import java.awt.*;

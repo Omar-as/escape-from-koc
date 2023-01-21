@@ -4,7 +4,6 @@ import managers.DataStoreManager;
 import managers.ScreenManager;
 import models.RunModeState;
 import screens.ScreenFactory;
-import screens.ScreenType;
 import utils.Constants;
 
 import java.awt.event.ActionEvent;
@@ -25,7 +24,7 @@ public final class MainMenuController {
     }
 
     public static void handleNewGameBtn(ActionEvent e) {
-        ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.BUILD_MODE));
+        ScreenManager.getInstance().setScreen(ScreenFactory.getBuildModeScreen());
     }
 
     public static void handleLoadGameBtn(ActionEvent e) {
@@ -41,18 +40,18 @@ public final class MainMenuController {
     }
 
     public static void handleCreditsBtn(ActionEvent e) {
-        ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.CREDITS));
+        ScreenManager.getInstance().setScreen(ScreenFactory.getCreditsScreen());
     }
 
     public static void handleScoreboardBtn(ActionEvent e) {
-        ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.SCOREBOARD));
+        ScreenManager.getInstance().setScreen(ScreenFactory.getScoreboardScreen());
     }
 
     public static void handleHelpBtn(ActionEvent e) {
-        ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.HELP));
+        ScreenManager.getInstance().setScreen(ScreenFactory.getHelpScreen());
     }
 
     public static void handleBackToMain(ActionEvent e) {
-        ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+        ScreenManager.getInstance().setScreen(ScreenFactory.getMainScreen());
     }
 }

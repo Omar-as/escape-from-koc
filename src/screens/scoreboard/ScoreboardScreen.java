@@ -1,11 +1,11 @@
 package screens.scoreboard;
 
+import managers.DataStoreManager;
+import managers.ThemeManager;
 import models.GameData;
 import screens.Screen;
 import screens.main.MainMenuController;
 import utils.Constants;
-import managers.DataStoreManager;
-import managers.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;

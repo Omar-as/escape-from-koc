@@ -6,6 +6,7 @@ import models.objects.Obj;
 import models.objects.ObjectType;
 import screens.Backend;
 import utils.Constants;
+import utils.RandomUtils;
 
 import java.util.Random;
 
@@ -65,42 +66,27 @@ public class BuildModeBackend implements Backend<BuildModeState> {
     }
 
     public void insertRandomObjectInCurrentRoom(BuildModeState state, ObjectType type) {
-        instertRandomObject(state, state.getRooms()[state.getCurrentRoom()], type);
+        insertRandomObject(state, state.getRooms()[state.getCurrentRoom()], type);
     }
-    public void fillOneRoomRandomly(BuildModeState state, Room room){
+
+    public void fillOneRoomRandomly(BuildModeState state, Room room) {
         int NumOfObjs = room.getMinObjects() - room.getObjects().size();
         var random = new Random();
-        for(int i = 0; i < NumOfObjs ;i++)
-            instertRandomObject(state, room,ObjectType.values()[random.nextInt(ObjectType.values().length)]);
+        for (int i = 0; i < NumOfObjs; i++)
+            insertRandomObject(state, room, ObjectType.values()[random.nextInt(ObjectType.values().length)]);
     }
-    public void fillAllRoomsRandomly(BuildModeState state){
+
+    public void fillAllRoomsRandomly(BuildModeState state) {
         Room[] rooms = state.getRooms();
         int numOfRooms = state.getRooms().length;
-        for(int i = 0; i < numOfRooms; i ++) {
+        for (int i = 0; i < numOfRooms; i++) {
             fillOneRoomRandomly(state, rooms[i]);
         }
     }
-    private void instertRandomObject(BuildModeState state, Room room, ObjectType type){
+
+    private void insertRandomObject(BuildModeState state, Room room, ObjectType type) {
         var newObj = new Obj(0, 0, Constants.OBJ_DIM, Constants.OBJ_DIM, type);
-        var objects = room.getObjects();
-        var random = new Random();
-        var done = false;
-
-        while (!done) {
-            int x = random.nextInt(state.getWidth() - newObj.getWidth());
-            int y = random.nextInt(state.getHeight() - newObj.getHeight());
-
-            newObj.setPosition(x, y);
-
-            int tooClose = objects.stream()
-                    .map(newObj::distanceBetweenObjects)
-                    .mapToInt(b -> (b < Constants.MIN_DISTANCE) ? 1 : 0)
-                    .sum();
-
-            done = tooClose == 0;
-        }
-
-        objects.add(newObj);
+        newObj.setPosition(RandomUtils.getRandomPosition(room, state.getWidth(), state.getHeight(), newObj));
+        room.getObjects().add(newObj);
     }
-
 }

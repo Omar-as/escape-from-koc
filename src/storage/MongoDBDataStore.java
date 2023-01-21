@@ -20,16 +20,15 @@ import java.util.Objects;
  */
 public class MongoDBDataStore implements IDataStoreAdapter {
     private static MongoDBDataStore instance = null;
-
-    public static MongoDBDataStore getInstance() {
-        if (instance == null) instance = new MongoDBDataStore();
-        return instance;
-    }
-
     private final MongoDatabase db;
 
     private MongoDBDataStore() {
         db = new MongoClient().getDatabase("database");
+    }
+
+    public static MongoDBDataStore getInstance() {
+        if (instance == null) instance = new MongoDBDataStore();
+        return instance;
     }
 
     @Override

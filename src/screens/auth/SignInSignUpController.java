@@ -1,10 +1,9 @@
 package screens.auth;
 
-import screens.ScreenFactory;
-import managers.ScreenManager;
-import screens.ScreenType;
 import managers.AccountManager;
 import managers.DataStoreManager;
+import managers.ScreenManager;
+import screens.ScreenFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,7 +29,7 @@ public final class SignInSignUpController {
         var screenManager = ScreenManager.getInstance();
         if (isLoginSuccessful) {
             AccountManager.setUsername(username);
-            screenManager.setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+            screenManager.setScreen(ScreenFactory.getMainScreen());
         } else screenManager.showErrorDialog("Incorrect username or password.");
     }
 
@@ -47,7 +46,7 @@ public final class SignInSignUpController {
     }
 
     public static void handleDataStoreChoiceChange(ActionEvent e) {
-        var select           = (JComboBox) e.getSource();
+        var select = (JComboBox) e.getSource();
         var newDataStoreType = (DataStoreManager.DataStoreType) select.getSelectedItem();
         DataStoreManager.setDataStoreType(newDataStoreType);
     }

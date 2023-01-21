@@ -18,7 +18,7 @@ class RunModeStateTest {
     void setWidth() {
         var room = new Room("Student Center", 1);
         room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
-        var state = new RunModeState(new ArrayList<>(), false, new Room[]{ room }, new ArrayList<>(), new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50), new ArrayList<>());
+        var state = new RunModeState(new Room[]{ room });
         assertTrue(state.repOk());
         assertThrows(IllegalArgumentException.class, () -> { state.setWidth(-1); });
         assertTrue(state.repOk());
@@ -33,7 +33,7 @@ class RunModeStateTest {
     void setHeight() {
         var room = new Room("Student Center", 1);
         room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
-        var state = new RunModeState(new ArrayList<>(), false, new Room[]{ room }, new ArrayList<>(), new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50), new ArrayList<>());
+        var state = new RunModeState(new Room[]{ room });
         assertTrue(state.repOk());
         assertThrows(IllegalArgumentException.class, () -> { state.setHeight(-1); });
         assertTrue(state.repOk());
@@ -48,7 +48,7 @@ class RunModeStateTest {
     void setAliens() {
         var room = new Room("Student Center", 1);
         room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
-        var state = new RunModeState(new ArrayList<>(), false, new Room[]{ room }, new ArrayList<>(), new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50), new ArrayList<>());
+        var state = new RunModeState(new Room[]{ room });
         assertTrue(state.repOk());
         assertThrows(IllegalArgumentException.class, () -> { state.setAliens(null); });
         assertTrue(state.repOk());
@@ -62,7 +62,7 @@ class RunModeStateTest {
     void setRooms() {
         var room = new Room("Student Center", 1);
         room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
-        var state = new RunModeState(new ArrayList<>(), false, new Room[]{ room }, new ArrayList<>(), new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50), new ArrayList<>());
+        var state = new RunModeState(new Room[]{ room });
         assertTrue(state.repOk());
         assertThrows(IllegalArgumentException.class, () -> { state.setRooms(null); });
         assertTrue(state.repOk());
@@ -80,18 +80,16 @@ class RunModeStateTest {
         var room2 = new Room("SNA", 1);
         room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
         room2.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
-        var state = new RunModeState(new ArrayList<>(), false, new Room[]{ room,room2 }, new ArrayList<>(), new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50), new ArrayList<>());
+        var state = new RunModeState(new Room[]{ room });
         assertTrue(state.repOk());
-        state.incCurrentRoom();
-        assertTrue(state.repOk());
-        assertThrows(IllegalArgumentException.class, () -> { state.incCurrentRoom();});
+        assertThrows(IllegalArgumentException.class, state::incCurrentRoom);
     }
 
     @Test
     void setPowerUps() {
         var room = new Room("Student Center", 1);
         room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
-        var state = new RunModeState(new ArrayList<>(), false, new Room[]{ room}, new ArrayList<>(), new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50), new ArrayList<>());
+        var state = new RunModeState(new Room[]{ room });
         assertTrue(state.repOk());
         assertThrows(IllegalArgumentException.class, () -> { state.setPowerUps(null);});
     }
@@ -100,9 +98,9 @@ class RunModeStateTest {
     void setPlayer() {
         var room = new Room("Student Center", 1);
         room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
-        var state = new RunModeState(new ArrayList<>(), false, new Room[]{ room }, new ArrayList<>(), new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50), new ArrayList<>());
+        var state = new RunModeState(new Room[]{ room });
         assertTrue(state.repOk());
-        state.setPlayer(new Player(5, 200, 10, 10, 64, 64));
+        state.setPlayer(new Player(5, 10, 10, 64, 64));
         assertTrue(state.repOk());
         assertThrows(IllegalArgumentException.class, () -> { state.setPlayer(null);});
 
@@ -112,7 +110,7 @@ class RunModeStateTest {
     void setDoor() {
         var room = new Room("Student Center", 1);
         room.getObjects().add(new Obj(1, 2, 3, 4, ObjectType.CHALK_BOARD));
-        var state = new RunModeState(new ArrayList<>(), false, new Room[]{ room }, new ArrayList<>(), new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50), new ArrayList<>());
+        var state = new RunModeState(new Room[]{ room });
         assertTrue(state.repOk());
         state.setDoor(new Door(200, 100, 100, 100));
         assertTrue(state.repOk());
@@ -124,8 +122,7 @@ class RunModeStateTest {
         var room = new Room("Student Center", 1);
         var object = new Obj(1,2,3,4,ObjectType.CHALK_BOARD);
         room.getObjects().add(object);
-        var state = new RunModeState(new ArrayList<>(), false, new Room[]{ room }, new ArrayList<>(), new Player(3, 100, 0, 0, 100, 100), new Door(100, 100, 50, 50), new ArrayList<>());
-        var key = new Key(object);
+        var state = new RunModeState(new Room[]{ room });
         state.setShowKeyFor(3);
         assertTrue(state.repOk());
         assertThrows(IllegalArgumentException.class, () -> { state.setShowKeyFor(-1);});

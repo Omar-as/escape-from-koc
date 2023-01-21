@@ -1,91 +1,84 @@
 package screens;
 
-import screens.build.BuildModeBackend;
-import screens.credits.CreditsScreen;
-import screens.run.RunModeBackend;
-import models.*;
-import models.alien.Alien;
-import models.powerUps.PowerUp;
+import models.BuildModeState;
+import models.RunModeState;
 import screens.auth.SignInSignUpScreen;
+import screens.build.BuildModeBackend;
 import screens.build.BuildModeScreen;
+import screens.credits.CreditsScreen;
 import screens.end.GameEndScreen;
 import screens.help.HelpScreen;
 import screens.main.MainScreen;
+import screens.run.RunModeBackend;
 import screens.run.RunModeScreen;
 import screens.scoreboard.ScoreboardScreen;
+import utils.Constants;
 
-import java.util.ArrayList;
-
+/**
+ * Screen Factory
+ * <p>
+ * Handles creation logic for all screen types.
+ * <p>
+ * Patterns:
+ * 1. Information Expert: This class has all the needed information to create any type of screen.
+ * 2. Low Coupling      : Other parts of the code don't need to rely on specific creation logic.
+ * 3. High Cohesion     : One responsibility done well.
+ * 4. Factory           : Factory GoF pattern.
+ */
 public class ScreenFactory {
-    public static Screen getScreen(ScreenType type) {
+    public static SignInSignUpScreen getSignInSignUpScreen() {
         // EFFECTS:
-        // If type is "SIGN_IN_SIGN_UP" returns SignInSignUpScreen
-        // If type is "MAIN"            returns MainScreen
-        // If type is "HELP"            returns HelpScreen
-        // If type is "BUILD_MODE"      returns BuildModeScreen
-        // If type is "SCOREBOARD"      returns ScoreboardScreen
-        // If type is "CREDITS"         returns CreditsScreen
-        // If type is "RUN_MODE"        throws  IllegalArgumentException()
-        // If type is "GAME_END"        throws  IllegalArgumentException()
-        return switch (type) {
-            case SIGN_IN_SIGN_UP -> getSignInSignUpScreen();
-            case MAIN -> getMainScreen();
-            case HELP -> getHelpScreen();
-            case BUILD_MODE -> getBuildModeScreen();
-            case SCOREBOARD -> getScoreboardScreen();
-            case CREDITS -> getCreditsScreen();
-            case RUN_MODE, GAME_END -> throw new IllegalArgumentException();
-        };
-    }
-
-    private static SignInSignUpScreen getSignInSignUpScreen() {
+        // Constructs and returns a SignInSignUpScreen
         return new SignInSignUpScreen();
     }
 
-    private static MainScreen getMainScreen() {
+    public static MainScreen getMainScreen() {
+        // EFFECTS:
+        // Constructs and returns a MainScreen
         return new MainScreen();
     }
 
-    private static HelpScreen getHelpScreen() {
+    public static HelpScreen getHelpScreen() {
+        // EFFECTS:
+        // Constructs and returns a HelpScreen
         return new HelpScreen();
     }
 
-    private static ScoreboardScreen getScoreboardScreen() {
+    public static ScoreboardScreen getScoreboardScreen() {
+        // EFFECTS:
+        // Constructs and returns a ScoreboardScreen
         return new ScoreboardScreen();
     }
 
-    private static CreditsScreen getCreditsScreen() {
+    public static CreditsScreen getCreditsScreen() {
+        // EFFECTS:
+        // Constructs and returns a CreditScreen
         return new CreditsScreen();
     }
 
-    private static BuildModeScreen getBuildModeScreen() {
+    public static BuildModeScreen getBuildModeScreen() {
+        // EFFECTS:
+        // Constructs and returns a BuildModeScreen
         var backend = new BuildModeBackend();
-        // TODO: Make array constant
-        return new BuildModeScreen(new BuildModeState(new Room[]{
-                new Room("Student Center", 5),
-                new Room("CASE Building", 7),
-                new Room("SOS Building", 10),
-                new Room("SCI Building", 14),
-                new Room("ENG Building", 19),
-                new Room("SNA Building", 25)
-        }), backend);
+        return new BuildModeScreen(new BuildModeState(Constants.DEFAULT_ROOMS), backend);
     }
 
-    public static RunModeScreen getRunModeScreen(BuildModeState buildModeState) {
-        var player = new Player(5, 0, 0, 0, 64, 64);
-        player.editBag("H",0);
-        player.editBag("PV",0);
-        player.editBag("PB",0);
-        var state = new RunModeState(new ArrayList<Alien>() , false, buildModeState.getRooms(), new ArrayList<PowerUp>(), player, buildModeState.getDoor(), new ArrayList<Projectile>());
-        return getRunModeScreen(state);
+    public static RunModeScreen getRunModeScreen(BuildModeState state) {
+        // EFFECTS:
+        // Constructs and returns a RunModeScreen
+        return getRunModeScreen(new RunModeState(state.getRooms()));
     }
 
     public static RunModeScreen getRunModeScreen(RunModeState state) {
+        // EFFECTS:
+        // Constructs and returns a RunModeScreen
         var backend = new RunModeBackend();
         return new RunModeScreen(state, backend);
     }
 
     public static GameEndScreen getGameEndScreen(boolean didWin) {
+        // EFFECTS:
+        // Constructs and returns a GameEndScreen
         return new GameEndScreen(didWin);
     }
 }

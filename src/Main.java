@@ -1,6 +1,5 @@
-import screens.ScreenFactory;
 import managers.ScreenManager;
-import screens.ScreenType;
+import screens.ScreenFactory;
 import utils.Constants;
 
 public class Main {
@@ -13,7 +12,7 @@ public class Main {
                 Constants.FRAME_WIDTH,
                 Constants.FRAME_HEIGHT,
                 Constants.FRAME_TITLE,
-                ScreenFactory.getScreen(ScreenType.SIGN_IN_SIGN_UP)
+                ScreenFactory.getSignInSignUpScreen()
         );
     }
 }

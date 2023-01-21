@@ -48,7 +48,7 @@ public class KeyManager {
 
     // Method for testing
     // Simulates key presses
-    public void setKeyPressed(int keyCode,boolean isPressed){
+    public void setKeyPressed(int keyCode, boolean isPressed) {
         synchronized (KeyManager.class) {
             keyStates.put(keyCode, isPressed);
         }

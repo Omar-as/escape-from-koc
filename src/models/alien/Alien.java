@@ -1,9 +1,9 @@
 package models.alien;
 
+import models.Position;
 import models.Rectangle;
 import utils.Asset;
 import utils.Constants;
-import models.Position;
 
 import java.util.Random;
 
@@ -17,11 +17,6 @@ public class Alien extends Rectangle {
     private Asset currentSprite;
     private int timeLeftWhenSpawned;
     private int timePercentLeftWhenSpawned;
-    public enum timeWastingMode {
-        NORMAL,
-        CONFUSED,
-        PETTY;
-    };
     private timeWastingMode mode;
 
     public Alien(AlienType type, int xPosition, int yPosition, int width, int height) {
@@ -46,10 +41,11 @@ public class Alien extends Rectangle {
         return type;
     }
 
-    public int[] getCurrentDirection(){
+    public int[] getCurrentDirection() {
         return currentDirection;
     }
-    public void setCurrentDirectionRandomly(){
+
+    public void setCurrentDirectionRandomly() {
         Random random = new Random();
         currentDirection = directions[random.nextInt(4)];
     }
@@ -61,18 +57,23 @@ public class Alien extends Rectangle {
     public void decActionTimeOut() {
         actionTimeOut = Math.max(actionTimeOut - 1, 0);
     }
-    public void resetActionTimeOut(){
+
+    public void resetActionTimeOut() {
         actionTimeOut = (int) ((actionTimer * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
     }
-    public int getFramesPassed(){
+
+    public int getFramesPassed() {
         return framesPassed;
     }
+
     public void setFramesPassed(int framesPassed) {
         this.framesPassed = framesPassed;
     }
+
     public Asset getCurrentSprite() {
         return currentSprite;
     }
+
     public void setCurrentSprite(Asset currentSprite) {
         this.currentSprite = currentSprite;
     }
@@ -96,25 +97,34 @@ public class Alien extends Rectangle {
     public timeWastingMode getMode() {
         return mode;
     }
-    public void setMode(){
+
+    public void setMode() {
         if (timePercentLeftWhenSpawned >= 70) this.mode = timeWastingMode.NORMAL;
-        else if (30 <= timePercentLeftWhenSpawned && timePercentLeftWhenSpawned < 70) this.mode = timeWastingMode.CONFUSED;
+        else if (30 <= timePercentLeftWhenSpawned && timePercentLeftWhenSpawned < 70)
+            this.mode = timeWastingMode.CONFUSED;
         else if (timePercentLeftWhenSpawned < 30) this.mode = timeWastingMode.PETTY;
     }
-    public float[] aim(Rectangle target){
-        var thisCenterX = this.getPosition().getX() + this.getWidth()/2;
-        var thisCenterY = this.getPosition().getY() + this.getHeight()/2;
-        var targetCenterX = target.getPosition().getX() + target.getWidth()/2;
-        var targetCenterY = target.getPosition().getY() + target.getHeight()/2;
 
-        int xDir = targetCenterX - thisCenterX ;
-        int yDir = targetCenterY - thisCenterY ;
+    public float[] aim(Rectangle target) {
+        var thisCenterX = this.getPosition().getX() + this.getWidth() / 2;
+        var thisCenterY = this.getPosition().getY() + this.getHeight() / 2;
+        var targetCenterX = target.getPosition().getX() + target.getWidth() / 2;
+        var targetCenterY = target.getPosition().getY() + target.getHeight() / 2;
+
+        int xDir = targetCenterX - thisCenterX;
+        int yDir = targetCenterY - thisCenterY;
 
         float distance = (float) Math.sqrt(Math.pow(xDir, 2) + Math.pow(yDir, 2));
 
-        float unitX = (float) xDir/(float) distance;
-        float unitY =(float) yDir/(float)distance;
+        float unitX = (float) xDir / distance;
+        float unitY = (float) yDir / distance;
 
-        return (new float[]{unitX,unitY});
+        return (new float[]{unitX, unitY});
+    }
+
+    public enum timeWastingMode {
+        NORMAL,
+        CONFUSED,
+        PETTY
     }
 }

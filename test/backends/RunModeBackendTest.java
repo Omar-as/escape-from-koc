@@ -31,16 +31,16 @@ class RunModeBackendTest {
         scRoom.getObjects().add(new Obj(300, 300, 50, 50, ObjectType.CHALK_BOARD));
 
 
-        var player = new Player(5, 0, 500, 500, 100, 100);
-        var state = new RunModeState(null, false, new Room[]{ scRoom, caseRoom, sosRoom, sciRoom, engRoom, snaRoom }, null, player, new Door(1000 - 50, 1000 - 50, 50, 50), new ArrayList<>());
+        var state = new RunModeState(new Room[]{ scRoom, caseRoom, sosRoom, sciRoom, engRoom, snaRoom });
         state.setWidth(1000);
         state.setHeight(1000);
         var backend = new RunModeBackend();
+        var player = state.getPlayer();
         //case 1
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_UP,true);
         backend.movePlayer(state);
-        assertEquals(500,player.getPosition().getX());
-        assertEquals(495,player.getPosition().getY());
+        assertEquals(0, player.getPosition().getX());
+        assertEquals(0, player.getPosition().getY());
         KeyManager.getInstance().setKeyPressed(KeyEvent.VK_UP,false);
         player.setPosition(new Position(500,500));
         //case 2

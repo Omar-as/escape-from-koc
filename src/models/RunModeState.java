@@ -31,23 +31,29 @@ public class RunModeState extends State {
 
     // Constructors
 
-    public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, ArrayList<PowerUp> powerUps, Player player, Door door, ArrayList<Projectile> projectiles) {
+    public RunModeState(Room[] rooms) {
         this.width = 1;
         this.height = 1;
-        this.aliens = aliens;
-        this.isPaused = isPaused;
+        this.aliens = new ArrayList<>();
+        this.isPaused = false;
         this.rooms = rooms;
         this.currentRoom = 0;
-        this.powerUps = powerUps;
-        this.player = player;
-        this.door = door;
+        this.powerUps = new ArrayList<>();
+        this.player = new Player(
+                Constants.STARTING_LIVES,
+                0,
+                0,
+                Constants.PLAYER_DIM,
+                Constants.PLAYER_DIM
+        );
+        this.door = new Door(width - Constants.DOOR_DIM, height - Constants.DOOR_DIM, Constants.DOOR_DIM, Constants.DOOR_DIM);
         setKey(new Random());
         this.showKeyFor = 0;
         resetTimeoutAfter();
         resetTimeForNextAlien();
         resetTimeForNextPowerUp();
         this.completed = false;
-        this.projectiles = projectiles;
+        this.projectiles = new ArrayList<>();
         this.frames = 0;
     }
 
@@ -62,7 +68,7 @@ public class RunModeState extends State {
     public void setWidth(int width) {
         if (width <= 0) throw new IllegalArgumentException();
         this.width = width;
-        this.door.setXPosition(width - Constants.ENTITY_DIM);
+        this.door.setXPosition(width - Constants.DOOR_DIM);
     }
 
     public int getHeight() {
@@ -74,7 +80,7 @@ public class RunModeState extends State {
     public void setHeight(int height) {
         if (height <= 0) throw new IllegalArgumentException();
         this.height = height;
-        this.door.setYPosition(height - Constants.ENTITY_DIM);
+        this.door.setYPosition(height - Constants.DOOR_DIM);
     }
 
     public ArrayList<Alien> getAliens() {
@@ -133,7 +139,7 @@ public class RunModeState extends State {
     public ArrayList<PowerUp> getPowerUps() {
         return powerUps;
     }
-    
+
     // EFFECT: Update the powerUps list in the game. PowerUps list should not be null.
     // MODIFIES: PowerUps
     public void setPowerUps(ArrayList<PowerUp> powerUps) {
@@ -212,7 +218,9 @@ public class RunModeState extends State {
         timeoutAfter = Math.max(timeoutAfter - 1, 0);
     }
 
-    public void incTimeoutAfter(int time){ timeoutAfter += ((time * Constants.SECOND_MILLS)/Constants.REPAINT_DELAY_MILLS); }
+    public void incTimeoutAfter(int time) {
+        timeoutAfter += (((long) time * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
 
     public long getTimeForNextAlien() {
         return timeForNextAlien;
@@ -247,23 +255,27 @@ public class RunModeState extends State {
     public void setCompleted() {
         completed = true;
     }
-    
-        public ArrayList<Projectile> getProjectiles() {
+
+    public ArrayList<Projectile> getProjectiles() {
         return projectiles;
     }
 
     public void setProjectiles(ArrayList<Projectile> projectiles) {
         this.projectiles = projectiles;
     }
-    public void resetHintEffectTimer(){
+
+    public void resetHintEffectTimer() {
         hintEffectTimer = (int) ((10 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
     }
-    public void resetProtectionVestEffectTimer(){
+
+    public void resetProtectionVestEffectTimer() {
         protectionVestEffectTimer = (int) ((20 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
     }
+
     public void decHintEffectTimer() {
         hintEffectTimer = Math.max(hintEffectTimer - 1, 0);
     }
+
     public void decProtectionVestEffectTimer() {
         protectionVestEffectTimer = Math.max(protectionVestEffectTimer - 1, 0);
     }

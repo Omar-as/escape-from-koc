@@ -1,10 +1,8 @@
 package screens.help;
 
-import managers.ScreenManager;
 import managers.ThemeManager;
-import screens.ScreenFactory;
 import screens.Screen;
-import screens.ScreenType;
+import screens.main.MainMenuController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -93,9 +91,9 @@ public class HelpScreen extends Screen {
                 • There must be at least 14 objects in the SCI building.
                 • There must be at least 19 objects in the ENG building.
                 • There must be at least 25 objects in the SNA building.
-                
+                                
                 TIME-WASTING ALIEN
-                
+                                
                  • Time-wasting alien does not kill you
                  • It changes the location of the key randomly every 5 seconds.
                  • It does not walk around but just resides wherever it appears and you cannot see how it changes the location of the key
@@ -126,7 +124,7 @@ public class HelpScreen extends Screen {
         var backButton = new JButton("Back");
         // TODO: Remove magic numbers
         backButton.setPreferredSize(new Dimension(20, 60));
-        backButton.addActionListener(e -> ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN)));
+        backButton.addActionListener(MainMenuController::handleBackToMain);
         backButton.setForeground(Color.BLUE);
         mainColumn.add(backButton);
     }

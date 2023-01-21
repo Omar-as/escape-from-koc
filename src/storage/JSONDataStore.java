@@ -23,24 +23,12 @@ import java.util.Scanner;
 public class JSONDataStore implements IDataStoreAdapter {
     private static JSONDataStore instance = null;
 
-    public static JSONDataStore getInstance() {
-        if (instance == null) instance = new JSONDataStore();
-        return instance;
-    }
-
     private JSONDataStore() {
     }
 
-    @Override
-    public <T> void addToCollection(String collectionName, T element, Class<T> clazz) {
-        var collection = JSONDataStore.readStoreCollection(collectionName, clazz);
-        collection.add(element);
-        JSONDataStore.writeStoreCollection(collectionName, collection);
-    }
-
-    @Override
-    public <T> List<T> getCollection(String collectionName, Class<T> clazz) {
-        return JSONDataStore.readStoreCollection(collectionName, clazz);
+    public static JSONDataStore getInstance() {
+        if (instance == null) instance = new JSONDataStore();
+        return instance;
     }
 
     private static <T> List<T> readStoreCollection(String collectionName, Class<T> clazz) {
@@ -112,5 +100,17 @@ public class JSONDataStore implements IDataStoreAdapter {
 
     private static String getStoreDirPath() {
         return Constants.CONFIG_DIR_PATH.formatted(Constants.HOME_DIRECTORY);
+    }
+
+    @Override
+    public <T> void addToCollection(String collectionName, T element, Class<T> clazz) {
+        var collection = JSONDataStore.readStoreCollection(collectionName, clazz);
+        collection.add(element);
+        JSONDataStore.writeStoreCollection(collectionName, collection);
+    }
+
+    @Override
+    public <T> List<T> getCollection(String collectionName, Class<T> clazz) {
+        return JSONDataStore.readStoreCollection(collectionName, clazz);
     }
 }

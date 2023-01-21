@@ -1,9 +1,9 @@
 package screens.run;
 
+import managers.GraphicsManager;
 import managers.KeyManager;
 import models.RunModeState;
 import models.alien.AlienType;
-import managers.GraphicsManager;
 import screens.Frontend;
 import utils.Asset;
 
@@ -27,7 +27,7 @@ public class RunModeFrontend implements Frontend<RunModeState> {
         // Draw aliens
         for (var alien : state.getAliens()) {
             // draw blind alien
-            if (alien.getType() == AlienType.BLIND ) {
+            if (alien.getType() == AlienType.BLIND) {
                 if (alien.getFramesPassed() == 10) {
                     var alienCurrentAsset = alien.getCurrentSprite();
 
@@ -47,14 +47,13 @@ public class RunModeFrontend implements Frontend<RunModeState> {
                 } else {
                     alien.setFramesPassed(alien.getFramesPassed() + 1);
                 }
-            }
-            else alien.setCurrentSprite(alien.getType().asset);
+            } else alien.setCurrentSprite(alien.getType().asset);
 
             var alienImage = GraphicsManager.getInstance().getImage(alien.getCurrentSprite(), alien.getWidth(), alien.getHeight());
 //            if (alien.getType() == AlienType.SHOOTER)
             canvas.drawImage(alienImage, alien.getPosition().getX(), alien.getPosition().getY(), null);
         }
-        for(var projectile : state.getProjectiles()){
+        for (var projectile : state.getProjectiles()) {
             var projectileImage = GraphicsManager.getInstance().getImage(projectile.getSprite(), projectile.getWidth(), projectile.getHeight());
 
             canvas.drawImage(projectileImage, projectile.getPosition().getX(), projectile.getPosition().getY(), null);
@@ -69,7 +68,7 @@ public class RunModeFrontend implements Frontend<RunModeState> {
         // Draw rectangle when hint powerUp is active
         if (state.getPlayer().getIsHint()) {
             canvas.setColor(Color.BLACK);
-            canvas.drawRect(state.getKey().getUnder().getPosition().getX() - 32, state.getKey().getUnder().getPosition().getY() -32, 64, 64);
+            canvas.drawRect(state.getKey().getUnder().getPosition().getX() - 32, state.getKey().getUnder().getPosition().getY() - 32, 64, 64);
         }
 
         // Draw door

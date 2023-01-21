@@ -1,5 +1,7 @@
 package utils;
 
+import models.Room;
+
 /**
  * Useful Application-Wide Constants
  * Saves us from throwing magic numbers all around the code.
@@ -24,9 +26,20 @@ public final class Constants {
 
     // In-Game
     public static final int PLAYER_SPEED = 5;
-    public static final int ENTITY_DIM = 64;
-    public static final int OBJ_DIM = 32;
     public static final int MIN_DISTANCE = 100;
+    public static final Room[] DEFAULT_ROOMS = new Room[]{
+            new Room("Student Center", 5),
+            new Room("CASE Building", 7),
+            new Room("SOS Building", 10),
+            new Room("SCI Building", 14),
+            new Room("ENG Building", 19),
+            new Room("SNA Building", 25)
+    };
+    public static final int STARTING_LIVES = 5;
+    public static final int PLAYER_DIM = 64;
+    public static final int DOOR_DIM = 64;
+    public static final int ALIEN_DIM = 64;
+    public static final int OBJ_DIM = 32;
 
     // Animation
     // Frame Rate: 67 FPS

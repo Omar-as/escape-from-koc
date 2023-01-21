@@ -24,15 +24,8 @@ public class RunModeBackendTest {
         Room studentCenter = new Room("Student Center", 1);
         studentCenter.getObjects().add(new Obj(100, 100, 50, 50, ObjectType.CHALK_BOARD));
         studentCenter.getObjects().add(new Obj(400, 400, 50, 50, ObjectType.TRASH_BIN));
-        Player player = new Player(5,0,0,0, 32, 32);
-        RunModeState state = new RunModeState(
-                null,
-                false,
-                new Room[]{studentCenter},
-                null,
-                player,
-                new Door(1000, 1000, 32, 32),
-                new ArrayList<>());
+        RunModeState state = new RunModeState(new Room[]{studentCenter});
+        var player = state.getPlayer();
 
         RunModeBackend backend = new RunModeBackend();
         state.setWidth(1000);

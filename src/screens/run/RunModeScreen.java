@@ -1,14 +1,13 @@
 package screens.run;
 
-import screens.Backend;
+import managers.DataStoreManager;
 import managers.ScreenManager;
 import models.RunModeState;
-import screens.ScreenFactory;
 import screens.AnimatedScreen;
+import screens.Backend;
 import screens.Canvas;
-import screens.ScreenType;
+import screens.ScreenFactory;
 import utils.Constants;
-import managers.DataStoreManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,7 +58,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
         exitBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+                ScreenManager.getInstance().setScreen(ScreenFactory.getMainScreen());
                 state.setCompleted();
             }
         });
@@ -79,7 +78,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
             @Override
             public void mouseClicked(MouseEvent e) {
                 backend.pickupKey(state, e.getX(), e.getY());
-                backend.pickupPowerUp(state,e.getX(),e.getY());
+                backend.pickupPowerUp(state, e.getX(), e.getY());
             }
         });
         mainColumn.add(canvas);
@@ -94,7 +93,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
             roomNameLabel.setText(state.getRooms()[state.getCurrentRoom()].getName());
             long remainingSeconds = (state.getTimeoutAfter() * Constants.REPAINT_DELAY_MILLS) / Constants.SECOND_MILLS;
             timeLabel.setText("Remaining: %d s".formatted(remainingSeconds));
-            powerUps.setText(state.getPlayer().convertBagToString());
+            powerUps.setText(state.getPlayer().getBagAsString());
             canvas.repaint();
         }
     }

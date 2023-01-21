@@ -1,13 +1,12 @@
 package screens.build;
 
-import screens.Backend;
 import managers.ScreenManager;
 import models.BuildModeState;
 import models.objects.ObjectType;
-import screens.ScreenFactory;
 import screens.AnimatedScreen;
+import screens.Backend;
 import screens.Canvas;
-import screens.ScreenType;
+import screens.ScreenFactory;
 import utils.Constants;
 
 import javax.swing.*;
@@ -62,7 +61,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         randomizeRoomBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                backend.fillOneRoomRandomly(state,state.getRooms()[state.getCurrentRoom()]);
+                backend.fillOneRoomRandomly(state, state.getRooms()[state.getCurrentRoom()]);
 
             }
         });
@@ -101,7 +100,7 @@ public class BuildModeScreen extends AnimatedScreen<BuildModeState> {
         exitBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ScreenManager.getInstance().setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+                ScreenManager.getInstance().setScreen(ScreenFactory.getMainScreen());
             }
         });
 
