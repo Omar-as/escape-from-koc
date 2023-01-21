@@ -1,6 +1,10 @@
 package models;
 
+import managers.AccountManager;
 import models.alien.Alien;
+import models.alien.BlindAlien;
+import models.alien.ShooterAlien;
+import models.alien.TimeWastingAlien;
 import models.powerUps.PowerUp;
 import utils.Constants;
 
@@ -8,10 +12,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class RunModeState extends State {
+    private final String username;
     // OVERVIEW: Holds the state while in Run Mode (player and alien positions, scores and timeouts, etc...). Mutable.
     private int width;
     private int height;
-    private ArrayList<Alien> aliens;
+    private ArrayList<ShooterAlien> shooterAliens;
+    private ArrayList<BlindAlien> blindAliens;
+    private ArrayList<TimeWastingAlien> timeWastingAliens;
     private boolean isPaused;
     private Room[] rooms;
     private int currentRoom;
@@ -28,27 +35,40 @@ public class RunModeState extends State {
     private int hintEffectTimer;
     private int protectionVestEffectTimer;
     private int frames;
+    private boolean plasticBottleActive;
+    private int[] plasticBottleDir;
 
     // Constructors
 
-    public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, ArrayList<PowerUp> powerUps, Player player, Door door, ArrayList<Projectile> projectiles) {
+    public RunModeState(Room[] rooms) {
         this.width = 1;
         this.height = 1;
-        this.aliens = aliens;
-        this.isPaused = isPaused;
+        this.shooterAliens = new ArrayList<>();
+        this.blindAliens = new ArrayList<>();
+        this.timeWastingAliens = new ArrayList<>();
+        this.isPaused = false;
         this.rooms = rooms;
         this.currentRoom = 0;
-        this.powerUps = powerUps;
-        this.player = player;
-        this.door = door;
+        this.powerUps = new ArrayList<>();
+        this.player = new Player(
+                Constants.STARTING_LIVES,
+                Constants.STARTING_X,
+                Constants.STARTING_Y,
+                Constants.PLAYER_DIM,
+                Constants.PLAYER_DIM
+        );
+        this.door = new Door(width - Constants.DOOR_DIM, height - Constants.DOOR_DIM, Constants.DOOR_DIM, Constants.DOOR_DIM);
         setKey(new Random());
         this.showKeyFor = 0;
         resetTimeoutAfter();
         resetTimeForNextAlien();
         resetTimeForNextPowerUp();
         this.completed = false;
-        this.projectiles = projectiles;
+        this.projectiles = new ArrayList<>();
         this.frames = 0;
+        this.username = AccountManager.getUsername();
+        this.plasticBottleActive = false;
+        this.plasticBottleDir = new int[]{1, 0};
     }
 
     // Methods
@@ -62,7 +82,7 @@ public class RunModeState extends State {
     public void setWidth(int width) {
         if (width <= 0) throw new IllegalArgumentException();
         this.width = width;
-        this.door.setXPosition(width - Constants.ENTITY_DIM);
+        this.door.setXPosition(width - Constants.DOOR_DIM);
     }
 
     public int getHeight() {
@@ -74,18 +94,19 @@ public class RunModeState extends State {
     public void setHeight(int height) {
         if (height <= 0) throw new IllegalArgumentException();
         this.height = height;
-        this.door.setYPosition(height - Constants.ENTITY_DIM);
+        this.door.setYPosition(height - Constants.DOOR_DIM);
     }
 
-    public ArrayList<Alien> getAliens() {
-        return aliens;
+    public ArrayList<ShooterAlien> getShooterAliens() {
+        return shooterAliens;
     }
 
-    // EFFECT: Update the Aliens List in the game. The array should not be null.
-    // MODIFIES: Aliens
-    public void setAliens(ArrayList<Alien> aliens) {
-        if (aliens == null) throw new IllegalArgumentException();
-        this.aliens = aliens;
+    public ArrayList<BlindAlien> getBlindAliens() {
+        return blindAliens;
+    }
+
+    public ArrayList<TimeWastingAlien> getTimeWastingAliens() {
+        return timeWastingAliens;
     }
 
     public boolean isPaused() {
@@ -125,7 +146,7 @@ public class RunModeState extends State {
     // MODIFIES: Current room
     public void incCurrentRoom() {
         // Next room index should be a valid index
-        if (currentRoom+1 >= rooms.length) throw new IllegalArgumentException();
+        if (currentRoom + 1 >= rooms.length) throw new IllegalArgumentException();
 
         currentRoom++;
     }
@@ -133,7 +154,7 @@ public class RunModeState extends State {
     public ArrayList<PowerUp> getPowerUps() {
         return powerUps;
     }
-    
+
     // EFFECT: Update the powerUps list in the game. PowerUps list should not be null.
     // MODIFIES: PowerUps
     public void setPowerUps(ArrayList<PowerUp> powerUps) {
@@ -204,15 +225,24 @@ public class RunModeState extends State {
     }
 
     public void resetTimeoutAfter() {
-        // TODO: Remove magic numbers
-        timeoutAfter = (int) ((getRooms()[getCurrentRoom()].getObjects().size() * 5 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+        timeoutAfter = (int) ((getRooms()[getCurrentRoom()].getObjects().size() * Constants.SECONDS_PER_OBJECT * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+
+    public int getMaxTime() {
+        return (int) ((getRooms()[getCurrentRoom()].getObjects().size() * Constants.SECONDS_PER_OBJECT * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
+
+    public float getPercentPassed() {
+        return (float) timeoutAfter / getMaxTime();
     }
 
     public void decTimeoutAfter() {
         timeoutAfter = Math.max(timeoutAfter - 1, 0);
     }
 
-    public void incTimeoutAfter(int time){ timeoutAfter += ((time * Constants.SECOND_MILLS)/Constants.REPAINT_DELAY_MILLS); }
+    public void incTimeoutAfter(int time) {
+        timeoutAfter += (((long) time * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    }
 
     public long getTimeForNextAlien() {
         return timeForNextAlien;
@@ -247,23 +277,27 @@ public class RunModeState extends State {
     public void setCompleted() {
         completed = true;
     }
-    
-        public ArrayList<Projectile> getProjectiles() {
+
+    public ArrayList<Projectile> getProjectiles() {
         return projectiles;
     }
 
     public void setProjectiles(ArrayList<Projectile> projectiles) {
         this.projectiles = projectiles;
     }
-    public void resetHintEffectTimer(){
+
+    public void resetHintEffectTimer() {
         hintEffectTimer = (int) ((10 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
     }
-    public void resetProtectionVestEffectTimer(){
+
+    public void resetProtectionVestEffectTimer() {
         protectionVestEffectTimer = (int) ((20 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
     }
+
     public void decHintEffectTimer() {
         hintEffectTimer = Math.max(hintEffectTimer - 1, 0);
     }
+
     public void decProtectionVestEffectTimer() {
         protectionVestEffectTimer = Math.max(protectionVestEffectTimer - 1, 0);
     }
@@ -284,14 +318,31 @@ public class RunModeState extends State {
         return frames;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public boolean isPlasticBottleActive() {
+        return plasticBottleActive;
+    }
+
+    public void setPlasticBottleActive(boolean active) {
+        plasticBottleActive = active;
+    }
+
+    public int[] getPlasticBottleDir() {
+        return plasticBottleDir;
+    }
+
+    public void setPlasticBottleDir(int[] dir) {
+        plasticBottleDir = dir;
+    }
+
     // Invariant Validity Check
 
     public boolean repOk() {
         // Width and height should be positive
         if (width <= 0 || height <= 0) return false;
-
-        // The aliens list cannot be null
-        if (aliens == null) return false;
 
         // The rooms list cannot be null or empty
         if (rooms == null || rooms.length == 0) return false;
@@ -303,7 +354,7 @@ public class RunModeState extends State {
             if (room.getObjects().size() < room.getMinObjects()) return false;
         }
 
-        // The powerups list cannot be null
+        // The power-ups list cannot be null
         if (powerUps == null) return false;
 
         // The player cannot be null

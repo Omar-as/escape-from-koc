@@ -1,13 +1,13 @@
 package models.powerUps;
 
+import models.Position;
 import models.Rectangle;
 import utils.Constants;
-import models.Position;
 
 public class PowerUp extends Rectangle {
     private final PowerUpType type;
 
-    private int despawnTimer = (int) ((6* Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
+    private int despawnTimer = (int) ((6 * Constants.SECOND_MILLS) / Constants.REPAINT_DELAY_MILLS);
     private int effectTimer;
     private int actionTimeOut;
     private int actionTimer;
@@ -32,6 +32,7 @@ public class PowerUp extends Rectangle {
     public void setDespawnTimer(int despawnTimer) {
         this.despawnTimer = despawnTimer;
     }
+
     public void decTimer() {
         despawnTimer = Math.max(despawnTimer - 1, 0);
     }

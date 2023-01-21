@@ -15,6 +15,15 @@ public enum Asset {
     PLAYER_MOVE_DOWN2("player_md2"),
     PLAYER_MOVE_UP1("player_mu1"),
     PLAYER_MOVE_UP2("player_mu2"),
+    ARMOUR_PLAYER_IDLE("arm_player_idle"),
+    ARMOUR_PLAYER_MOVE_RIGHT1("arm_player_mr1"),
+    ARMOUR_PLAYER_MOVE_RIGHT2("arm_player_mr2"),
+    ARMOUR_PLAYER_MOVE_LEFT1("arm_player_ml1"),
+    ARMOUR_PLAYER_MOVE_LEFT2("arm_player_ml2"),
+    ARMOUR_PLAYER_MOVE_DOWN1("arm_player_md1"),
+    ARMOUR_PLAYER_MOVE_DOWN2("arm_player_md2"),
+    ARMOUR_PLAYER_MOVE_UP1("arm_player_mu1"),
+    ARMOUR_PLAYER_MOVE_UP2("arm_player_mu2"),
 
     // Blind Alien Sprites
     ALIEN_BLIND_IDLE("alien_blind"),
@@ -32,7 +41,9 @@ public enum Asset {
     PROJECTILE("projectile"),
 
     // Time Wasting Alien Sprites
-    ALIEN_TIME_WASTING("alien_time_wasting"),
+    ALIEN_FRIENDLY_TIME_WASTING("alien_friendly_time_wasting"),
+    ALIEN_CONFUSED_TIME_WASTING("alien_confused_time_wasting"),
+    ALIEN_AGGRESSIVE_TIME_WASTING("alien_aggressive_time_wasting"),
 
     // PowerUps
     PLASTIC_BOTTLE("power_up_plastic_bottle"),

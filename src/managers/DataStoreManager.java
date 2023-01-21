@@ -15,6 +15,19 @@ import storage.MongoDBDataStore;
  * 2. Singleton: Only one instance of the Data Store can be created.
  */
 public final class DataStoreManager {
+    private static DataStoreType dataStoreType = DataStoreType.JSON;
+
+    private DataStoreManager() {
+    }
+
+    public static IDataStoreAdapter getInstance() {
+        return dataStoreType.instance;
+    }
+
+    public static void setDataStoreType(DataStoreType dataStoreType) {
+        DataStoreManager.dataStoreType = dataStoreType;
+    }
+
     public enum DataStoreType {
         JSON("File (JSON)", JSONDataStore.getInstance()),
         MONGO_DB("Database (MongoDB)", MongoDBDataStore.getInstance());
@@ -30,18 +43,5 @@ public final class DataStoreManager {
         public String toString() {
             return this.label;
         }
-    }
-
-    private static DataStoreType dataStoreType = DataStoreType.JSON;
-
-    public static IDataStoreAdapter getInstance() {
-        return dataStoreType.instance;
-    }
-
-    public static void setDataStoreType(DataStoreType dataStoreType) {
-        DataStoreManager.dataStoreType = dataStoreType;
-    }
-
-    private DataStoreManager() {
     }
 }

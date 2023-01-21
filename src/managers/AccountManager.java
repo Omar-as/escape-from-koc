@@ -30,12 +30,12 @@ public final class AccountManager {
     private static final int BITS_IN_BYTE = 8;
     private static String username;
 
-    public static void setUsername(String username) {
-        AccountManager.username = username;
-    }
-
     public static String getUsername() {
         return username;
+    }
+
+    public static void setUsername(String username) {
+        AccountManager.username = username;
     }
 
     public static void createNewAccount(String username, char[] password) {

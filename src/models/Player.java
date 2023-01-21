@@ -2,24 +2,23 @@ package models;
 
 import utils.Asset;
 
-import java.util.HashMap;
-import java.util.stream.Collectors;
-
 public class Player extends Rectangle {
     private int lives;
-    private int score;
     private Room currentRoom;
     private Asset currentSprite;
     private int framesPassed = 10;
     private boolean isProtectionVest;
     private boolean isHint;
-    private HashMap<String, Integer> powerUpBag;
+    private int bagHints;
+    private int bagProtectionVests;
+    private int bagPlasticBottles;
 
-    public Player(int lives, int score, int xPosition, int yPosition, int width, int height) {
+    public Player(int lives, int xPosition, int yPosition, int width, int height) {
         super(new Position(xPosition, yPosition), width, height);
-        this.powerUpBag = new HashMap<String, Integer>();
         this.lives = lives;
-        this.score = score;
+        this.bagHints = 0;
+        this.bagProtectionVests = 0;
+        this.bagPlasticBottles = 0;
     }
 
     public int getLives() {
@@ -28,14 +27,6 @@ public class Player extends Rectangle {
 
     public void setLives(int lives) {
         this.lives = lives;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public Room getCurrentRoom() {
@@ -62,24 +53,70 @@ public class Player extends Rectangle {
         this.framesPassed = framesPassed;
     }
 
-    public boolean getIsProtectionVest() { return isProtectionVest; }
+    public boolean getIsProtectionVest() {
+        return isProtectionVest;
+    }
 
-    public void setIsProtectionVest(boolean protectionVest) { isProtectionVest = protectionVest; }
+    public void setIsProtectionVest(boolean protectionVest) {
+        isProtectionVest = protectionVest;
+    }
 
-    public boolean isProtectionVest() { return isProtectionVest; }
+    public boolean isProtectionVest() {
+        return isProtectionVest;
+    }
 
-    public void setProtectionVest(boolean protectionVest) { isProtectionVest = protectionVest; }
+    public void setProtectionVest(boolean protectionVest) {
+        isProtectionVest = protectionVest;
+    }
 
-    public boolean getIsHint() { return isHint; }
+    public boolean getIsHint() {
+        return isHint;
+    }
 
-    public void setIsHint(boolean hint) { isHint = hint; }
+    public void setIsHint(boolean hint) {
+        isHint = hint;
+    }
 
-    public void editBag(String powerUpName, int additionalPowerUp){ powerUpBag.put(powerUpName, additionalPowerUp); }
+    public int getBagHints() {
+        return bagHints;
+    }
 
-    public int getBagPowerUpInfo(String powerUpName){ return powerUpBag.get(powerUpName); }
+    public void incBagHints() {
+        this.bagHints++;
+    }
 
-    public String convertBagToString(){
-        String bagInfo = powerUpBag.keySet().stream().map(key -> key + ":" + powerUpBag.get(key)).collect(Collectors.joining(", "));
-        return bagInfo;
+    public void decBagHints() {
+        if (this.bagHints <= 0) throw new IllegalStateException();
+        this.bagHints--;
+    }
+
+    public int getBagProtectionVests() {
+        return bagProtectionVests;
+    }
+
+    public void incBagProtectionVests() {
+        this.bagProtectionVests++;
+    }
+
+    public void decBagProtectionVests() {
+        if (this.bagProtectionVests <= 0) throw new IllegalStateException();
+        this.bagProtectionVests--;
+    }
+
+    public int getBagPlasticBottles() {
+        return bagPlasticBottles;
+    }
+
+    public void incBagPlasticBottles() {
+        this.bagPlasticBottles++;
+    }
+
+    public void decBagPlasticBottles() {
+        if (this.bagPlasticBottles <= 0) throw new IllegalStateException();
+        this.bagPlasticBottles--;
+    }
+
+    public String getBagAsString() {
+        return "H: %d, V: %d, B: %d".formatted(bagHints, bagProtectionVests, bagPlasticBottles);
     }
 }
