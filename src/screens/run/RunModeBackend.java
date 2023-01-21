@@ -142,10 +142,10 @@ public class RunModeBackend implements Backend<RunModeState> {
                     state.resetTimeoutAfter();
                     state.setAliens(new ArrayList<>());
                     state.setProjectiles(new ArrayList<>());
-                    player.setPosition(0, 0);
                     state.setPowerUps(new ArrayList<>());
                     state.resetTimeForNextAlien();
                     state.resetTimeForNextPowerUp();
+                    player.setPosition(Constants.STARTING_X, Constants.STARTING_Y);
                 }
             } else player.setPosition(backupPosition);
         }
@@ -229,15 +229,14 @@ public class RunModeBackend implements Backend<RunModeState> {
             alien.setMode();
         }
 
-        RandomUtils.randomizePosition(room, state.getWidth(), state.getHeight(), alien);
+        RandomUtils.runModeRandomize(state, room, alien);
         state.getAliens().add(alien);
     }
 
     private void spawnPowerUp(Random random, RunModeState state) {
         Room room = state.getRooms()[state.getCurrentRoom()];
-//        PowerUp powerUp = new PowerUp(PowerUpType.Hint, 0, 0 ,Constants.objDim, Constants.objDim);
-        PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0, Constants.OBJ_DIM, Constants.OBJ_DIM);
-        RandomUtils.randomizePosition(room, state.getWidth(), state.getHeight(), powerUp);
+        PowerUp powerUp = new PowerUp(PowerUpType.values()[random.nextInt(PowerUpType.values().length)], 0, 0, Constants.POWER_UP_DIM, Constants.POWER_UP_DIM);
+        RandomUtils.runModeRandomize(state, room, powerUp);
         state.getPowerUps().add(powerUp);
     }
 
@@ -249,8 +248,8 @@ public class RunModeBackend implements Backend<RunModeState> {
         var door = state.getDoor();
         var player = state.getPlayer();
         var intersects = 0;
+        alien.decActionTimeOut();
         while (!done && !alien.intersects(player)) {
-            alien.decActionTimeOut();
             if (alien.getActionTimeOut() <= 0 || intersects != 0) {
                 alien.setCurrentDirectionRandomly();
                 alien.setPosition(alien.getPosition().getX() - alien.getCurrentDirection()[0], alien.getPosition().getY() - alien.getCurrentDirection()[1]);

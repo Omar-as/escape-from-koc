@@ -4,6 +4,7 @@ import managers.AccountManager;
 import models.alien.Alien;
 import models.powerUps.PowerUp;
 import utils.Constants;
+import utils.RandomUtils;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -43,8 +44,8 @@ public class RunModeState extends State {
         this.powerUps = new ArrayList<>();
         this.player = new Player(
                 Constants.STARTING_LIVES,
-                0,
-                0,
+                Constants.STARTING_X,
+                Constants.STARTING_Y,
                 Constants.PLAYER_DIM,
                 Constants.PLAYER_DIM
         );

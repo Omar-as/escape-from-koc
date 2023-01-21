@@ -79,7 +79,7 @@ public class RunModeScreen extends AnimatedScreen<RunModeState> {
             public void mouseClicked(MouseEvent e) {
                 // Left-click picks lifts object / picks up key
                 if (SwingUtilities.isLeftMouseButton(e)) backend.pickupKey(state, e.getX(), e.getY());
-                // Right-click picks up power-up
+                    // Right-click picks up power-up
                 else if (SwingUtilities.isRightMouseButton(e)) backend.pickupPowerUp(state, e.getX(), e.getY());
             }
         });

@@ -13,7 +13,6 @@ import java.util.Random;
 public class BuildModeBackend implements Backend<BuildModeState> {
     @Override
     public void updateState(BuildModeState state) {
-
     }
 
     public void liftObject(BuildModeState state, int pressX, int pressY) {
@@ -86,7 +85,7 @@ public class BuildModeBackend implements Backend<BuildModeState> {
 
     private void insertRandomObject(BuildModeState state, Room room, ObjectType type) {
         var newObj = new Obj(0, 0, Constants.OBJ_DIM, Constants.OBJ_DIM, type);
-        RandomUtils.randomizePosition(room, state.getWidth(), state.getHeight(), newObj);
+        RandomUtils.buildModeRandomize(state, room, newObj);
         room.getObjects().add(newObj);
     }
 }

@@ -1,24 +1,40 @@
 package utils;
 
-import models.Position;
-import models.Rectangle;
-import models.Room;
+import models.*;
 
+import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class RandomUtils {
-    public static void randomizePosition(Room room, int roomWidth, int roomHeight, Rectangle rect) {
+    public static void runModeRandomize(RunModeState state, Room room, Rectangle target) {
+        var objs = room.getObjects().stream();
+        var others = Arrays.stream(new Rectangle[]{state.getPlayer(), state.getDoor()});
+        var aliens = state.getAliens().stream();
+        var powerUps = state.getPowerUps().stream();
+        var avoid = Stream.of(objs, others, aliens, powerUps).reduce(Stream::concat).orElseGet(Stream::empty).toArray(Rectangle[]::new);
+        RandomUtils.randomizePosition(state.getWidth(), state.getHeight(), target, avoid);
+    }
+
+    public static void buildModeRandomize(BuildModeState state, Room room, Rectangle target) {
+        var objs = room.getObjects().stream();
+        var others = Arrays.stream(new Rectangle[]{state.getDoor(), new Player(Constants.STARTING_LIVES, Constants.STARTING_X, Constants.STARTING_Y, Constants.PLAYER_DIM, Constants.PLAYER_DIM)});
+        var avoid = Stream.concat(objs, others).toArray(Rectangle[]::new);
+        RandomUtils.randomizePosition(state.getWidth(), state.getHeight(), target, avoid);
+    }
+
+    public static void randomizePosition(int roomWidth, int roomHeight, Rectangle target, Rectangle... avoid) {
         var random = new Random();
         var done = false;
 
         while (!done) {
-            int x = random.nextInt(roomWidth - rect.getWidth());
-            int y = random.nextInt(roomHeight - rect.getHeight());
+            int x = random.nextInt(roomWidth - target.getWidth());
+            int y = random.nextInt(roomHeight - target.getHeight());
 
-            rect.setPosition(new Position(x, y));
+            target.setPosition(new Position(x, y));
 
-            int tooClose = room.getObjects().stream()
-                    .map(rect::distanceTo)
+            int tooClose = Arrays.stream(avoid)
+                    .map(target::distanceTo)
                     .mapToInt(b -> (b < Constants.MIN_DISTANCE) ? 1 : 0)
                     .sum();
 

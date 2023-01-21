@@ -55,7 +55,6 @@ different license. It also does not provide a warranty of any sort.
 
 ## Todo:
 
-- Prevent objects from spawning over the door and player section.
 - Implement the plastic bottle power-up.
 - Check strategy.
 - Add player sprites with armour.

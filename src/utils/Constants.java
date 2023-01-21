@@ -37,10 +37,13 @@ public final class Constants {
             new Room("SNA Building", 25)
     });
     public static final int STARTING_LIVES = 5;
+    public static final int STARTING_X = 0;
+    public static final int STARTING_Y = 0;
     public static final int PLAYER_DIM = 64;
     public static final int DOOR_DIM = 64;
     public static final int ALIEN_DIM = 64;
     public static final int OBJ_DIM = 32;
+    public static final int POWER_UP_DIM = 32;
 
     // Animation
     // Frame Rate: 67 FPS
