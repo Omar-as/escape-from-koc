@@ -1,5 +1,6 @@
 package models;
 
+import managers.AccountManager;
 import models.alien.Alien;
 import models.powerUps.PowerUp;
 import utils.Constants;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class RunModeState extends State {
+    private final String username;
     // OVERVIEW: Holds the state while in Run Mode (player and alien positions, scores and timeouts, etc...). Mutable.
     private int width;
     private int height;
@@ -55,6 +57,7 @@ public class RunModeState extends State {
         this.completed = false;
         this.projectiles = new ArrayList<>();
         this.frames = 0;
+        this.username = AccountManager.getUsername();
     }
 
     // Methods
@@ -294,6 +297,10 @@ public class RunModeState extends State {
 
     public int getFrames() {
         return frames;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     // Invariant Validity Check

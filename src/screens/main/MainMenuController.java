@@ -1,5 +1,6 @@
 package screens.main;
 
+import managers.AccountManager;
 import managers.DataStoreManager;
 import managers.ScreenManager;
 import models.RunModeState;
@@ -7,6 +8,7 @@ import screens.ScreenFactory;
 import utils.Constants;
 
 import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 /**
  * Main Menu Controller
@@ -30,13 +32,14 @@ public final class MainMenuController {
     public static void handleLoadGameBtn(ActionEvent e) {
         // Find saved games
         var games = DataStoreManager.getInstance().getCollection(Constants.SAVED_GAMES_COLLECTION_NAME, RunModeState.class);
-        if (games.isEmpty()) {
+        var myGames = games.stream().filter(g -> Objects.equals(g.getUsername(), AccountManager.getUsername())).toArray(RunModeState[]::new);
+        if (myGames.length == 0) {
             // No saved games
             ScreenManager.getInstance().showErrorDialog("No saved games.");
             return;
         }
         // Load saved game
-        ScreenManager.getInstance().setScreen(ScreenFactory.getRunModeScreen(games.get(games.size() - 1)));
+        ScreenManager.getInstance().setScreen(ScreenFactory.getRunModeScreen(myGames[myGames.length - 1]));
     }
 
     public static void handleCreditsBtn(ActionEvent e) {

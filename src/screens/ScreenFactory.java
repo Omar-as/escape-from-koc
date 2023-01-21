@@ -62,7 +62,7 @@ public class ScreenFactory {
         // EFFECTS:
         // Constructs and returns a BuildModeScreen
         var backend = new BuildModeBackend();
-        var rooms   = new Gson().fromJson(Constants.DEFAULT_ROOMS, Room[].class);
+        var rooms = new Gson().fromJson(Constants.DEFAULT_ROOMS, Room[].class);
         return new BuildModeScreen(new BuildModeState(rooms), backend);
     }
 
