@@ -1,8 +1,8 @@
 package managers;
 
-import utils.IDataStoreAdapter;
-import utils.JSONDataStore;
-import utils.MongoDBDataStore;
+import storage.IDataStoreAdapter;
+import storage.JSONDataStore;
+import storage.MongoDBDataStore;
 
 /**
  * Data Store Manager

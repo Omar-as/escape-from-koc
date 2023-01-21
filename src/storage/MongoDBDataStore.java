@@ -1,4 +1,4 @@
-package utils;
+package storage;
 
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
@@ -9,6 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * MongoDB Data Store
+ * <p>
+ * Type of data store that uses a MongoDB database to store data.
+ * <p>
+ * Patterns:
+ * 1. Adapter: Implements the IDataStoreAdapter interface.
+ * 2. Singleton: Only one instance of this data store can exist.
+ */
 public class MongoDBDataStore implements IDataStoreAdapter {
     private static MongoDBDataStore instance = null;
 
@@ -26,7 +35,7 @@ public class MongoDBDataStore implements IDataStoreAdapter {
     @Override
     public <T> void addToCollection(String collectionName, T element, Class<T> clazz) {
         createCollection(collectionName);
-        var gson   = new Gson();
+        var gson = new Gson();
         var newDoc = Document.parse(gson.toJson(element));
         db.getCollection(collectionName).insertOne(newDoc);
     }

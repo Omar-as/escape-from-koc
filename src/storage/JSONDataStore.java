@@ -1,7 +1,8 @@
-package utils;
+package storage;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import utils.Constants;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,6 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * JSON Data Store
+ * <p>
+ * Type of data store that uses files in JSON format to store data.
+ * <p>
+ * Patterns:
+ * 1. Adapter: Implements the IDataStoreAdapter interface.
+ * 2. Singleton: Only one instance of this data store can exist.
+ */
 public class JSONDataStore implements IDataStoreAdapter {
     private static JSONDataStore instance = null;
 
@@ -18,7 +28,8 @@ public class JSONDataStore implements IDataStoreAdapter {
         return instance;
     }
 
-    private JSONDataStore() { }
+    private JSONDataStore() {
+    }
 
     @Override
     public <T> void addToCollection(String collectionName, T element, Class<T> clazz) {
@@ -62,7 +73,7 @@ public class JSONDataStore implements IDataStoreAdapter {
     private static void writeStoreFile(String fileName, String content) {
         var storeFile = getStoreFile(fileName);
         try {
-            var fileWriter  = new FileWriter(storeFile, false);
+            var fileWriter = new FileWriter(storeFile, false);
             var printWriter = new PrintWriter(fileWriter);
             printWriter.println(content);
             fileWriter.close();
