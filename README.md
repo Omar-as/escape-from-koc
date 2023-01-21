@@ -1,5 +1,12 @@
 # Escape From Koç
 
+## Dependencies
+
+This project needs the following library dependencies:
+
+- [`Gson v2.10.1`](https://github.com/google/gson/releases/tag/gson-parent-2.10.1): Convert Java objects into JSON and back.
+- [`MongoDB Java Driver v3.12.5`](https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver/3.12.5): Use MongoDB from within Java.
+
 ## Features
 
 ### Secure Login
