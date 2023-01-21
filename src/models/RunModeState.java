@@ -26,6 +26,7 @@ public class RunModeState extends State {
     private boolean completed;
     private int hintEffectTimer;
     private int protectionVestEffectTimer;
+    private int frames;
 
     public RunModeState(ArrayList<Alien> aliens, boolean isPaused, Room[] rooms, ArrayList<PowerUp> powerUps, Player player, Door door, ArrayList<Projectile> projectiles) {
         this.width = 0;
@@ -44,6 +45,7 @@ public class RunModeState extends State {
         resetTimeForNextPowerUp();
         this.completed = false;
         this.projectiles = projectiles;
+        this.frames = 0;
     }
 
     public int getWidth() {
@@ -223,5 +225,13 @@ public class RunModeState extends State {
 
     public int getProtectionVestEffectTimer() {
         return protectionVestEffectTimer;
+    }
+
+    public void incFrames() {
+        frames++;
+    }
+
+    public int getFrames() {
+        return frames;
     }
 }

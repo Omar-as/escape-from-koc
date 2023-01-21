@@ -4,11 +4,12 @@ import ui.Screen;
 import ui.ScreenFactory;
 import ui.ScreenManager;
 import ui.ScreenType;
-import utils.AccountManager;
-import utils.ThemeManager;
+import utils.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class SignInSignUpScreen extends Screen {
 
@@ -44,7 +45,10 @@ public class SignInSignUpScreen extends Screen {
             var isLoginSuccessful = AccountManager.isValidAuthInput(username, password);
 
             var screenManager = ScreenManager.getInstance();
-            if (isLoginSuccessful) screenManager.setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+            if (isLoginSuccessful) {
+                AccountManager.setUsername(username);
+                screenManager.setScreen(ScreenFactory.getScreen(ScreenType.MAIN));
+            }
             else screenManager.showErrorDialog("Incorrect username or password.");
         });
         signUpButton.addActionListener(a -> {
@@ -62,11 +66,18 @@ public class SignInSignUpScreen extends Screen {
             else screenManager.showInformationDialog("Account created successfully!");
         });
 
+        var dataStoreLabel   = new JLabel("Data Store");
+        var dataStoreSelect  = new JComboBox(DataStoreManager.DataStoreType.values());
+        dataStoreSelect.setSelectedIndex(0);
+        dataStoreSelect.addActionListener(e -> DataStoreManager.setDataStoreType((DataStoreManager.DataStoreType) dataStoreSelect.getSelectedItem()));
+
         form.add(usernameLabel);
         form.add(usernameField);
         form.add(passwordLabel);
         form.add(passwordField);
         form.add(signInButton);
         form.add(signUpButton);
+        form.add(dataStoreLabel);
+        form.add(dataStoreSelect);
     }
 }
