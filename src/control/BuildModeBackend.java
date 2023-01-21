@@ -26,6 +26,16 @@ public class BuildModeBackend implements Backend<BuildModeState> {
     }
 
     public void dropObject(BuildModeState state) {
+        // MODIFIES:
+        // state.selectedObject
+        // state.rooms
+        // EFFECTS :
+        // If no object is selected: Do nothing.
+        // If an object is selected AND dropped outside the top    border: Unselect and delete object.
+        // If an object is selected AND dropped outside the right  border: Unselect and delete object.
+        // If an object is selected AND dropped outside the bottom border: Unselect and delete object.
+        // If an object is selected AND dropped outside the left   border: Unselect and delete object.
+        // If an object is selected AND dropped inside  screen     border: Unselect object.
         var selected = state.getSelectedObject();
         if (selected == null) return;
         var x = selected.getPosition().getX();

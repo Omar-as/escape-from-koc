@@ -14,9 +14,9 @@ import managers.DataStoreManager;
 import models.Position;
 
 import java.awt.event.KeyEvent;
+
 import java.util.ArrayList;
 import java.util.Random;
-
 
 public class RunModeBackend implements Backend<RunModeState> {
     @Override
@@ -83,7 +83,14 @@ public class RunModeBackend implements Backend<RunModeState> {
             
     }
 
-    private void movePlayer(RunModeState state) {
+    public void movePlayer(RunModeState state) {
+        // MODIFIES: player.xPosition, player.Yposition
+        // EFFECTS1: Key pressed right Player Movesby PLAYER_SPEED to right
+        // EFFECTS2: Key pressed left Player Movesby PLAYER_SPEED to left
+        // EFFECTS3: Key pressed up Player Movesby PLAYER_SPEED to up
+        // EFFECTS4: Key pressed down Player Movesby PLAYER_SPEED to down
+        // EFFECTS5: Key pressed down + right Player Moves by PLAYER_SPEED to down + right
+
         // Check whether keys are pressed or not
         var isUpPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_UP);
         var isLeftPressed = KeyManager.getInstance().isKeyPressed(KeyEvent.VK_LEFT);
@@ -130,7 +137,7 @@ public class RunModeBackend implements Backend<RunModeState> {
                     );
                     ScreenManager.getInstance().setScreen(ScreenFactory.getGameEndScreen(true));
                 } else {
-                    state.setKey();
+                    state.setKey(new Random());
                     state.resetTimeoutAfter();
                     state.setAliens(new ArrayList<Alien>());
                     state.setProjectiles(new ArrayList<Projectile>());

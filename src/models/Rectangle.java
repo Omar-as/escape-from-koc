@@ -48,6 +48,13 @@ public class Rectangle {
     }
 
     public boolean intersects(Rectangle other) {
+        // MODIFIES : Nothing
+        // EFFECTS : Nothing
+        // DOES :
+        // Returns if rectangles are intersecting from top,
+        // bottom, right, left or inside each other
+        // Returns false if rectangles are far from each other,
+        // not intersecting
         int selfX1 = this.position.getX();
         int selfY1 = this.position.getY();
         int selfX2 = this.position.getX() + this.width;
