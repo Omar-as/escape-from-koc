@@ -27,7 +27,7 @@ public class ScoreboardScreen extends Screen {
         title.setAlignmentX(CENTER_ALIGNMENT);
         mainColumn.add(title);
 
-        // Get best 10 timings
+        // Get best timings
         var gameData = DataStoreManager.getInstance().getCollection(Constants.SCOREBOARD_COLLECTION_NAME, GameData.class);
         var top = gameData.stream()
                 .sorted(Comparator.comparingInt(GameData::getTime))
