@@ -1,5 +1,8 @@
 # Escape From Koç
 
+## Brief Introduction
+Escape from KOÇ is an easy-to-play game that combines fun and challenge. The game space takes place on the KOÇ University campus where a student is trying to find a sequence of keys in the campus buildings. The game starts when the player enters one of the buildings and starts looking for a key in different rooms. During that journey, aliens may show up and try to catch the player, who should try to escape or distract them. The player is aiming to find the key before the timeout. To accomplish that, some hints show up here and there. Once the key is found, the building will be marked as complete and the player can choose the next open building, which is basically the next level. Some promotions can be offered, like adding more time. The game is over If the player fails to find the key within the time limit. If he manages to find all the keys, then he wins the game.
+
 ## Dependencies
 
 This project needs the following library dependencies:
@@ -11,14 +14,14 @@ This project needs the following library dependencies:
 
 ### Secure Login
 
-Multiple accounts can be created, so that each account can have its separate
+Multiple accounts can be created so that each account can have its separate
 data.
 
 Account passwords are not saved directly to disk. We save a hash of the password
 instead. This protects account passwords even if the attacker gets read access
 to the database. Moreover, we use a random salt with each password, to make
 dictionary attacks harder. Also, responding to correct and incorrect passwords
-take the same time, to prevent side channel attacks like timing attacks.
+takes the same time, to prevent side-channel attacks like timing attacks.
 
 The `SHA` family of hash functions is easy to compute, so brute-force attacks are
 easy to carry, especially with modern GPUs. We use the `PBKDF2WithHmacSHA512`
@@ -38,7 +41,7 @@ Example entries in the account database:
 For this feature we created the `ConfigManager` class; which is 
 used to handle writing to and reading data from the config file.
 
-the date is stored in a file placed in the `.config` file that is stored
+The date is stored in a file placed in the `.config` file that is stored
 in the home directory; and that is because we are following the XDG
 convention to store configuration files.
 
